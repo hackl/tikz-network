@@ -1,0 +1,12 @@
+u,v,label,lw,color ,opacity,bend,Direct
+A,B, ab  ,.5,red   ,   1   ,  30,false
+B,C, bc  ,.7,blue  ,   1   , -60,false
+A,E, ae  , 1,green ,   1   ,  45,true
+C,E, ce  , 2,orange,   1   ,   0,false
+A,A, aa  ,.3,black ,  .5   ,  75,false
+C,G, cg  , 1,blue  ,  .5   ,   0,false
+E,H, eh  , 1,gray  ,  .5   ,   0,false
+F,A, fa  ,.7,red   ,  .7   ,   0,true
+D,F, df  ,.7,cyan  ,   1   ,   30,true
+F,H, fh  ,.7,purple,   1   ,   60,false
+D,G, dg  ,.7,blue  ,  .7   ,   60,false
