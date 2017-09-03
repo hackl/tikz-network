@@ -1,11 +1,12 @@
 # tkz-network
 A tool to visualize complex networks in LaTeX.
 
+| ------------------ | ----------- |
 | **Date:**          | 02 Sep 2017 |
 | **Authors:**       | Jürgen Hackl |
 | **Contact:**       | hackl.j@gmx.at |
 | **Web site:**      | https://github.com/hackl/tkz-network/ |
-| **Documentation:** | https://github.com/hackl/tkz-network/ |
+| **Documentation:** | [manual](https://github.com/hackl/tkz-network/blob/master/manual.pdf) |
 | **Copyright:**     | This document has been placed in the public domain. |
 | **License:**       | GNU General Public Licence. |
 | **Version:**       | 0.1 |
