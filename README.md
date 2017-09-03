@@ -1,6 +1,7 @@
 # tkz-network
 A tool to visualize complex networks in LaTeX.
 
+| Package:           | tkz-network |
 | ------------------ | ----------- |
 | **Date:**          | 02 Sep 2017 |
 | **Authors:**       | Jürgen Hackl |
