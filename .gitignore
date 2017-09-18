@@ -218,3 +218,5 @@ TSWLatexianTemp*
 
 # expex forward references with \gathertags
 *-tags.tex
+/doc/auto/manual.el
+/doc/manual.pdf

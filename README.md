@@ -1,20 +1,20 @@
-# tkz-network
+# tikz-network
 A tool to visualize complex networks in LaTeX.
 
-| Package:           | tkz-network |
+| Package:           | tikz-network |
 | ------------------ | ----------- |
-| **Date:**          | 02 Sep 2017 |
+| **Date:**          | 18 Sep 2017 |
 | **Authors:**       | Jürgen Hackl |
 | **Contact:**       | hackl.j@gmx.at |
-| **Web site:**      | https://github.com/hackl/tkz-network/ |
-| **Documentation:** | [manual](https://github.com/hackl/tkz-network/blob/master/manual.pdf) |
+| **Web site:**      | https://github.com/hackl/tikz-network/ |
+| **Documentation:** | [manual](https://github.com/hackl/tikz-network/blob/master/manual.pdf) |
 | **Copyright:**     | This document has been placed in the public domain. |
 | **License:**       | GNU General Public Licence. |
-| **Version:**       | 0.1 |
+| **Version:**       | 0.2 |
 
 Note:
 
-> The `tkz-package` package is still under development. Hence, changes in the commands and functionality cannot be excluded.
+> The `tikz-network` package is still under development. Hence, changes in the commands and functionality cannot be excluded.
 
 
 ## Purpose
@@ -23,7 +23,7 @@ In recent years, complex network theory becomes more and more popular within the
 
 Nowadays, a variety of great visualization tools are available, which helps to structure, filter, manipulate and of course to visualize the networks. However, they come with some limitations, including the need for specific software tools, difficulties to embed the outputs properly in a `LaTeX` file (e.g. font type, font size, additional equations and math symbols needed,...) and challenges in the post-processing of the graphs, without rerunning the software tools again.
 
-In order to overcome this issues, the package `tkz-network` was created. Some of the features are:
+In order to overcome this issues, the package `tikz-network` was created. Some of the features are:
 
 - `LaTeX` is a standard for scientific publications and widely used
 - beside `LaTeX` no other software is needed
@@ -36,3 +36,31 @@ In order to overcome this issues, the package `tkz-network` was created. Some of
 - able to visualize larger networks
 - three-dimensional visualization of (multilayer) networks
 - compatible with other visualization tools
+
+## ToDo
+
+### Code to fix
+- change default entries for Boolean options in the vertices file.
+
+### Documentation
+- add indices to the manual.
+- add an extended tutorial/example to the document.
+- clean-up and document the .sty file.
+- upload the package to CTAN, if it is appropriated tested.
+
+
+### Features
+- add `\Plain` command in order to create automatically multilayer plains.
+- add a spherical coordinate system
+
+### Add-ons
+- add igraph to tikz-network compiler (e.g. plot function)
+- add networkx to tikz-network compiler (e.g. plot function)
+- add QGIS to tikz-network compiler
+
+
+## Changelog
+| Version:           | Changes |
+| ------------------ | ----------- |
+| 0.1                | initial commit |
+| 0.2                | change of the package name to tikz-network |
