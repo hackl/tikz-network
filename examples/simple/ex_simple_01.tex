@@ -1,0 +1,47 @@
+%=============================================================================
+% File:  ex_simple_01.tex --  tikz-network example
+% Author(s): Jürgen Hackl <hackl@ibi.baug.ethz.ch>
+% Creation:  20 Sep 2017
+% Time-stamp: <Mit 2017-09-20 15:00 juergen>
+%
+% Copyright (c) 2017 Jürgen Hackl <hackl@ibi.baug.ethz.ch>
+%               http://www.ibi.ethz.ch
+% $Id$
+%
+% More information on LaTeX: http://www.latex-project.org/
+% LaTeX symbol list: 
+%   http://www.ctan.org/tex-archive/info/symbols/comprehensive/symbols-a4.pdf
+%=============================================================================
+\documentclass{standalone}
+
+% Used packages
+\usepackage{../../tikz-network}
+
+\begin{document}
+\begin{tikzpicture}
+% Vertices
+\Vertex[size=.4,color=green,opacity=.9,label=a]{A}
+\Vertex[x=1,y=.7,opacity=.5,label=b]{B}
+\Vertex[x=2,y=1,size=.8,color=orange,opacity=.3,label=c]{C}
+\Vertex[x=2,size=.5,color=red,opacity=.7,label=d]{D}
+\Vertex[x=.2,y=1.5,size=.5,color=gray,label=e]{E}
+
+% Edges
+\Edge[label=ab,lw=.5,color=red,bend=30](A)(B)
+\Edge[label=bc,lw=.7,color=blue,bend=-60](B)(C)
+\Edge[label=bd,lw=.5,color=blue,opacity=.5,bend=-60](B)(D)
+\Edge[label=ae,lw= 1,color=green,bend=75](A)(E)
+\Edge[label=ce,lw= 2,color=orange](C)(E)
+\Edge[label=aa,lw=.3,color=black,opacity=.5,bend= 75](A)(A)
+\end{tikzpicture}
+\end{document}
+%=============================================================================
+% eof
+%
+% Local Variables:
+% mode: latex
+% mode: linum
+% mode: auto-fill
+% fill-column: 80
+% TeX-master: t
+% End:

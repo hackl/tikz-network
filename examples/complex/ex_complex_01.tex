@@ -1,0 +1,38 @@
+%=============================================================================
+% File:  ex_complex_01.tex --  tikz-network example
+% Author(s): Jürgen Hackl <hackl@ibi.baug.ethz.ch>
+% Creation:  20 Sep 2017
+% Time-stamp: <Mit 2017-09-20 15:04 juergen>
+%
+% Copyright (c) 2017 Jürgen Hackl <hackl@ibi.baug.ethz.ch>
+%               http://www.ibi.ethz.ch
+% $Id$
+%
+% More information on LaTeX: http://www.latex-project.org/
+% LaTeX symbol list: 
+%   http://www.ctan.org/tex-archive/info/symbols/comprehensive/symbols-a4.pdf
+%=============================================================================
+\documentclass{standalone}
+
+% Used packages
+\usepackage{../../tikz-network}
+
+\begin{document}
+\begin{tikzpicture}
+% Vertices
+\Vertices{./data/ex_complex_01_vertices.csv}
+
+% Edges
+\Edges{./data/ex_complex_01_edges.csv}
+\end{tikzpicture}
+\end{document}
+%=============================================================================
+% eof
+%
+% Local Variables:
+% mode: latex
+% mode: linum
+% mode: auto-fill
+% fill-column: 80
+% TeX-master: t
+% End:

@@ -1,0 +1,91 @@
+%=============================================================================
+% File:  ex_multilayer_01.tex --  tikz-network example
+% Author(s): Jürgen Hackl <hackl@ibi.baug.ethz.ch>
+% Creation:  20 Sep 2017
+% Time-stamp: <Mit 2017-09-20 15:46 juergen>
+%
+% Copyright (c) 2017 Jürgen Hackl <hackl@ibi.baug.ethz.ch>
+%               http://www.ibi.ethz.ch
+% $Id$
+%
+% More information on LaTeX: http://www.latex-project.org/
+% LaTeX symbol list: 
+%   http://www.ctan.org/tex-archive/info/symbols/comprehensive/symbols-a4.pdf
+%=============================================================================
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% use lualatex to compile the pdf !!! %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass{standalone}
+
+% Used packages
+\usepackage{../../tikz-network}
+
+\begin{document}
+
+% Setting
+\SetCoordinates[xAngle = -20]
+\SetVertexStyle[MinSize = 4.5mm]
+\SetLayerDistance{-5}
+
+\begin{tikzpicture}[multilayer=3d]
+
+%%
+% Layer 2
+
+% Layer 2 environment
+\begin{Layer}[layer=2]
+% Move layer 2 to the background
+\begin{scope}[on background layer]
+% Base fill of the layer
+\fill[orange,fill opacity=.4] (0,0) rectangle (10,10);
+% Image assigned to the layer
+\node[inner sep=0pt,opacity=.6] at (5,5) {\includegraphics[width=10cm]{./data/ex_multilayer_01_layer_02.pdf}};
+% Border
+\draw[black,very thick] (0,0) rectangle (10,10);
+% Grid
+\draw[step=1cm, black,draw opacity=.5] (0,0) grid (10,10);
+\node at (1,-.7)[right,scale=2.5]{Layer $\beta$};
+\end{scope}
+\end{Layer}
+
+% Vertices
+\Vertices[color=orange]{./data/ex_multilayer_01_vertices.csv}
+
+% Intra-layer edges in layer 2
+\Edges[color=black,layer={2,2}]{./data/ex_multilayer_01_edges.csv}
+
+% Inter-layer edges between layer 1 and 2
+\Edges[NotInBG,color=black,layer={1,2},style={dashed}]{./data/ex_multilayer_01_edges.csv}
+
+%%
+% Layer 1
+
+\begin{Layer}[layer=1]
+\fill[vertexfill,fill opacity=.4] (0,0) rectangle (10,10);
+\node[inner sep=0pt,opacity=.6] at (5,5) {\includegraphics[width=10cm]{./data/ex_multilayer_01_layer_01.pdf}};
+\draw[black,very thick] (0,0) rectangle (10,10);
+\draw[step=1cm, black,draw opacity=.5] (0,0) grid (10,10);
+\node at (1,-.7)[right,scale=2.5]{Layer $\alpha$};
+\end{Layer}
+
+% Intra-layer edges in layer 1
+\Edges[NotInBG,color=black,layer={1,1}]{./data/ex_multilayer_01_edges.csv}
+
+% Vertices in layer 1
+\Vertices[layer=1]{./data/ex_multilayer_01_vertices.csv}
+
+
+\end{tikzpicture}
+\end{document}
+%=============================================================================
+% eof
+%
+% Local Variables:
+% mode: latex
+% mode: linum
+% mode: auto-fill
+% fill-column: 80
+% TeX-master: t
+% End:
