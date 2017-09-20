@@ -214,10 +214,14 @@ TSWLatexianTemp*
 *~[0-9]*
 
 # auto folder when using emacs and auctex
+/doc/auto/*
+/examples/simple/auto/*
+/examples/complex/auto/*
+/examples/multilayer/auto/*
 /auto/*
+*.el
 
 # expex forward references with \gathertags
 *-tags.tex
 /doc/auto/manual.el
 /doc/manual.pdf
-.el
