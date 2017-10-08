@@ -428,6 +428,7 @@ For a \doccmd{Vertex} the following options are available:
       IdAsLabel  & false & boolean & uses the \docarg{Name} as label \\
       Math       & false & boolean & displays the label in math mode \\
       RGB        & false & boolean & allow RGB colors \\
+      Pseudo     & false & boolean & create a pseudo vertex\\
       \bottomrule
     \end{tabular}
     \scriptsize
@@ -687,7 +688,7 @@ The option \docopt{Math} allows transforming labels into mathematical expression
 In order to display RGB colors for the vertex fill color, the option \docopt{RGB} has to be entered. In combination with this option, the \docopt{color} hast to be a list with the \docarg{RGB 
 values}, separated by <<,>> and within $\{~\}$.\footnote{e.g. the RGB code for white: $\{255,255,255\}$}
 
-\begin{marginfigure}[8mm]
+\begin{marginfigure}[4mm]
 \centering
   \begin{tikzpicture}
     \Vertex[RGB,color={127,201,127}]{A}
@@ -705,6 +706,31 @@ values}, separated by <<,>> and within $\{~\}$.\footnote{e.g. the RGB code for w
   \end{tikzpicture}
 \end{lstlisting}
 \end{docspec}
+
+\begin{docspecdef}
+  \doccmd{Vertex}[\docopt{Pseudo}]\{\docarg{Name}\}
+\end{docspecdef}
+
+The option \docopt{Pseudo} creates a pseudo vertex, where only the vertex name and the vertex coordinate will be drawn. Edges etc, can still be assigned to this vertex.
+
+\begin{marginfigure}[32mm]
+\centering
+  \begin{tikzpicture}
+    \Vertex{A}
+    \Vertex[x=2,Pseudo]{B}
+  \end{tikzpicture}
+\end{marginfigure}
+
+\begin{docspec}
+\begin{lstlisting}
+  \begin{tikzpicture}
+    \Vertex{A}
+    \Vertex[x=2,Pseudo]{B}
+  \end{tikzpicture}
+\end{lstlisting}
+\end{docspec}
+
+
 
 \begin{docspecdef}
   \doccmd{Vertex}[\docopt{layer}=\docarg{number}]\{\docarg{Name}\}
@@ -740,8 +766,10 @@ For an \doccmd{Edge} the following options are available:
       bend        & 0     & number  & angle out/in of the vertex \\
       label       & \{\}  & string  & label \\
       position    & \{\}  & string  & label position\\
-      distance    & 0.5   & number  & label distance from Vertex i\\
+      distance    & 0.5   & number  & label distance from vertex i\\
       style       & \{\}  & string  & additional \tikzsym styles \\
+      \midrule
+      path        & \{\}  & list    & path over several vertices\\
       \midrule
       loopsize    & 1cm   & measure & size parameter of the self-loop\\
       loopposition& 0     & number  & orientation of the self-loop \\
@@ -750,6 +778,7 @@ For an \doccmd{Edge} the following options are available:
       Direct      & false & boolean & allow directed edges \\
       Math        & false & boolean & displays the label in math mode \\
       RGB         & false & boolean & allow RGB colors \\
+      NotInBG     & false & boolean & edge is not in the background layer\\
       \bottomrule
     \end{tabular}
     \scriptsize
@@ -846,6 +875,7 @@ With the option \docopt{opacity} the opacity of the edge line can be modified. T
   \begin{tikzpicture}
     \Vertex{A} \Vertex[x=2]{B} \Vertex[x=2,y=-1]{C}
     \fill [orange] (.9,.2) rectangle (1.1,-.7);
+    \EdgesNotInBG
     \Edge[opacity=.7](A)(B)
     \Edge[opacity=.2](A)(C)
   \end{tikzpicture}
@@ -994,6 +1024,31 @@ Any other \tikzsym style option or command can be entered via the option \docopt
 \end{docspec}
 
 
+\begin{docspecdef}
+  \doccmd{Edge}[\docopt{path}=\docarg{list}](\docarg{Vertex i})(\docarg{Vertex j})
+\end{docspecdef}
+
+In order to draw a finite sequence of edges which connect a sequence of vertices and/or coordinates, the option \docopt{path} can be used\footnote{\TODO currently labels and bend edges are not supported!}. The argument for this option has to be a list element indicated by $\{~\}$ brackets, containing the \docarg{Names} of the intermediated vertices. New coordinates, i.e. there is no vertex located, can be insert with $\{\docopt{x},\docopt{y}\}$. Arguments of the list, have to be seperated by commas <<,>>.
+
+
+\begin{marginfigure}[18mm]
+\centering
+  \begin{tikzpicture}
+    \Vertex{A} \Vertex[x=2]{B} \Vertex[x=2,y=-1]{C}
+    \Edge[path={A,{0,-1},C,B}](A)(B)
+  \end{tikzpicture}
+\end{marginfigure}
+
+\begin{docspec}
+\begin{lstlisting}
+  \begin{tikzpicture}
+    \Vertex{A} \Vertex[x=2]{B} \Vertex[x=2,y=-1]{C}
+    \Edge[path={A,{0,-1},C,B}](A)(B)
+  \end{tikzpicture}
+\end{lstlisting}
+\end{docspec}
+
+\newpage
 
 \begin{docspecdef}
   \doccmd{Edge}(\docarg{Vertex i})(\docarg{Vertex i})
@@ -1103,6 +1158,8 @@ The shape of the self-loop is defined by the enclosing angle. The shape can be c
 \end{lstlisting}
 \end{docspec}
 
+\newpage
+
 \begin{docspecdef}
   \doccmd{Edge}[\docopt{Direct}](\docarg{Vertex i})(\docarg{Vertex j})
 \end{docspecdef}
@@ -1176,6 +1233,38 @@ values}, separated by <<,>> and within $\{~\}$.\footnote{e.g. the RGB code for w
 \end{lstlisting}
 \end{docspec}
 
+\begin{docspecdef}
+  \doccmd{Edge}[\docopt{NotInBG}]\{\docarg{filename}\}
+\end{docspecdef}
+
+Per default, the edge is drawn on the background layer of the \docarg{tikzpicture}. I.e. objects which are created after the edges appear also on top of them. To turn this off, the option \docopt{NotInBG} has to be enabled. Changes to the default setting can be made with \doccmd{EdgesNotInBG} or \doccmd{EdgesInBG}\footnote{See Section \ref{sec:edge_style}}.
+
+\begin{marginfigure}[6mm]
+\centering
+  \begin{tikzpicture}
+    \Vertex{A} \Vertex[x=2]{B} \Vertex[x=1,y=-.5]{C}
+    \Vertex[y=-1]{D} \Vertex[x=2,y=-1]{E}
+    \Edge[bend=-30](A)(B)
+    \Edge[bend=30,NotInBG](D)(E)
+  \end{tikzpicture}
+\end{marginfigure}
+
+\begin{docspec}
+\begin{lstlisting}
+  \begin{tikzpicture}
+    \Vertex{A} \Vertex[x=2]{B} \Vertex[x=1,y=-.5]{C}
+    \Vertex[y=-1]{D} \Vertex[x=2,y=-1]{E}
+    \Edge[bend=-30](A)(B)
+    \Edge[bend=30,NotInBG](D)(E)
+  \end{tikzpicture}
+\end{lstlisting}
+\end{docspec}
+
+
+\newpage
+\section{Text}
+\label{sec:text}
+
 
 \chapter{Complex Networks}
 \label{chap:complex_networks}
@@ -1240,6 +1329,7 @@ Predefined \doccmd{Vertex} options can be overruled by the \docopt{global option
       IdAsLabel  & false & boolean & uses the \docarg{Names} as labels \\
       Math       & false & boolean & displays the labels in math mode \\
       RGB        & false & boolean & allow RGB colors \\
+      Pseudo     & false & boolean & create a pseudo vertices\\
       \bottomrule
     \end{tabular}
     \scriptsize
@@ -1298,7 +1388,8 @@ To change the fill color for all vertices, the option \docopt{color} has to be u
 
 With the option \docopt{opacity} the opacity of all vertices fills colors can be modified. The range of the \docarg{number} lies between $0$ and $1$. Where $0$ represents a fully transparent fill and $1$ a solid fill.
 
-\begin{marginfigure}[22mm]
+\newpage
+\begin{marginfigure}[2mm]
 \centering
   \begin{tikzpicture}
     \Vertices[opacity=.3]{data/vertices.csv}
@@ -1320,7 +1411,7 @@ With the option \docopt{opacity} the opacity of all vertices fills colors can be
 
 Any other \tikzsym style option or command can be entered via the option \docopt{style}. Most of these commands can be found in the ``\tikzsym and PGF Manual''. Contain the commands additional options (e.g.\docopt{shading}=\docarg{ball}), then the argument for the \docopt{style} has to be between $\{~\}$ brackets.
 
-\begin{marginfigure}[22mm]
+\begin{marginfigure}[25mm]
 \centering
   \begin{tikzpicture}
     \Vertices[style={shading=ball,blue}]{data/vertices.csv}
@@ -1397,7 +1488,8 @@ id, x, y ,size, color,opacity,label, R , G , B
 
 The ``normal'' color definition can also be part of the vertex definition. If the option \docopt{RGB} is not set, then the colors under \docopt{color} are applied.
 
-\begin{marginfigure}[28mm]
+\newpage
+\begin{marginfigure}[3mm]
 \centering
   \begin{tikzpicture}
     \Vertices[RGB]{data/vertices_RGB.csv}
@@ -1413,7 +1505,11 @@ The ``normal'' color definition can also be part of the vertex definition. If th
 \end{docspec}
 
 
+\begin{docspecdef}
+  \doccmd{Vertices}[\docopt{Pseudo}]\{\docarg{filename}\}
+\end{docspecdef}
 
+The option \docopt{Pseudo} creates a pseudo vertices, where only the names and the coordinates of the vertices wil be drawn. Edges etc, can still be assigned to these vertices.
 
 \begin{docspecdef}
   \doccmd{Vertices}[\docopt{layer}=\docarg{number}]\{\docarg{filename}\}
@@ -1965,9 +2061,295 @@ The perspective of the three-dimensional plot can be modified by changing the or
   \end{tikzpicture}
 \end{lstlisting}
 \end{docspec}
+\newpage
+\section{Plain}
+
+To support the illustration of multilayer networks, the background of the layer can be simply visualized with the command \doccmddef{Plain}, which allow to draw boundaries, grids and include images to the layer.
+\begin{docspecdef}
+  \doccmd{Plain}[\docopt{options}]
+\end{docspecdef}
+No obligatory arguments are needed. For a \doccmd{Plain} the following options are available:
+
+\begin{table}[h]\index{Plain!options}
+  \footnotesize%
+  \begin{center}
+    \begin{tabular}{lccl}
+      \toprule
+      Option & Default & Type &Definition \\
+      \midrule
+      x          & 0     & measure& x-coordinate of the origin\\
+      y          & 0     & measure& y-coordinate of the origin\\
+      width      & \SI{5}{cm} & measure& width of the plain\\
+      height     & \SI{5}{cm} & measure& height of the plain\\
+      color      & vertexfill  & color  & fill color of the plain \\
+      opacity    & 0.3   & number & opacity of the fill color \\
+      grid       & \{\}  & measure& spacing of the grid\\
+      image      & \{\}  & file   & path to the image file \\
+      style      & \{\}  & string & additional \tikzsym styles \\
+      layer      & 1  & number & layer where the plain is located\\
+      \midrule
+      RGB        & false & boolean & allow RGB colors \\
+      NoFill     & false & boolean & disable fill color \\
+      NoBorder   & false & boolean & disable border line \\
+      ImageAndFill&false & boolean & allow image and fill color \\
+      InBG       & false & boolean & plain is in the background layer\\
+      \bottomrule
+    \end{tabular}
+    \scriptsize
+    \\$^a$ either measure or string
+  \end{center}
+  \caption{Options for the \doccmd{Plain} command.}
+  \label{tab:plain_options}
+\end{table}
+
+\begin{docspecdef}
+ \doccmd{Plain}[\docopt{x}=\docarg{measure},\docopt{y}=\docarg{measure},\docopt{width}=\docarg{measure},\docopt{height}=\docarg{measure}]
+\end{docspecdef}
+
+A \doccmd{Plain} is a rectangle with origin (\docopt{x},\docopt{y}), a given \docopt{width} and \docopt{height}. The origin is defined in the left lower corner and per default $(0,0)$. The plain is default \SI{5}{cm} (width) by \SI{5}{cm} (height). This default options can be changed with \doccmd{SetPlainWidth} and \doccmd{SetPlainHeight}\footnote{See Section \ref{sec:plain_style}.} 
+
+\begin{marginfigure}%[45mm]
+\centering
+  \begin{tikzpicture}[multilayer=3d]
+    \Plain[x=-.5,y=-.5,width=3,height=2.5]
+    \begin{Layer}[layer=1]
+    \filldraw [orange] (-.5,-.5) circle (3pt);
+    \node [orange,anchor=south west] at (-.5,-.5) {origin};
+    \draw[|<->|,orange] (-.5,-.8) --++ (3,0) node [pos=.5,below]{width};
+    \draw[|<->|,orange] (2.8,-.5) --++ (0,2.5) node [pos=.5,below,sloped]{height};
+    \end{Layer}
+  \end{tikzpicture}
+\end{marginfigure}
+
+\begin{docspec}
+\begin{lstlisting}
+  \begin{tikzpicture}[multilayer=3d]
+    \Plain[x=-.5,y=-.5,width=3,height=2.5]
+  \end{tikzpicture}
+\end{lstlisting}
+\end{docspec}
 
 
+\begin{docspecdef}
+  \doccmd{Plain}[\docopt{color}=\docarg{color}]
+\end{docspecdef}
 
+To change the fill color of each plain individually, the option \docopt{color} has to be used. Without the option \docopt{RGB} set, the default \tikzsym and \LaTeX~ colors can be applied. Per default the default vertex color is used.
+
+\begin{marginfigure}[22mm]
+\centering
+  \begin{tikzpicture}[multilayer=3d]
+    \Plain[x=-.5,y=-.5,width=3,height=2.5,color=green!70!blue]
+  \end{tikzpicture}
+\end{marginfigure}
+
+\begin{docspec}
+\begin{lstlisting}
+  \begin{tikzpicture}[multilayer=3d]
+    \Plain[x=-.5,y=-.5,width=3,height=2.5,color=green!70!blue]
+  \end{tikzpicture}
+\end{lstlisting}
+\end{docspec}
+
+\newpage
+
+\begin{docspecdef}
+  \doccmd{Plain}[\docopt{opacity}=\docarg{number}]
+\end{docspecdef}
+
+With the option \docopt{opacity} the opacity of the plain fill color can be modified. The range of the \docarg{number} lies between $0$ and $1$. Where $0$ represents a fully transparent fill and $1$ a solid fill. Per default the opacity is set to $0.3$.
+
+\begin{marginfigure}[22mm]
+\centering
+  \begin{tikzpicture}[multilayer=3d]
+    \Plain[x=-.5,y=-.5,width=3,height=2.5,opacity=.7]
+  \end{tikzpicture}
+\end{marginfigure}
+
+\begin{docspec}
+\begin{lstlisting}
+  \begin{tikzpicture}[multilayer=3d]
+    \Plain[x=-.5,y=-.5,width=3,height=2.5,opacity=.7]
+  \end{tikzpicture}
+\end{lstlisting}
+\end{docspec}
+
+
+\begin{docspecdef}
+  \doccmd{Plain}[\docopt{grid}=\docarg{measure}]
+\end{docspecdef}
+
+With the option \docopt{grid} a grid will be drawn on top of the plain. The argument of this option defines the spacing between the grid lines. The entered \docarg{measure} are in default units (\si{cm}). Changing the unites (locally) can be done by adding the unit to the \docarg{measure}\footnote{e.g. x=\SI{5}{mm}}. Changes to the default setting can be made with \doccmd{SetDefaultUnit}\footnote{see Section \ref{sec:gerneral_settings}}. 
+
+\begin{marginfigure}%[22mm]
+\centering
+  \begin{tikzpicture}[multilayer=3d]
+    \Plain[x=-.5,y=-.5,width=3,height=2.5,grid=5mm]
+    \begin{Layer}[layer=1]
+    \draw[<->,orange] (2,-.7) --++ (.5,0) node [pos=.5,below]{5mm};
+    \draw[<->,orange] (2.7,-.5) --++ (0,.5) node [pos=.5,below,sloped]{5mm};
+    \end{Layer}
+  \end{tikzpicture}
+\end{marginfigure}
+
+\begin{docspec}
+\begin{lstlisting}
+  \begin{tikzpicture}[multilayer=3d]
+    \Plain[x=-.5,y=-.5,width=3,height=2.5,grid=5mm]
+  \end{tikzpicture}
+\end{lstlisting}
+\end{docspec}
+
+
+\begin{docspecdef}
+  \doccmd{Plain}[\docopt{image}=\docarg{file}]
+\end{docspecdef}
+
+An image can be assigned to a plain with the option \docopt{image}. The argument is the file name and the folder where the image is stored. The width and height of the figure is scaled to the size of the plain. Without the option \docopt{ImageAndFill} the image overwrite the color options.
+
+\begin{marginfigure}[22mm]
+\centering
+  \begin{tikzpicture}[multilayer=3d]
+    \Plain[x=-.5,y=-.5,width=3,height=2.5,image=data/plain.png]
+  \end{tikzpicture}
+\end{marginfigure}
+
+\begin{docspec}
+\begin{lstlisting}
+  \begin{tikzpicture}[multilayer=3d]
+    \Plain[x=-.5,y=-.5,width=3,height=2.5,image=data/plain.png]
+  \end{tikzpicture}
+\end{lstlisting}
+\end{docspec}
+
+\begin{docspecdef}
+  \doccmd{Plain}[\docopt{style}=\docarg{string}]
+\end{docspecdef}
+
+Any other \tikzsym style option or command can be entered via the option \docopt{style}. Most of these commands can be found in the ``\tikzsym and PGF Manual''. Contain the commands additional options (e.g.\docopt{inner color}=\docarg{color}), then the argument for the \docopt{style} has to be between $\{~\}$ brackets.
+
+\begin{marginfigure}[22mm]
+\centering
+  \begin{tikzpicture}[multilayer=3d]
+    \Plain[x=-.5,y=-.5,width=3,height=2.5,style={dashed,inner color=white,outer color=red!80}]
+  \end{tikzpicture}
+\end{marginfigure}
+
+\begin{docspec}
+\begin{lstlisting}
+  \begin{tikzpicture}[multilayer=3d]
+    \Plain[x=-.5,y=-.5,width=3,height=2.5,style={dashed,inner color=white,outer color=red!80}]
+  \end{tikzpicture}
+\end{lstlisting}
+\end{docspec}
+
+\begin{docspecdef}
+  \doccmd{Plain}[\docopt{layer}=\docarg{number}]
+\end{docspecdef}
+
+With the option \docopt{layer}=\docarg{layer $\alpha$}, the position of the plain can be assigned to a specific layer. Per default the plain is drawn on layer $1$.
+
+\newpage
+\begin{marginfigure}%[22mm]
+\centering
+  \begin{tikzpicture}[multilayer=3d]
+    \SetLayerDistance{-1.5}
+    \Plain[x=-.5,y=-.5,width=3,height=2.5,color=green,layer=2]
+    \Plain[x=-.5,y=-.5,width=3,height=2.5]
+    \Text[x=-.5,y=-.5,layer=2,color=orange,anchor=north west,fontsize=\normalsize]{Layer 2}
+    \Text[x=-.5,y=-.5,layer=1,color=orange,anchor=north west,fontsize=\normalsize]{Layer 2}
+  \end{tikzpicture}
+\end{marginfigure}
+
+\begin{docspec}
+\begin{lstlisting}
+  \begin{tikzpicture}[multilayer=3d]
+    \SetLayerDistance{-1.5}
+    \Plain[x=-.5,y=-.5,width=3,height=2.5,color=green,layer=2]
+    \Plain[x=-.5,y=-.5,width=3,height=2.5]
+  \end{tikzpicture}
+\end{lstlisting}
+\end{docspec}
+
+\begin{docspecdef}
+  \doccmd{Plain}[\docopt{RGB},\docopt{color}=\docarg{RGB values}]
+\end{docspecdef}
+
+In order to display RGB colors for the plain fill color, the option \docopt{RGB} has to be entered. In combination with this option, the \docopt{color} hast to be a list with the \docarg{RGB 
+values}, separated by <<,>> and within $\{~\}$.\footnote{e.g. the RGB code for white: $\{255,255,255\}$}
+
+\begin{marginfigure}
+\centering
+  \begin{tikzpicture}[multilayer=3d]
+    \Plain[x=-.5,y=-.5,width=3,height=2.5,RGB,color={0,0,0}]
+  \end{tikzpicture}
+\end{marginfigure}
+
+\begin{docspec}
+\begin{lstlisting}
+  \begin{tikzpicture}[multilayer=3d]
+    \Plain[x=-.5,y=-.5,width=3,height=2.5,RGB,color={0,0,0}]
+  \end{tikzpicture}
+\end{lstlisting}
+\end{docspec}
+
+
+\begin{docspecdef}
+  \doccmd{Plain}[\docopt{NoFill}]
+\end{docspecdef}
+\begin{docspecdef}
+  \doccmd{Plain}[\docopt{NoBorder}]
+\end{docspecdef}
+
+\docopt{NoFill} is a Boolean option which disables the fill color of the plain and \docopt{NoBorder} is a Boolean option which suppress the border line of the plain.
+
+\begin{marginfigure}[16mm]
+\centering
+  \begin{tikzpicture}[multilayer=3d]
+    \SetLayerDistance{-1.5}
+    \Plain[x=-.5,y=-.5,width=3,height=2.5,layer=2,NoFill]
+    \Plain[x=-.5,y=-.5,width=3,height=2.5,NoBorder]
+    \Text[x=-.5,y=-.5,layer=2,color=orange,anchor=north west,fontsize=\normalsize]{Layer 2}
+    \Text[x=-.5,y=-.5,layer=1,color=orange,anchor=north west,fontsize=\normalsize]{Layer 2}
+  \end{tikzpicture}
+\end{marginfigure}
+
+\begin{docspec}
+\begin{lstlisting}
+  \begin{tikzpicture}[multilayer=3d]
+    \SetLayerDistance{-1.5}
+    \Plain[x=-.5,y=-.5,width=3,height=2.5,layer=2,NoFill]
+    \Plain[x=-.5,y=-.5,width=3,height=2.5,NoBorder]
+  \end{tikzpicture}
+\end{lstlisting}
+\end{docspec}
+
+\begin{docspecdef}
+  \doccmd{Plain}[\docopt{ImageAndFill}]
+\end{docspecdef}
+
+With the option \docopt{ImageAndFill} both, image and fill color can be drawn on a plain. The option \docopt{opacity} is applied to both objects.
+
+\begin{marginfigure}[18mm]
+\centering
+  \begin{tikzpicture}[multilayer=3d]
+    \Plain[x=-.5,y=-.5,width=3,height=2.5,image=data/plain.png,color=red,opacity=.4,ImageAndFill]
+  \end{tikzpicture}
+\end{marginfigure}
+
+\begin{docspec}
+\begin{lstlisting}
+  \begin{tikzpicture}[multilayer=3d]
+   \Plain[x=-.5,y=-.5,width=3,height=2.5,image=data/plain.png,color=red,opacity=.4,ImageAndFill]
+  \end{tikzpicture}
+\end{lstlisting}
+\end{docspec}
+
+\begin{docspecdef}
+  \doccmd{Plain}[\docopt{InBG}]
+\end{docspecdef}
+
+A plain is drawn on the current layer of the \docarg{tikzpicture}. I.e. objects which are created after the plain appear on top of it and objects created before below of it. With the option \docopt{InBG} enabled, the plain is drawn on the background layer of the \docarg{tikzpicture}.
 
 \chapter{Default Settings}
 \label{chap:default_settings}
@@ -2021,19 +2403,19 @@ The following options are available:
       \toprule
       Option & Default & Type &Definition \\
       \midrule
-VertexShape        & circle                  & text     & shape of the vertex \\
-VertexInnerSep     & 2pt                     & measure  & separation space which will be added inside the shape \\
-VertexOuterSep     & 0pt                     & measure  & separation space outside the background path \\
-VertexMinSize      & 0.6\doccmd{DefaultUnit} & measure  & diameter (size) of the vertex \\
-VertexFillColor    & vertexfill              & color    & color of the vertex \\
-VertexFillOpacity  & 1                       & number   & opacity of the vertex \\
-VertexLineWidth    & 1pt                     & measure  & line width of the vertex boundary \\
-VertexLineColor    & black                   & color    & line color of the vertex boundary \\
-VertexLineOpacity  & 1                       & number   & line opacity of the vertex boundary \\
-VertexTextFont     & \doccmd{scriptsize}     & fontsize & font size of the vertex label \\
-VertexTextColor    & black                   & color    & color of the vertex label \\
-VertexTextOpacity  & 1                       & number   & opacity of the vertex label \\
-VertexTextRotation & 0                       & number   & initial rotation of the vertex \\
+Shape        & circle                  & text     & shape of the vertex \\
+InnerSep     & 2pt                     & measure  & separation space which will be added inside the shape \\
+OuterSep     & 0pt                     & measure  & separation space outside the background path \\
+MinSize      & 0.6\doccmd{DefaultUnit} & measure  & diameter (size) of the vertex \\
+FillColor    & vertexfill              & color    & color of the vertex \\
+FillOpacity  & 1                       & number   & opacity of the vertex \\
+LineWidth    & 1pt                     & measure  & line width of the vertex boundary \\
+LineColor    & black                   & color    & line color of the vertex boundary \\
+LineOpacity  & 1                       & number   & line opacity of the vertex boundary \\
+TextFont     & \doccmd{scriptsize}     & fontsize & font size of the vertex label \\
+TextColor    & black                   & color    & color of the vertex label \\
+TextOpacity  & 1                       & number   & opacity of the vertex label \\
+TextRotation & 0                       & number   & initial rotation of the vertex \\
       \bottomrule
     \end{tabularx}
     \scriptsize
@@ -2061,17 +2443,17 @@ The following options are available:
       \toprule
       Option & Default & Type &Definition \\
       \midrule
-EdgeLineWidth       & 1.5pt               & measure  & width of the edge \\
-EdgeColor           & black!75            & color    & color of the edge \\
-EdgeOpacity         & 1                   & number   & opacity of the edge \\
-EdgeArrow           & -latex              & text     & arrow shape of the directed edge \\
-EdgeTextFont        & \doccmd{scriptsize} & fontsize & font size of the edge label \\
-EdgeTextOpacity     & 1                   & number   & opacity of the edge label \\
-EdgeTextFillColor   & white               & color    & fill color of the edge label \\
-EdgeTextFillOpacity & 1                   & number   & fill opacity of the edge label \\
-EdgeInnerSep        & 0pt                 & measure  & separation space which will be added inside the shape \\
-EdgeOuterSep        & 1pt                 & measure  & separation space outside the background path \\
-EdgeTextRotation    & 0                   & number   & initial rotation of the edge label \\
+LineWidth       & 1.5pt               & measure  & width of the edge \\
+Color           & black!75            & color    & color of the edge \\
+Opacity         & 1                   & number   & opacity of the edge \\
+Arrow           & -latex              & text     & arrow shape of the directed edge \\
+TextFont        & \doccmd{scriptsize} & fontsize & font size of the edge label \\
+TextOpacity     & 1                   & number   & opacity of the edge label \\
+TextFillColor   & white               & color    & fill color of the edge label \\
+TextFillOpacity & 1                   & number   & fill opacity of the edge label \\
+InnerSep        & 0pt                 & measure  & separation space which will be added inside the shape \\
+OuterSep        & 1pt                 & measure  & separation space outside the background path \\
+TextRotation    & 0                   & number   & initial rotation of the edge label \\
       \bottomrule
     \end{tabularx}
     \scriptsize
@@ -2081,8 +2463,82 @@ EdgeTextRotation    & 0                   & number   & initial rotation of the e
 \end{table}
 
 
+\section{Text Style}
+\label{sec:text_style}
+
+The appearance of the text can be modified with the command \doccmddef{SetTextStyle}. This command will change the default settings of the text.
+
+\begin{docspecdef}
+  \doccmd{SetTextStyle}\{\docarg{document options}\}
+\end{docspecdef}
+
+The following options are available:
+
+\begin{table}[h]\index{Text!style}
+  \footnotesize%
+  \begin{center}
+    \begin{tabularx}{\textwidth}{lccX}
+      \toprule
+      Option & Default & Type &Definition \\
+      \midrule
+TextFont        & \doccmd{footnotesize} & fontsize & font size of the text \\
+TextOpacity     & 1                   & number   & opacity of the text \\
+TextColor       & white               & color    & color of the text \\
+TextOpacity     & 1                   & number   & opacity of the text \\
+InnerSep        & 2pt                 & measure  & separation space which will be added inside the shape \\
+OuterSep        & 0pt                 & measure  & separation space outside the background path \\
+TextRotation    & 0                   & number   & initial rotation of the text \\
+      \bottomrule
+    \end{tabularx}
+    \scriptsize
+  \end{center}
+  \caption{Document style options for the plains.}
+  \label{tab:plain_style}
+\end{table}
 
 
+\section{Plain Style}
+\label{sec:plain_style}
+
+The appearance of the plains can be modified with the command \doccmddef{SetPlainStyle}. This command will change the default settings of the plains.
+
+\begin{docspecdef}
+  \doccmd{SetPlainStyle}\{\docarg{document options}\}
+\end{docspecdef}
+
+The following options are available:
+
+\begin{table}[h]\index{Plain!style}
+  \footnotesize%
+  \begin{center}
+    \begin{tabularx}{\textwidth}{lccX}
+      \toprule
+      Option & Default & Type &Definition \\
+      \midrule
+LineWidth     & 1.5pt               & measure  & width of the border line \\
+LineColor     & black               & color    & color of the border line \\
+LineOpacity   & 1                   & number   & opacity of the border line \\
+FillColor     & vertexfill          & color    & fill color of the plain \\
+FillOpacity   & 0.3                 & number   & fill opacity of the plain \\
+GridLineWidth & 0.5pt               & measure  & width of the grid lines \\
+GridColor     & black               & color    & color of the grid lines \\
+GridOpacity   & 0.5                 & number   & opacity of the grid lines \\
+      \bottomrule
+    \end{tabularx}
+    \scriptsize
+  \end{center}
+  \caption{Document style options for the plains.}
+  \label{tab:plain_style}
+\end{table}
+
+\begin{docspecdef}
+  \doccmd{SetPlainWidth}\{\docarg{measure}\}
+\end{docspecdef}
+\begin{docspecdef}
+  \doccmd{SetPlainHight}\{\docarg{measure}\}
+\end{docspecdef}
+
+With the commands \doccmd{SetPlainWidth} and \doccmd{SetPlainHight} the default size of the plains can be modified. 
 
 
 
@@ -2147,14 +2603,13 @@ The following is a list of packages that the \pkg package rely upon.  Packages m
 \section{Documentation}
 \begin{itemize}
 \item add indices to the manual.
-\item add an extended tutorial/example to the document.
+\item extended tutorial/example to the document.
 \item clean-up and document the .sty file.
 \item upload the package to CTAN, if it is appropriated tested.
 \end{itemize}
 
 \section{Features}
 \begin{itemize}
-\item add \doccmd{Plain} command in order to create automatically multilayer plains.
 \item add a spherical coordinate system
 \end{itemize}
 
