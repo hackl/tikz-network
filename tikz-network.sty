@@ -2,7 +2,7 @@
 % File:  tikz-network.tex --  Library for plotting networks in TikZ
 % Author(s): Jürgen Hackl <hackl@ibi.baug.ethz.ch>
 % Creation:  28 Feb 2017
-% Time-stamp: <Son 2017-10-08 18:59 juergen>
+% Time-stamp: <Mon 2017-10-09 19:03 juergen>
 %
 % Copyright (c) 2017 Jürgen Hackl <hackl@ibi.baug.ethz.ch>
 %               http://www.ibi.ethz.ch
@@ -96,7 +96,7 @@
 
 \newcommand*{\TextInnerSep}{2pt}
 \newcommand*{\TextOuterSep}{0pt}
-\newcommand*{\TextFont}{\footnotesize}
+\newcommand*{\TextFont}{\normalsize}
 \newcommand*{\TextColor}{black}
 \newcommand*{\TextRotation}{0}
 \newcommand*{\TextOpacity}{1}
@@ -1220,7 +1220,7 @@
   \fi
   % Check if the opacity of the text is redefined, if so the new style is used
   \ifthenelse{\not\equal{\cmdNW@text@opacity}{}}{
-    \tikzset{LocalTextOpacity/.style={opacity = \cmdNW@text@opacity}}
+    \tikzset{LocalTextOpacity/.style={text opacity = \cmdNW@text@opacity}}
   }{
     \tikzset{LocalTextOpacity/.style={}}
   }
@@ -1258,7 +1258,7 @@
         \protected@edef\@tempa{%
           \noexpand\node[TextStyle, LocalTextColor, LocalTextOpacity,
           LocalTextFontSize, LocalTextRotation, LocalTextPosition,
-          LocalTextAnchor, \cmdNW@text@style] at
+          LocalTextAnchor, LocalTextWidth, \cmdNW@text@style] at
           (\cmdNW@text@x,\cmdNW@text@y){#1}
         }\@tempa;%
     }{

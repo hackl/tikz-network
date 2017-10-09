@@ -6,7 +6,7 @@
 % Book metadata
 \title{tikz-network\\manual}
 \author[J\"urgen Hackl]{J\"urgen Hackl}
-\publisher{Version 0.2}
+\publisher{Version 0.3}
 
 %%
 % If they're installed, use Bergamo and Chantilly from www.fontsite.com.
@@ -424,11 +424,11 @@ For a \doccmd{Vertex} the following options are available:
       style      & \{\}  & string & additional \tikzsym styles \\
       layer      & \{\}  & number & assigned layer of the vertex \\
       \midrule
-      NoLabel    & false & boolean & delete the label \\
-      IdAsLabel  & false & boolean & uses the \docarg{Name} as label \\
-      Math       & false & boolean & displays the label in math mode \\
-      RGB        & false & boolean & allow RGB colors \\
-      Pseudo     & false & boolean & create a pseudo vertex\\
+      NoLabel    & false & Boolean & delete the label \\
+      IdAsLabel  & false & Boolean & uses the \docarg{Name} as label \\
+      Math       & false & Boolean & displays the label in math mode \\
+      RGB        & false & Boolean & allow RGB colors \\
+      Pseudo     & false & Boolean & create a pseudo vertex\\
       \bottomrule
     \end{tabular}
     \scriptsize
@@ -444,7 +444,7 @@ The order how the options are entered does not matter. Changes to the default Ve
   \doccmd{Vertex}[\docopt{x}=\docarg{measure},\docopt{y}=\docarg{measure}]\{\docarg{Name}\}
 \end{docspecdef}
 
-The location of the vertices are determined by Cartesian coordinates in \docopt{x} and \docopt{y}. The coordinates are optional. If no coordinates are determined the vertex will be placed at the origin ($0,0$). The entered \docarg{measure} are in default units (\si{cm}). Changing the unites (locally) can be done by adding the unit to the \docarg{measure}\footnote{e.g. x=\SI{1}{in}}. Changes to the default setting can be made with \doccmd{SetDefaultUnit}\footnote{see Section \ref{sec:gerneral_settings}}. 
+The location of the vertices are determined by Cartesian coordinates in \docopt{x} and \docopt{y}. The coordinates are optional. If no coordinates are determined the vertex will be placed at the origin ($0,0$). The entered \docarg{measures} are in default units (\si{cm}). Changing the unites (locally) can be done by adding the unit to the \docarg{measure}\footnote{e.g. x=\SI{1}{in}}. Changes to the default setting can be made with \doccmd{SetDefaultUnit}\footnote{see Section \ref{sec:gerneral_settings}}. 
 \newpage
 \begin{marginfigure}[6mm]
 \centering
@@ -633,7 +633,7 @@ Any other \tikzsym style option or command can be entered via the option \docopt
   \doccmd{Vertex}[\docopt{NoLabel},\docopt{label}=\docarg{string}]\{\docarg{Name}\}
 \end{docspecdef}
 
-\docopt{IdAsLabel} is a boolean option which assigns the \docarg{Name} of the vertex as label. On the contrary, \docopt{NoLabel} suppress all labels.
+\docopt{IdAsLabel} is a Boolean option which assigns the \docarg{Name} of the vertex as label. On the contrary, \docopt{NoLabel} suppress all labels.
 
 \begin{marginfigure}[32mm]
 \centering
@@ -775,10 +775,10 @@ For an \doccmd{Edge} the following options are available:
       loopposition& 0     & number  & orientation of the self-loop \\
       loopshape   & 90    & number  & loop angle out/in of the vertex \\
       \midrule
-      Direct      & false & boolean & allow directed edges \\
-      Math        & false & boolean & displays the label in math mode \\
-      RGB         & false & boolean & allow RGB colors \\
-      NotInBG     & false & boolean & edge is not in the background layer\\
+      Direct      & false & Boolean & allow directed edges \\
+      Math        & false & Boolean & displays the label in math mode \\
+      RGB         & false & Boolean & allow RGB colors \\
+      NotInBG     & false & Boolean & edge is not in the background layer\\
       \bottomrule
     \end{tabular}
     \scriptsize
@@ -1260,11 +1260,321 @@ Per default, the edge is drawn on the background layer of the \docarg{tikzpictur
 \end{lstlisting}
 \end{docspec}
 
-
 \newpage
 \section{Text}
 \label{sec:text}
 
+While \tikzsym offers multiple ways to label objects and create text elements, a simplified command \doccmddef{Text} is implemented, which allow placing and modifying text to the networks.
+\begin{docspecdef}
+  \doccmd{Text}[\docopt{local options}]\{\docarg{string}\}
+\end{docspecdef}
+In order to be able to create a text, a non-empty \docarg{string} argument is required. This argument is the actual text added to the figure. Mathematical symbols are entered in the same way as in a normal \LaTeX~document, i.e. between \$~\$.
+
+For a \doccmd{Text} the following options are available:
+
+\begin{table}[h]\index{Text!options}
+  \footnotesize%
+  \begin{center}
+    \begin{tabular}{lccl}
+      \toprule
+      Option & Default & Type &Definition \\
+      \midrule
+      x          & 0     & measure  & x-coordinate \\
+      y          & 0     & measure  & y-coordinate \\
+      fontsize   & \{\}  & fontsize & font size of the text\\
+      color      & \{\}  & color    & color of the text\\
+      opacity    & \{\}  & number   & opacity of the text \\
+      position   & center& string   & position of the text to the origin\\
+      distance   & \SI{0}{cm} & measure  & distance from the origin \\
+      rotation   & 0     & number   & rotation of the text \\
+      anchor     & \{\}  & string   & anchor of the text \\
+      width      & \{\}  & number   & width of the text box \\
+      style      & \{\}  & string   & additional \tikzsym styles \\
+      layer      & \{\}  & number   & assigned layer of the text \\
+      \midrule
+      RGB        & false & Boolean  & allow RGB colors \\
+      \bottomrule
+    \end{tabular}
+    \scriptsize
+  \end{center}
+  \caption{Local options for the \doccmd{Text} command.}
+  \label{tab:text_options}
+\end{table}
+
+The order how the options are entered does not matter. Changes to the default Text layout can be made with \doccmd{SetTextStyle}\footnote{see Section \ref{sec:text_style}}
+
+\begin{docspecdef}
+  \doccmd{Text}[\docopt{x}=\docarg{measure},\docopt{y}=\docarg{measure}]\{\docarg{string}\}
+\end{docspecdef}
+
+The location of the text is determined by Cartesian coordinates in \docopt{x} and \docopt{y}. The coordinates are optional. If no coordinates are determined the text will be placed at the origin ($0,0$). The entered \docarg{measures} are in default units (\si{cm}). Changing the unites (locally) can be done by adding the unit to the \docarg{measure}\footnote{e.g. x=\SI{1}{in}}. Changes to the default setting can be made with \doccmd{SetDefaultUnit}\footnote{see Section \ref{sec:gerneral_settings}}. 
+
+\begin{marginfigure}[6mm]
+\centering
+  \begin{tikzpicture}
+    \Text{A}
+    \Text[x=1,y=1]{B}
+    \Text[x=2]{C}
+  \end{tikzpicture}
+\end{marginfigure}
+
+\begin{docspec}
+\begin{lstlisting}
+  \begin{tikzpicture}
+    \Text{A}
+    \Text[x=1,y=1]{B}
+    \Text[x=2]{C}
+  \end{tikzpicture}
+\end{lstlisting}
+\end{docspec}
+
+
+\begin{docspecdef}
+  \doccmd{Text}[\docopt{fontsize}=\docarg{font size}]\{\docarg{string}\}
+\end{docspecdef}
+
+The font size of the text can be changed with the option \docopt{fontsize}. Per default the font size of the text is defined as \doccmd{normalsize}.
+
+\begin{marginfigure}[34mm]
+\centering
+  \begin{tikzpicture}
+    \Text[fontsize=\small]{A}
+    \Text[x=1,fontsize=\LARGE]{B}
+    \Text[x=2,fontsize=\Huge]{C}
+  \end{tikzpicture}
+\end{marginfigure}
+
+\begin{docspec}
+\begin{lstlisting}
+  \begin{tikzpicture}
+    \Text[fontsize=\small]{A}
+    \Text[x=1,fontsize=\LARGE]{B}
+    \Text[x=2,fontsize=\Huge]{C}
+  \end{tikzpicture}
+\end{lstlisting}
+\end{docspec}
+
+\begin{docspecdef}
+  \doccmd{Text}[\docopt{color}=\docarg{color}]\{\docarg{string}\}
+\end{docspecdef}
+
+To change the text color individually, the option \docopt{color} has to be used. Without the option \docopt{RGB} set, the default \tikzsym and \LaTeX~ colors can be applied. 
+
+\begin{marginfigure}[34mm]
+\centering
+  \begin{tikzpicture}
+    \Text[color = blue]{A}
+    \Text[x=1,color=red]{B}
+    \Text[x=2,color=green!70!blue]{C}
+  \end{tikzpicture}
+\end{marginfigure}
+
+\begin{docspec}
+\begin{lstlisting}
+  \begin{tikzpicture}
+    \Text[color = blue]{A}
+    \Text[x=1,color=red]{B}
+    \Text[x=2,color=green!70!blue]{C}
+  \end{tikzpicture}
+\end{lstlisting}
+\end{docspec}
+
+
+\begin{docspecdef}
+  \doccmd{Text}[\docopt{opacity}=\docarg{number}]\{\docarg{string}\}
+\end{docspecdef}
+
+With the option \docopt{opacity} the opacity of the text can be modified. The range of the \docarg{number} lies between $0$ and $1$. Where $0$ represents a fully transparent text and $1$ a solid text.
+
+\begin{marginfigure}[34mm]
+\centering
+  \begin{tikzpicture}
+    \draw[thick,orange,dashed] (-.5,0) -- (2.5,0);
+    \Text[opacity = 1]{A}
+    \Text[x=1,opacity =.7]{B}
+    \Text[x=2,opacity =.2]{C}
+  \end{tikzpicture}
+\end{marginfigure}
+
+\begin{docspec}
+\begin{lstlisting}
+  \begin{tikzpicture}
+    \Text[opacity = 1]{A}
+    \Text[x=1,opacity =.7]{B}
+    \Text[x=2,opacity =.2]{C}
+  \end{tikzpicture}
+\end{lstlisting}
+\end{docspec}
+
+
+
+\begin{docspecdef}
+ \doccmd{Text}[\docopt{position}=\docarg{string},\docopt{distance}=\docarg{measure}]\{\docarg{string}\}
+\end{docspecdef}
+
+Per default the \docopt{position} of the text is in the \docarg{center} of the origin. Classical \tikzsym commands\footnote{e.g. \docarg{above}, \docarg{below}, \docarg{left}, \docarg{right}, \docarg{above left}, \docarg{above right},\dots} can be used to change the \docopt{position} of the text.
+
+With the option, \docopt{distance} the distance between the text and the origin can be changed. 
+
+\begin{marginfigure}[20mm]
+\centering
+  \begin{tikzpicture}
+    \filldraw [orange] (0,0) circle (2pt);
+    \draw[<-,orange] (0.1,0) --++ (0.5,0) node [pos=1,right]{origin ($0,0$)};
+    \Text[position=above]{above}
+    \Text[position=below]{below}
+    \Text[position=left,distance=5mm]{left}
+    \Text[position=above right,distance=5mm]{above right}
+  \end{tikzpicture}
+\end{marginfigure}
+
+\begin{docspec}
+\begin{lstlisting}
+  \begin{tikzpicture}
+    \Text[position=above]{above}
+    \Text[position=below]{below}
+    \Text[position=left,distance=5mm]{left}
+    \Text[position=above right,distance=5mm]{above right}
+  \end{tikzpicture}
+\end{lstlisting}
+\end{docspec}
+
+
+\begin{docspecdef}
+ \doccmd{Text}[\docopt{rotation}=\docarg{number}]\{\docarg{string}\}
+\end{docspecdef}
+
+With the \docopt{rotation}, the text can be rotated by entering a \docarg{number} between $-360$ and $360$. The origin ($0^\circ$) is the $y$ axis. A positive \docarg{number} change the \docopt{position} counter clockwise, while a negative \docarg{number} make changes clockwise.
+
+\begin{marginfigure}[31mm]
+\centering
+  \begin{tikzpicture}
+    \Text[rotation = 30]{A}
+    \Text[x=1,rotation = 45]{B}
+    \Text[x=2,rotation = 75]{C}
+    \draw[orange,dashed](2,0) --++ (7mm,0mm)(2,0)--++(75:7mm);
+    \draw[orange,->] (2.5,0) arc (0:75:5mm);
+    \node[orange] (x) at (2.6,-.2) {$75^\circ$};
+  \end{tikzpicture}
+\end{marginfigure}
+
+\begin{docspec}
+\begin{lstlisting}
+  \begin{tikzpicture}
+    \Text[rotation=30]{A}
+    \Text[x=1,rotation=45]{B}
+    \Text[x=2,rotation=75]{C}
+  \end{tikzpicture}
+\end{lstlisting}
+\end{docspec}
+\newpage
+
+\begin{docspecdef}
+ \doccmd{Text}[\docopt{anchor}=\docarg{string}]\{\docarg{string}\}
+\end{docspecdef}
+
+With the option \docopt{anchor} the alignment of the text can be changed. Per default the text will be aligned centered. Classical \tikzsym commands\footnote{e.g. \docarg{north}, \docarg{east}, \docarg{south}, \docarg{west}, \docarg{north east}, \docarg{north west},\dots} can be used to change the alignment of the text.
+
+\begin{marginfigure}[5mm]
+\centering
+  \begin{tikzpicture}
+    \filldraw [orange] (0,0) circle (2pt);
+    \filldraw [orange] (1,0) circle (2pt);
+    \filldraw [orange] (2,0) circle (2pt);
+    \Text[anchor=north east]{NE}
+    \Text[x=1,anchor = south]{S}
+    \Text[x=2,anchor =south west]{SW}
+  \end{tikzpicture}
+\end{marginfigure}
+
+\begin{docspec}
+\begin{lstlisting}
+  \begin{tikzpicture}
+    \Text[anchor=north east]{NE}
+    \Text[x=1,anchor = south]{S}
+    \Text[x=2,anchor =south west]{SW}
+  \end{tikzpicture}
+\end{lstlisting}
+\end{docspec}
+
+
+\begin{docspecdef}
+ \doccmd{Text}[\docopt{width}=\docarg{measure}]\{\docarg{string}\}
+\end{docspecdef}
+
+With the option \docopt{width} enabled, the text will break after the entered \docarg{measure}.
+
+\begin{marginfigure}[25mm]
+\centering
+  \begin{tikzpicture}
+    \draw[|<->|,orange] (-1.25,.7) --++ (2.5,0) node [pos=.5,above]{2.5cm};
+    \Text[width=2.5cm]{This might be a very long text.}
+  \end{tikzpicture}
+\end{marginfigure}
+
+\begin{docspec}
+\begin{lstlisting}
+  \begin{tikzpicture}
+    \Text[width=2.5cm]{This might be a very long text.}
+  \end{tikzpicture}
+\end{lstlisting}
+\end{docspec}
+
+\begin{docspecdef}
+  \doccmd{Text}[\docopt{style}=\{\docarg{string}\}]\{\docarg{string}\}
+\end{docspecdef}
+
+Any other \tikzsym style option or command can be entered via the option \docopt{style}. Most of these commands can be found in the ``\tikzsym and PGF Manual''. Contain the commands additional options (e.g.\docopt{fill}=\docarg{red}), then the argument for the \docopt{style} has to be between $\{~\}$ brackets.
+
+\begin{marginfigure}[32mm]
+\centering
+  \begin{tikzpicture}
+    \Text[style={draw,rectangle}]{A}
+    \Text[x=1,style={fill=red}]{B}
+    \Text[x=2,style={fill=blue,circle,opacity=.3}]{C}
+  \end{tikzpicture}
+\end{marginfigure}
+
+\begin{docspec}
+\begin{lstlisting}
+  \begin{tikzpicture}
+    \Text[style={draw,rectangle}]{A}
+    \Text[x=1,style={fill=red}]{B}
+    \Text[x=2,style={fill=blue,circle,opacity=.3}]{C}
+  \end{tikzpicture}
+\end{lstlisting}
+\end{docspec}
+
+\begin{docspecdef}
+  \doccmd{Text}[\docopt{RGB},\docopt{color}=\docarg{RGB values}]\{\docarg{string}\}
+\end{docspecdef}
+
+In order to display RGB colors for the text color, the option \docopt{RGB} has to be entered. In combination with this option, the \docopt{color} hast to be a list with the \docarg{RGB values}, separated by <<,>> and within $\{~\}$.\footnote{e.g. the RGB code for white: $\{255,255,255\}$}
+
+\begin{marginfigure}[7mm]
+\centering
+  \begin{tikzpicture}
+    \Text[RGB,color={127,201,127}]{A}
+    \Text[x=1,RGB,color={190,174,212}]{B}
+    \Text[x=2,RGB,color={253,192,134}]{C}
+  \end{tikzpicture}
+\end{marginfigure}
+
+\begin{docspec}
+\begin{lstlisting}
+  \begin{tikzpicture}
+    \Text[RGB,color={127,201,127}]{A}
+    \Text[x=1,RGB,color={190,174,212}]{B}
+    \Text[x=2,RGB,color={253,192,134}]{C}
+  \end{tikzpicture}
+\end{lstlisting}
+\end{docspec}
+
+\begin{docspecdef}
+  \doccmd{layer}[\docopt{layer}=\docarg{number}]\{\docarg{string}\}
+\end{docspecdef}
+
+With the option \docopt{layer} the text can be assigned to a specific layer. More about this option and the use of layers is explained in Chapter~\ref{chap:multilayer_networks}. 
 
 \chapter{Complex Networks}
 \label{chap:complex_networks}
@@ -1325,11 +1635,11 @@ Predefined \doccmd{Vertex} options can be overruled by the \docopt{global option
       style      & \{\}  & string & additional \tikzsym styles \\
       layer      & \{\}  & number & assigned layer of the vertices \\
       \midrule
-      NoLabel    & false & boolean & delete the labels \\
-      IdAsLabel  & false & boolean & uses the \docarg{Names} as labels \\
-      Math       & false & boolean & displays the labels in math mode \\
-      RGB        & false & boolean & allow RGB colors \\
-      Pseudo     & false & boolean & create a pseudo vertices\\
+      NoLabel    & false & Boolean & delete the labels \\
+      IdAsLabel  & false & Boolean & uses the \docarg{Names} as labels \\
+      Math       & false & Boolean & displays the labels in math mode \\
+      RGB        & false & Boolean & allow RGB colors \\
+      Pseudo     & false & Boolean & create a pseudo vertices\\
       \bottomrule
     \end{tabular}
     \scriptsize
@@ -1434,7 +1744,7 @@ Any other \tikzsym style option or command can be entered via the option \docopt
   \doccmd{Vertices}[\docopt{NoLabel}]\{\docarg{filename}\}
 \end{docspecdef}
 
-\docopt{IdAsLabel} is a boolean option which assigns the \docopt{id} of the single vertices as labels. On the contrary, \docopt{NoLabel} suppress all labels.
+\docopt{IdAsLabel} is a Boolean option which assigns the \docopt{id} of the single vertices as labels. On the contrary, \docopt{NoLabel} suppress all labels.
 
 \begin{marginfigure}[22mm]
 \centering
@@ -1577,11 +1887,11 @@ Predefined \doccmd{Edge} options can be overruled by the \docopt{global options}
       vertices    & \{\}  & file    & vertices were the edges are assigned to\\
       layer       & \{\}  & number  & edges in specific layers \\
       \midrule
-      Direct      & false & boolean & allow directed edges \\
-      Math        & false & boolean & displays the labels in math mode \\
-      NoLabel     & false & boolean & delete the labels\\
-      RGB         & false & boolean & allow RGB colors \\
-      NotInBG     & false & boolean & edges are not in the background layer\\
+      Direct      & false & Boolean & allow directed edges \\
+      Math        & false & Boolean & displays the labels in math mode \\
+      NoLabel     & false & Boolean & delete the labels\\
+      RGB         & false & Boolean & allow RGB colors \\
+      NotInBG     & false & Boolean & edges are not in the background layer\\
       \bottomrule
     \end{tabular}
     \scriptsize
@@ -2088,11 +2398,11 @@ No obligatory arguments are needed. For a \doccmd{Plain} the following options a
       style      & \{\}  & string & additional \tikzsym styles \\
       layer      & 1  & number & layer where the plain is located\\
       \midrule
-      RGB        & false & boolean & allow RGB colors \\
-      NoFill     & false & boolean & disable fill color \\
-      NoBorder   & false & boolean & disable border line \\
-      ImageAndFill&false & boolean & allow image and fill color \\
-      InBG       & false & boolean & plain is in the background layer\\
+      RGB        & false & Boolean & allow RGB colors \\
+      NoFill     & false & Boolean & disable fill color \\
+      NoBorder   & false & Boolean & disable border line \\
+      ImageAndFill&false & Boolean & allow image and fill color \\
+      InBG       & false & Boolean & plain is in the background layer\\
       \bottomrule
     \end{tabular}
     \scriptsize
@@ -2179,7 +2489,7 @@ With the option \docopt{opacity} the opacity of the plain fill color can be modi
   \doccmd{Plain}[\docopt{grid}=\docarg{measure}]
 \end{docspecdef}
 
-With the option \docopt{grid} a grid will be drawn on top of the plain. The argument of this option defines the spacing between the grid lines. The entered \docarg{measure} are in default units (\si{cm}). Changing the unites (locally) can be done by adding the unit to the \docarg{measure}\footnote{e.g. x=\SI{5}{mm}}. Changes to the default setting can be made with \doccmd{SetDefaultUnit}\footnote{see Section \ref{sec:gerneral_settings}}. 
+With the option \docopt{grid} a grid will be drawn on top of the plain. The argument of this option defines the spacing between the grid lines. The entered \docarg{measures} are in default units (\si{cm}). Changing the unites (locally) can be done by adding the unit to the \docarg{measure}\footnote{e.g. x=\SI{5}{mm}}. Changes to the default setting can be made with \doccmd{SetDefaultUnit}\footnote{see Section \ref{sec:gerneral_settings}}. 
 
 \begin{marginfigure}%[22mm]
 \centering
@@ -2391,7 +2701,7 @@ The perspective of the three-dimensional plot can be modified by changing the or
 The appearance of the vertices can be modified with the command \doccmddef{SetVertexStyle}. This command will change the default settings of the vertices in the network.
 
 \begin{docspecdef}
-  \doccmd{SetVertexStyle}\{\docarg{document options}\}
+  \doccmd{SetVertexStyle}[\docarg{document options}]
 \end{docspecdef}
 
 The following options are available:
@@ -2431,7 +2741,7 @@ TextRotation & 0                       & number   & initial rotation of the vert
 The appearance of the edges can be modified with the command \doccmddef{SetEdgeStyle}. This command will change the default settings of the edges in the network.
 
 \begin{docspecdef}
-  \doccmd{SetEdgeStyle}\{\docarg{document options}\}
+  \doccmd{SetEdgeStyle}[\docarg{document options}]
 \end{docspecdef}
 
 The following options are available:
@@ -2469,7 +2779,7 @@ TextRotation    & 0                   & number   & initial rotation of the edge 
 The appearance of the text can be modified with the command \doccmddef{SetTextStyle}. This command will change the default settings of the text.
 
 \begin{docspecdef}
-  \doccmd{SetTextStyle}\{\docarg{document options}\}
+  \doccmd{SetTextStyle}[\docarg{document options}]
 \end{docspecdef}
 
 The following options are available:
@@ -2481,9 +2791,9 @@ The following options are available:
       \toprule
       Option & Default & Type &Definition \\
       \midrule
-TextFont        & \doccmd{footnotesize} & fontsize & font size of the text \\
+TextFont        & \doccmd{normalsize} & fontsize & font size of the text \\
 TextOpacity     & 1                   & number   & opacity of the text \\
-TextColor       & white               & color    & color of the text \\
+TextColor       & black               & color    & color of the text \\
 TextOpacity     & 1                   & number   & opacity of the text \\
 InnerSep        & 2pt                 & measure  & separation space which will be added inside the shape \\
 OuterSep        & 0pt                 & measure  & separation space outside the background path \\
@@ -2503,7 +2813,7 @@ TextRotation    & 0                   & number   & initial rotation of the text 
 The appearance of the plains can be modified with the command \doccmddef{SetPlainStyle}. This command will change the default settings of the plains.
 
 \begin{docspecdef}
-  \doccmd{SetPlainStyle}\{\docarg{document options}\}
+  \doccmd{SetPlainStyle}[\docarg{document options}]
 \end{docspecdef}
 
 The following options are available:
@@ -2538,11 +2848,7 @@ GridOpacity   & 0.5                 & number   & opacity of the grid lines \\
   \doccmd{SetPlainHight}\{\docarg{measure}\}
 \end{docspecdef}
 
-With the commands \doccmd{SetPlainWidth} and \doccmd{SetPlainHight} the default size of the plains can be modified. 
-
-
-
-
+With the commands \doccmd{SetPlainWidth} and \doccmd{SetPlainHight} the default size of the plains can be modified.
 
 
 
@@ -2619,8 +2925,6 @@ The following is a list of packages that the \pkg package rely upon.  Packages m
 \item add networkx to tikz-network compiler (e.g. plot function)
 \item add QGIS to tikz-network compiler
 \end{itemize}
-
-
 
 %%
 % The back matter contains appendices, bibliographies, indices, glossaries, etc.
