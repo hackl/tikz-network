@@ -225,3 +225,5 @@ TSWLatexianTemp*
 *-tags.tex
 /doc/auto/manual.el
 /doc/manual.pdf
+/*.pyc
+/__pycache__/tikz_network.cpython-35.pyc

@@ -1,0 +1,24 @@
+\documentclass{standalone}
+\usepackage{../../tikz-network}
+\begin{document}
+\begin{tikzpicture}
+[multilayer]
+\Vertex[x=4.3191, y=-3.5352, size=0.5292, color={255.,192.,203}, opacity=0.5, label=Alice, position=0.5, distance=0.0397, fontcolor={0.,255.,0}, fontscale=2.143, shape=rectangle, style={dashed}, layer=2, RGB]{Alice}
+\Vertex[x=0.5292, y=-0.5292, size=0.5292, color={0.,0.,255}, opacity=0.5, label=Bob, position=0.5, distance=0.0397, fontcolor={0.,255.,0}, fontscale=2.143, shape=rectangle, style={dashed}, layer=1, RGB]{Bob}
+\Vertex[x=8.6559, y=-3.8008, size=0.5292, color={255.,192.,203}, opacity=0.5, label=Claire, position=0.5, distance=0.0397, fontcolor={0.,255.,0}, fontscale=2.143, shape=rectangle, style={dashed}, layer=2, RGB]{Claire}
+\Vertex[x=12.4117, y=-7.5239, size=0.5292, color={0.,0.,255}, opacity=0.5, label=Dennis, position=0.5, distance=0.0397, fontcolor={0.,255.,0}, fontscale=2.143, shape=rectangle, style={dashed}, layer=1, RGB]{Dennis}
+\Vertex[x=12.7, y=-1.7069, size=0.5292, color={255.,192.,203}, opacity=0.5, label=Esther, position=0.5, distance=0.0397, fontcolor={0.,255.,0}, fontscale=2.143, shape=rectangle, style={dashed}, layer=2, RGB]{Esther}
+\Vertex[x=6.0022, y=-9.0323, size=0.5292, color={0.,0.,255}, opacity=0.5, label=Frank, position=0.5, distance=0.0397, fontcolor={0.,255.,0}, fontscale=2.143, shape=rectangle, style={dashed}, layer=1, RGB]{Frank}
+\Vertex[x=9.7608, y=-12.7, size=0.5292, color={0.,0.,255}, opacity=0.5, label=George, position=0.5, distance=0.0397, fontcolor={0.,255.,0}, fontscale=2.143, shape=rectangle, style={dashed}, layer=1, RGB]{George}
+\Edge[lw=0.75, color={255.,0.,0}, opacity=0.5, bend=-8.531, label=red, position=above, distance=0.7, fontcolor={0.,0.,255}, fontscale=2.143, style={-{Latex[length=0.477cm, width=0.318cm]}, dashed}, Direct, RGB](Alice)(Bob)
+\Edge[lw=0.75, color={255.,0.,0}, opacity=0.5, bend=-8.531, label=red, position=above, distance=0.7, fontcolor={0.,0.,255}, fontscale=2.143, style={-{Latex[length=0.477cm, width=0.318cm]}, dashed}, Direct, RGB](Alice)(Claire)
+\Edge[lw=2.25, color={255.,0.,0}, opacity=0.5, bend=-8.531, label=red, position=above, distance=0.7, fontcolor={0.,0.,255}, fontscale=2.143, style={-{Latex[length=0.477cm, width=0.318cm]}, dashed}, Direct, RGB](Claire)(Dennis)
+\Edge[lw=2.25, color={255.,0.,0}, opacity=0.5, bend=-8.531, label=red, position=above, distance=0.7, fontcolor={0.,0.,255}, fontscale=2.143, style={-{Latex[length=0.477cm, width=0.318cm]}, dashed}, Direct, RGB](Dennis)(Esther)
+\Edge[lw=2.25, color={255.,0.,0}, opacity=0.5, bend=-8.531, label=red, position=above, distance=0.7, fontcolor={0.,0.,255}, fontscale=2.143, style={-{Latex[length=0.477cm, width=0.318cm]}, dashed}, Direct, RGB](Esther)(Claire)
+\Edge[lw=0.75, color={255.,0.,0}, opacity=0.5, bend=-8.531, label=red, position=above, distance=0.7, fontcolor={0.,0.,255}, fontscale=2.143, style={-{Latex[length=0.477cm, width=0.318cm]}, dashed}, Direct, RGB](Claire)(Frank)
+\Edge[lw=2.25, color={255.,0.,0}, opacity=0.5, bend=-8.531, label=red, position=above, distance=0.7, fontcolor={0.,0.,255}, fontscale=2.143, style={-{Latex[length=0.477cm, width=0.318cm]}, dashed}, Direct, RGB](Frank)(Alice)
+\Edge[lw=0.75, color={255.,0.,0}, opacity=0.5, bend=-8.531, label=red, position=above, distance=0.7, fontcolor={0.,0.,255}, fontscale=2.143, style={-{Latex[length=0.477cm, width=0.318cm]}, dashed}, Direct, RGB](George)(Dennis)
+\Edge[lw=0.75, color={255.,0.,0}, opacity=0.5, bend=-8.531, label=red, position=above, distance=0.7, fontcolor={0.,0.,255}, fontscale=2.143, style={-{Latex[length=0.477cm, width=0.318cm]}, dashed}, Direct, RGB](Frank)(George)
+\Edge[lw=0.75, color={255.,0.,0}, opacity=0.5, bend=-8.531, label=red, position=above, distance=0.7, fontcolor={0.,0.,255}, fontscale=2.143, style={-{Latex[length=0.477cm, width=0.318cm]}, dashed}, Direct, RGB](George)(George)
+\end{tikzpicture}
+\end{document}

@@ -2,7 +2,7 @@
 % File:  tikz-network.tex --  Library for plotting networks in TikZ
 % Author(s): Jürgen Hackl <hackl@ibi.baug.ethz.ch>
 % Creation:  28 Feb 2017
-% Time-stamp: <Mon 2017-10-09 19:03 juergen>
+% Time-stamp: <Don 2017-10-19 13:34 juergen>
 %
 % Copyright (c) 2017 Jürgen Hackl <hackl@ibi.baug.ethz.ch>
 %               http://www.ibi.ethz.ch
@@ -31,7 +31,7 @@
 \usetikzlibrary{fit}
 \usetikzlibrary{calc}
 \usetikzlibrary{backgrounds}
-
+\usetikzlibrary{arrows.meta}
 %=============================================================================
 
 
@@ -375,6 +375,10 @@
 \define@cmdkey  [NW] {vertex} {opacity}{}
 \define@cmdkey  [NW] {vertex} {style}{}
 \define@cmdkey  [NW] {vertex} {layer}{}
+\define@cmdkey  [NW] {vertex} {shape}{}
+\define@cmdkey  [NW] {vertex} {fontsize}{}
+\define@cmdkey  [NW] {vertex} {fontcolor}{}
+\define@cmdkey  [NW] {vertex} {fontscale}{}
 \define@boolkey [NW] {vertex} {RGB}[true]{}
 \define@boolkey [NW] {vertex} {IdAsLabel}[true]{}
 \define@boolkey [NW] {vertex} {NoLabel}[true]{}
@@ -404,7 +408,11 @@
                            color      = {},
                            opacity    = {},
                            layer      = {},
+                           shape      = {},
                            style      = {},
+                           fontsize   = {},
+                           fontcolor  = {},
+                           fontscale  = {},
                            NoLabel    = false,
                            IdAsLabel  = false,
                            Math       = false,
@@ -455,11 +463,29 @@
     }{
       \tikzset{LocalVertexSize/.style={}}
     }
+    % Check if the font size of the vertex label is redefined, if so the new style is used
+    \ifthenelse{\not\equal{\cmdNW@vertex@fontsize}{}}{
+      \tikzset{LocalVertexFontSize/.style={font = \cmdNW@vertex@fontsize}}
+    }{
+      \tikzset{LocalVertexFontSize/.style={}}
+    }
+    % Check if the font scale of the vertex label is redefined, if so the new style is used
+    \ifthenelse{\not\equal{\cmdNW@vertex@fontscale}{}}{
+      \tikzset{LocalVertexFontScale/.style={scale = \cmdNW@vertex@fontscale}}
+    }{
+      \tikzset{LocalVertexFontScale/.style={}}
+    }
     % Check if the opacity of the vertex is redefined, if so the new style is used
     \ifthenelse{\not\equal{\cmdNW@vertex@opacity}{}}{
       \tikzset{LocalVertexOpacity/.style={fill opacity = \cmdNW@vertex@opacity}}
     }{
       \tikzset{LocalVertexOpacity/.style={}}
+    }
+    % Check if the shape of the vertex is redefined, if so the new style is used
+    \ifthenelse{\not\equal{\cmdNW@vertex@shape}{}}{
+      \tikzset{LocalVertexShape/.style={shape = \cmdNW@vertex@shape}}
+    }{
+      \tikzset{LocalVertexShape/.style={}}
     }
     % Check if the color of the vertex is redefined, if so the new style is
     % used. If the option RGB is true, RGB values can be used to define the
@@ -472,12 +498,24 @@
       }{
         \tikzset{LocalVertexFill/.style={}}
       }
+      \ifthenelse{\not\equal{\cmdNW@vertex@fontcolor}{}}{
+        \pgfutil@definecolor{LocalFontColor}{RGB}{\cmdNW@vertex@fontcolor}
+        \tikzset{LocalVertexFontColor/.style={color = LocalFontColor}}
+      }{
+        \tikzset{LocalVertexFontColor/.style={}}
+      }
     \else
       \ifthenelse{\not\equal{\cmdNW@vertex@color}{}}{
         \tikzset{LocalVertexFill/.style={fill = \cmdNW@vertex@color}}
       }{
         \tikzset{LocalVertexFill/.style={}}
       }
+      \ifthenelse{\not\equal{\cmdNW@vertex@fontcolor}{}}{
+        \tikzset{LocalVertexFontColor/.style={color = \cmdNW@vertex@fontcolor}}
+      }{
+        \tikzset{LocalVertexFontColor/.style={}}
+      }
+
     \fi
     % Define empty style for the vertex
     \ifNW@vertex@Pseudo
@@ -486,17 +524,18 @@
       \tikzset{LocalPseudo/.style={}}
     \fi
     % Define local style for the label
-    \tikzset{LocalLabel/.style={label = {[LabelStyle, label
+    \tikzset{LocalLabel/.style={label = {[LabelStyle, LocalVertexFontColor,
+          LocalVertexFontSize, LocalVertexFontScale, label
           distance=\cmdNW@vertex@distance]\cmdNW@vertex@position:\vertex@Label}}}
     \ifthenelse{\equal{\cmdNW@vertex@layer}{}}{
       \protected@edef\@tempa{%
-        \noexpand\node[\vstyle,LocalVertexSize,LocalVertexOpacity,LocalVertexFill,LocalLabel,\cmdNW@vertex@style,LocalPseudo](#1)%
+        \noexpand\node[\vstyle,LocalVertexSize,LocalVertexOpacity,LocalVertexFill,LocalVertexShape,LocalLabel,\cmdNW@vertex@style,LocalPseudo](#1)%
         at (\cmdNW@vertex@x,\cmdNW@vertex@y){}}%
       \@tempa;
     }{
       \begin{scope}[canvas is yx plane at z=(\cmdNW@vertex@layer-1)*\NetworkLayerDistance]
       \protected@edef\@tempa{%
-        \noexpand\node[\vstyle,LocalVertexSize,LocalVertexOpacity,LocalVertexFill,LocalLabel,\cmdNW@vertex@style,LocalPseudo](#1)%
+        \noexpand\node[\vstyle,LocalVertexSize,LocalVertexOpacity,LocalVertexFill,LocalVertexShape,LocalLabel,\cmdNW@vertex@style,LocalPseudo](#1)%
         at (\cmdNW@vertex@x*\DistanceScale\DefaultUnit,\cmdNW@vertex@y*\DistanceScale\DefaultUnit){}}%
       \@tempa;
       \end{scope}
@@ -512,6 +551,9 @@
 \define@cmdkey  [NW] {edge} {color}{}
 \define@cmdkey  [NW] {edge} {opacity}{}
 \define@cmdkey  [NW] {edge} {style}{}
+\define@cmdkey  [NW] {edge} {fontcolor}{}
+\define@cmdkey  [NW] {edge} {fontsize}{}
+\define@cmdkey  [NW] {edge} {fontscale}{}
 \define@boolkey [NW] {edge} {RGB}[true]{}
 \define@boolkey [NW] {edge} {Math}[true]{}
 \define@boolkey [NW] {edge} {Direct}[true]{}
@@ -543,6 +585,9 @@
                        color      = {},
                        opacity    = {},
                        style      = {},
+                       fontcolor  = {},
+                       fontsize   = {},
+                       fontscale  = {},
                        RGB        = false,
                        Math       = false,
                        Direct     = false,
@@ -587,6 +632,20 @@
       \tikzset{LocalEdgeOpacity/.style={}}
       \tikzset{LocalTextOpacity/.style={}}
     }
+    % Check if the font size of the edge is redefined, if so the new style is
+    % used
+    \ifthenelse{\not\equal{\cmdNW@edge@fontsize}{}}{
+      \tikzset{LocalEdgeFontSize/.style={font = \cmdNW@edge@fontsize}}
+    }{
+      \tikzset{LocalEdgeFontSize/.style={}}
+    }
+    % Check if the font scale of the edge is redefined, if so the new style is
+    % used
+    \ifthenelse{\not\equal{\cmdNW@edge@fontscale}{}}{
+      \tikzset{LocalEdgeFontScale/.style={scale = \cmdNW@edge@fontscale}}
+    }{
+      \tikzset{LocalEdgeFontScale/.style={}}
+    }
     % Check if the color of the vertex is redefined, if so the new style is
     % used. If the option RGB is true, RGB values can be used to define the
     % color of the vertex entered in the form {R,G,B}. If RGB is not true the
@@ -598,12 +657,25 @@
       }{
         \tikzset{LocalEdgeColor/.style={}}
       }
+      \ifthenelse{\not\equal{\cmdNW@edge@fontcolor}{}}{
+        \pgfutil@definecolor{LocalFontColor}{RGB}{\cmdNW@edge@fontcolor}
+        \tikzset{LocalEdgeFontColor/.style={text = LocalFontColor}}
+      }{
+        \tikzset{LocalEdgeFontColor/.style={}}
+      }
+
     \else
       \ifthenelse{\not\equal{\cmdNW@edge@color}{}}{
         \tikzset{LocalEdgeColor/.style={color = \cmdNW@edge@color}}
       }{
         \tikzset{LocalEdgeColor/.style={}}
       }
+      \ifthenelse{\not\equal{\cmdNW@edge@fontcolor}{}}{
+        \tikzset{LocalEdgeFontColor/.style={text = \cmdNW@edge@fontcolor}}
+      }{
+        \tikzset{LocalEdgeFontColor/.style={}}
+      }
+
     \fi
     % Check if Math is true, if so the label will be in math mode
     \ifNW@edge@Math
@@ -612,7 +684,7 @@
       \def\edge@L{\cmdNW@edge@label}%
     \fi
     % Check if a label is assigned, if so create a label variable
-    \ifthenelse{\not\equal{\cmdNW@edge@label}{}}{    \def\edge@Label{node[EdgeLabelStyle,LocalTextOpacity,pos=\cmdNW@edge@distance,\cmdNW@edge@position]{\edge@L}}
+    \ifthenelse{\not\equal{\cmdNW@edge@label}{}}{    \def\edge@Label{node[EdgeLabelStyle,LocalTextOpacity,LocalEdgeFontColor,LocalEdgeFontSize,LocalEdgeFontScale,pos=\cmdNW@edge@distance,\cmdNW@edge@position]{\edge@L}}
     }{
       \def\edge@Label{}
     }
@@ -708,7 +780,7 @@
   % Go through each row and create vertices
   \DTLforeach*{vertices}{}{%
     % reset storage variable to default values
-    \edef\vertex@Options{x=0,y=0,label={},size={},color={},
+    \edef\vertex@Options{x=0,y=0,label={},size={},color={},fontcolor={},fontsize={},fontscale={},
       opacity={},layer={},style={},NoLabel=false,IdAsLabel=false,
       Math=false,RGB=false,Pseudo=false,distance={0},position={center}, }%
     \edef\vertex@rgbValues{}%
@@ -880,7 +952,7 @@
     \edef\edge@Options{label = {}, lw = {}, color = {}, opacity = {}, style =
       {}, RGB = false, Math = false, Direct = false, NotInBG = false, bend = {0}, loopsize =
       {1\DefaultUnit}, position = {}, loopposition = {0}, loopshape = {90},
-      distance = {.5}, path = {},}
+      distance = {.5}, path = {}, fontcolor = {}, fontsize = {}, fontscale ={},}
   \edef\edge@rgbValues{}%
     % Go through each row element
     \DTLforeachkeyinrow{\thisValue}{
