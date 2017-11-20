@@ -2,7 +2,7 @@
 % File:  tikz-network.tex --  Library for plotting networks in TikZ
 % Author(s): Jürgen Hackl <hackl@ibi.baug.ethz.ch>
 % Creation:  28 Feb 2017
-% Time-stamp: <Don 2017-10-19 13:34 juergen>
+% Time-stamp: <Mon 2017-11-20 09:22 juergen>
 %
 % Copyright (c) 2017 Jürgen Hackl <hackl@ibi.baug.ethz.ch>
 %               http://www.ibi.ethz.ch
@@ -417,7 +417,7 @@
                            IdAsLabel  = false,
                            Math       = false,
                            RGB        = false,
-                           Pseudo      = false,
+                           Pseudo     = false,
                            distance   = {0},
                            position   = {center},}
       \setkeys[NW]{vertex}{#1}%
@@ -782,7 +782,7 @@
     % reset storage variable to default values
     \edef\vertex@Options{x=0,y=0,label={},size={},color={},fontcolor={},fontsize={},fontscale={},
       opacity={},layer={},style={},NoLabel=false,IdAsLabel=false,
-      Math=false,RGB=false,Pseudo=false,distance={0},position={center}, }%
+      Math=false,RGB=false,Pseudo=false,distance={0},position={center},shape={},}%
     \edef\vertex@rgbValues{}%
     % Go through each row element
     \DTLforeachkeyinrow{\thisValue}{
