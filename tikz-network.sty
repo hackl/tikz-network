@@ -2,7 +2,7 @@
 % File:  tikz-network.tex --  Library for plotting networks in TikZ
 % Author(s): Jürgen Hackl <hackl@ibi.baug.ethz.ch>
 % Creation:  28 Feb 2017
-% Time-stamp: <Mon 2017-11-20 09:22 juergen>
+% Time-stamp: <Mon 2018-05-21 08:32 juergen>
 %
 % Copyright (c) 2017 Jürgen Hackl <hackl@ibi.baug.ethz.ch>
 %               http://www.ibi.ethz.ch
@@ -32,6 +32,7 @@
 \usetikzlibrary{calc}
 \usetikzlibrary{backgrounds}
 \usetikzlibrary{arrows.meta}
+\usetikzlibrary{shapes.geometric}
 %=============================================================================
 
 
@@ -76,18 +77,18 @@
 
 
 %<--------------------------------------------------------------------------->
-%      Plain
+%      Plane
 %<--------------------------------------------------------------------------->
-\newcommand*{\PlainLineWidth}{1.5pt}
-\newcommand*{\PlainLineColor}{black}
-\newcommand*{\PlainLineOpacity}{1}
-\newcommand*{\PlainGridLineWidth}{.5pt}
-\newcommand*{\PlainGridColor}{black}
-\newcommand*{\PlainGridOpacity}{.5}
-\newcommand*{\PlainFillColor}{vertexfill}
-\newcommand*{\PlainFillOpacity}{.3}
-\newcommand*{\PlainWidth}{5\DefaultUnit}
-\newcommand*{\PlainHeight}{5\DefaultUnit}
+\newcommand*{\PlaneLineWidth}{1.5pt}
+\newcommand*{\PlaneLineColor}{black}
+\newcommand*{\PlaneLineOpacity}{1}
+\newcommand*{\PlaneGridLineWidth}{.5pt}
+\newcommand*{\PlaneGridColor}{black}
+\newcommand*{\PlaneGridOpacity}{.5}
+\newcommand*{\PlaneFillColor}{vertexfill}
+\newcommand*{\PlaneFillOpacity}{.3}
+\newcommand*{\PlaneWidth}{5\DefaultUnit}
+\newcommand*{\PlaneHeight}{5\DefaultUnit}
 
 
 %<--------------------------------------------------------------------------->
@@ -187,7 +188,7 @@
 
 
 %<--------------------------------------------------------------------------->
-%      Init Default Plain Style
+%      Init Default Plane Style
 %<--------------------------------------------------------------------------->
 \define@cmdkey [NW] {DPS} {LineWidth}{}
 \define@cmdkey [NW] {DPS} {LineColor}{}
@@ -197,14 +198,14 @@
 \define@cmdkey [NW] {DPS} {GridOpacity}{}
 \define@cmdkey [NW] {DPS} {FillColor}{}
 \define@cmdkey [NW] {DPS} {FillOpacity}{}
-\presetkeys    [NW] {DPS} {LineWidth          = \PlainLineWidth,
-                           LineColor          = \PlainLineColor,
-                           LineOpacity        = \PlainLineOpacity,
-                           GridLineWidth      = \PlainGridLineWidth,
-                           GridColor          = \PlainGridColor,
-                           GridOpacity        = \PlainGridOpacity,
-                           FillColor          = \PlainFillColor,
-                           FillOpacity        = \PlainFillOpacity}{}
+\presetkeys    [NW] {DPS} {LineWidth          = \PlaneLineWidth,
+                           LineColor          = \PlaneLineColor,
+                           LineOpacity        = \PlaneLineOpacity,
+                           GridLineWidth      = \PlaneGridLineWidth,
+                           GridColor          = \PlaneGridColor,
+                           GridOpacity        = \PlaneGridOpacity,
+                           FillColor          = \PlaneFillColor,
+                           FillOpacity        = \PlaneFillOpacity}{}
 
 
 %<--------------------------------------------------------------------------->
@@ -282,17 +283,17 @@
 }%
 
 
-\newcommand*{\SetPlainStyle}[1][]{\NW@SetPlainStyleDefault[#1]}%
-\def\NW@SetPlainStyleDefault[#1]{%
+\newcommand*{\SetPlaneStyle}[1][]{\NW@SetPlaneStyleDefault[#1]}%
+\def\NW@SetPlaneStyleDefault[#1]{%
 \setkeys[NW]{DPS}{#1}% 
-\tikzset{PlainBorderStyle/.style =  {draw,
+\tikzset{PlaneBorderStyle/.style =  {draw,
                                line width     = \cmdNW@DPS@LineWidth,
                                color          = \cmdNW@DPS@LineColor,
                                draw opacity   = \cmdNW@DPS@LineOpacity}}
-\tikzset{PlainFillStyle/.style = {
+\tikzset{PlaneFillStyle/.style = {
                                fill           = \cmdNW@DPS@FillColor,
                                fill opacity   = \cmdNW@DPS@FillOpacity}}
-\tikzset{PlainGridStyle/.style =   {draw,
+\tikzset{PlaneGridStyle/.style =   {draw,
                                line width     = \cmdNW@DPS@GridLineWidth,
                                color          = \cmdNW@DPS@GridColor,
                                opacity        = \cmdNW@DPS@GridOpacity}}
@@ -345,7 +346,7 @@
 \SetCoordinates
 \SetVertexStyle
 \SetEdgeStyle
-\SetPlainStyle
+\SetPlaneStyle
 \SetTextStyle
 
 %<--------------------------------------------------------------------------->
@@ -355,8 +356,8 @@
 \newcommand*{\SetLayerDistance}[1]{\renewcommand{\NetworkLayerDistance}{#1}}
 \newcommand*{\SetDefaultUnit}[1]{\renewcommand{\DefaultUnit}{#1}}
 \newcommand*{\SetDistanceScale}[1]{\renewcommand{\DistanceScale}{#1}}
-\newcommand*{\SetPlainWidth}[1]{\renewcommand{\PlainWidth}{#1}}
-\newcommand*{\SetPlainHeight}[1]{\renewcommand{\PlainHeight}{#1}}
+\newcommand*{\SetPlaneWidth}[1]{\renewcommand{\PlaneWidth}{#1}}
+\newcommand*{\SetPlaneHeight}[1]{\renewcommand{\PlaneHeight}{#1}}
 \newcommand*{\EdgesInBG}{\presetkeys [NW] {edge} {NotInBG = false}{}}
 \newcommand*{\EdgesNotInBG}{\presetkeys [NW] {edge} {NotInBG = true}{}}
 
@@ -530,7 +531,7 @@
     \ifthenelse{\equal{\cmdNW@vertex@layer}{}}{
       \protected@edef\@tempa{%
         \noexpand\node[\vstyle,LocalVertexSize,LocalVertexOpacity,LocalVertexFill,LocalVertexShape,LocalLabel,\cmdNW@vertex@style,LocalPseudo](#1)%
-        at (\cmdNW@vertex@x,\cmdNW@vertex@y){}}%
+        at (\cmdNW@vertex@x*\DistanceScale\DefaultUnit,\cmdNW@vertex@y*\DistanceScale\DefaultUnit){}}%
       \@tempa;
     }{
       \begin{scope}[canvas is yx plane at z=(\cmdNW@vertex@layer-1)*\NetworkLayerDistance]
@@ -725,6 +726,7 @@
 \define@cmdkey  [NW] {vertices} {color}{}
 \define@cmdkey  [NW] {vertices} {opacity}{}
 \define@cmdkey  [NW] {vertices} {style}{}
+\define@cmdkey  [NW] {vertices} {shape}{}
 \define@boolkey [NW] {vertices} {RGB}[true]{}
 \define@boolkey [NW] {vertices} {IdAsLabel}[true]{}
 \define@boolkey [NW] {vertices} {NoLabel}[true]{}
@@ -735,6 +737,7 @@
                                  size      = {},
                                  color     = {},
                                  style     = {},
+                                 shape     = {},
                                  RGB       = false,
                                  IdAsLabel = false,
                                  NoLabel   = false,
@@ -833,6 +836,11 @@
     \ifthenelse{\not\equal{\cmdNW@vertices@size}{}}
     {
       \edef\vertex@Options{\vertex@Options size=\cmdNW@vertices@size,}
+    }{}
+    % shape
+    \ifthenelse{\not\equal{\cmdNW@vertices@shape}{}}
+    {
+      \edef\vertex@Options{\vertex@Options shape=\cmdNW@vertices@shape,}
     }{}
     % color
     \ifthenelse{\not\equal{\cmdNW@vertices@color}{}}
@@ -1112,27 +1120,27 @@
 
 
 %<--------------------------------------------------------------------------->
-%      Init Plain
+%      Init Plane
 %<--------------------------------------------------------------------------->
-\define@cmdkey  [NW] {plain} {x}{}
-\define@cmdkey  [NW] {plain} {y}{}
-\define@cmdkey  [NW] {plain} {width}{}
-\define@cmdkey  [NW] {plain} {height}{}
-\define@cmdkey  [NW] {plain} {color}{}
-\define@cmdkey  [NW] {plain} {opacity}{}
-\define@cmdkey  [NW] {plain} {style}{}
-\define@cmdkey  [NW] {plain} {layer}{}
-\define@cmdkey  [NW] {plain} {grid}{}
-\define@cmdkey  [NW] {plain} {image}{}
-\define@boolkey [NW] {plain} {RGB}[true]{}
-\define@boolkey [NW] {plain} {InBG}[true]{}
-\define@boolkey [NW] {plain} {NoFill}[true]{}
-\define@boolkey [NW] {plain} {NoBorder}[true]{}
-\define@boolkey [NW] {plain} {ImageAndFill}[true]{}
-\presetkeys     [NW] {plain} {x       = {0},
+\define@cmdkey  [NW] {plane} {x}{}
+\define@cmdkey  [NW] {plane} {y}{}
+\define@cmdkey  [NW] {plane} {width}{}
+\define@cmdkey  [NW] {plane} {height}{}
+\define@cmdkey  [NW] {plane} {color}{}
+\define@cmdkey  [NW] {plane} {opacity}{}
+\define@cmdkey  [NW] {plane} {style}{}
+\define@cmdkey  [NW] {plane} {layer}{}
+\define@cmdkey  [NW] {plane} {grid}{}
+\define@cmdkey  [NW] {plane} {image}{}
+\define@boolkey [NW] {plane} {RGB}[true]{}
+\define@boolkey [NW] {plane} {InBG}[true]{}
+\define@boolkey [NW] {plane} {NoFill}[true]{}
+\define@boolkey [NW] {plane} {NoBorder}[true]{}
+\define@boolkey [NW] {plane} {ImageAndFill}[true]{}
+\presetkeys     [NW] {plane} {x       = {0},
                               y       = {0},
-                              width   = {\PlainWidth},
-                              height  = {\PlainHeight},
+                              width   = {\PlaneWidth},
+                              height  = {\PlaneHeight},
                               color   = {},
                               opacity = {},
                               style   = {},
@@ -1147,84 +1155,84 @@
 
 
 %<--------------------------------------------------------------------------->
-%      Plain
+%      Plane
 %<--------------------------------------------------------------------------->
-\newcommand*{\Plain}[1][]{\@plain[#1]}%
-\def\@plain[#1]{%
-  \setkeys[NW]{plain}{#1}%
-  \ifNW@plain@ImageAndFill
-  \setkeys[NW]{plain}{#1}%
+\newcommand*{\Plane}[1][]{\@plane[#1]}%
+\def\@plane[#1]{%
+  \setkeys[NW]{plane}{#1}%
+  \ifNW@plane@ImageAndFill
+  \setkeys[NW]{plane}{#1}%
   \else
-  \ifthenelse{\not\equal{\cmdNW@plain@image}{}}{
-    \setkeys[NW]{plain}{#1,NoFill}
+  \ifthenelse{\not\equal{\cmdNW@plane@image}{}}{
+    \setkeys[NW]{plane}{#1,NoFill}
   }{}
   \fi
-  \@@plain%
+  \@@plane%
 }
-\def\@@plain{%
-  % Draw Plain on the Background layer
-  \ifNW@plain@InBG
+\def\@@plane{%
+  % Draw Plane on the Background layer
+  \ifNW@plane@InBG
     \tikzset{InBGStyle/.style={on background layer}}
   \else
     \tikzset{InBGStyle/.style={}}
   \fi
   \begin{scope}[InBGStyle]
-    % Check if the color of the plain is redefined, if so the new style is
+    % Check if the color of the plane is redefined, if so the new style is
     % used. If the option RGB is true, RGB values can be used to define the
-    % color of the plain entered in the form {R,G,B}. If RGB is not true the
+    % color of the plane entered in the form {R,G,B}. If RGB is not true the
     % default colors of tikz can be used (e.g. blue!50!green)
-    \ifNW@plain@RGB
-      \ifthenelse{\not\equal{\cmdNW@plain@color}{}}{
-        \pgfutil@definecolor{LocalColor}{RGB}{\cmdNW@plain@color}
-        \tikzset{LocalPlainFill/.style={fill = LocalColor}}
+    \ifNW@plane@RGB
+      \ifthenelse{\not\equal{\cmdNW@plane@color}{}}{
+        \pgfutil@definecolor{LocalColor}{RGB}{\cmdNW@plane@color}
+        \tikzset{LocalPlaneFill/.style={fill = LocalColor}}
       }{
-        \tikzset{LocalPlainFill/.style={}}
+        \tikzset{LocalPlaneFill/.style={}}
       }
     \else
-      \ifthenelse{\not\equal{\cmdNW@plain@color}{}}{
-        \tikzset{LocalPlainFill/.style={fill = \cmdNW@plain@color}}
+      \ifthenelse{\not\equal{\cmdNW@plane@color}{}}{
+        \tikzset{LocalPlaneFill/.style={fill = \cmdNW@plane@color}}
       }{
-        \tikzset{LocalPlainFill/.style={}}
+        \tikzset{LocalPlaneFill/.style={}}
       }
     \fi
-    % Check if the opacity of the plain is redefined, if so the new style is used
-    \ifthenelse{\not\equal{\cmdNW@plain@opacity}{}}{
-      \tikzset{LocalPlainOpacity/.style={fill opacity = \cmdNW@plain@opacity}}
+    % Check if the opacity of the plane is redefined, if so the new style is used
+    \ifthenelse{\not\equal{\cmdNW@plane@opacity}{}}{
+      \tikzset{LocalPlaneOpacity/.style={fill opacity = \cmdNW@plane@opacity}}
     }{
-      \tikzset{LocalPlainOpacity/.style={}}
+      \tikzset{LocalPlaneOpacity/.style={}}
     }
-    \begin{scope}[canvas is yx plane at z=(\cmdNW@plain@layer-1)*\NetworkLayerDistance]
-      % Draw the fill of the Plain
-      \ifNW@plain@NoFill
+    \begin{scope}[canvas is yx plane at z=(\cmdNW@plane@layer-1)*\NetworkLayerDistance]
+      % Draw the fill of the Plane
+      \ifNW@plane@NoFill
       \else
       \protected@edef\@tempa{%
-        \noexpand\fill[PlainFillStyle,LocalPlainFill,LocalPlainOpacity](\cmdNW@plain@x,\cmdNW@plain@y)
-        rectangle ++ (\cmdNW@plain@width,\cmdNW@plain@height)}%
+        \noexpand\fill[PlaneFillStyle,LocalPlaneFill,LocalPlaneOpacity](\cmdNW@plane@x*\DistanceScale,\cmdNW@plane@y*\DistanceScale)
+        rectangle ++ (\cmdNW@plane@width*\DistanceScale,\cmdNW@plane@height*\DistanceScale)}%
       \@tempa;
       \fi
-      % Draw image on the Plain
-      \ifthenelse{\not\equal{\cmdNW@plain@image}{}}{
+      % Draw image on the Plane
+      \ifthenelse{\not\equal{\cmdNW@plane@image}{}}{
         %\protected@edef\@tempa{%
           %\noexpand
-          \node[inner sep=0pt,LocalPlainOpacity] at
-          ($(\cmdNW@plain@width/2,\cmdNW@plain@height/2)+(\cmdNW@plain@x,\cmdNW@plain@y)$)
-          {\includegraphics[width=\cmdNW@plain@width\DefaultUnit,height=\cmdNW@plain@height\DefaultUnit]{\cmdNW@plain@image}};
+          \node[inner sep=0pt,LocalPlaneOpacity] at
+          ($(\cmdNW@plane@width/2,\cmdNW@plane@height/2)+(\cmdNW@plane@x,\cmdNW@plane@y)$)
+          {\includegraphics[width=\cmdNW@plane@width\DefaultUnit,height=\cmdNW@plane@height\DefaultUnit]{\cmdNW@plane@image}};
         %}%
         %\@tempa;
       }{}
-      % Draw grid on the Plain
-      \ifthenelse{\not\equal{\cmdNW@plain@grid}{}}{
+      % Draw grid on the Plane
+      \ifthenelse{\not\equal{\cmdNW@plane@grid}{}}{
         \protected@edef\@tempa{%
-          \noexpand\draw[PlainGridStyle,step=\cmdNW@plain@grid](\cmdNW@plain@x,\cmdNW@plain@y)
-          grid ++ (\cmdNW@plain@width,\cmdNW@plain@height)}%
+          \noexpand\draw[PlaneGridStyle,step=\cmdNW@plane@grid*\DistanceScale](\cmdNW@plane@x*\DistanceScale,\cmdNW@plane@y*\DistanceScale)
+          grid ++ (\cmdNW@plane@width*\DistanceScale,\cmdNW@plane@height*\DistanceScale)}%
         \@tempa;
      }{}
-      % Draw the border of the Plain
-      \ifNW@plain@NoBorder
+      % Draw the border of the Plane
+      \ifNW@plane@NoBorder
       \else
       \protected@edef\@tempa{%
-        \noexpand\draw[PlainBorderStyle,\cmdNW@plain@style](\cmdNW@plain@x,\cmdNW@plain@y)
-        rectangle ++ (\cmdNW@plain@width,\cmdNW@plain@height)}%
+        \noexpand\draw[PlaneBorderStyle,\cmdNW@plane@style](\cmdNW@plane@x*\DistanceScale,\cmdNW@plane@y*\DistanceScale)
+        rectangle ++ (\cmdNW@plane@width*\DistanceScale,\cmdNW@plane@height*\DistanceScale)}%
       \@tempa;
       \fi
     \end{scope}
@@ -1331,7 +1339,7 @@
           \noexpand\node[TextStyle, LocalTextColor, LocalTextOpacity,
           LocalTextFontSize, LocalTextRotation, LocalTextPosition,
           LocalTextAnchor, LocalTextWidth, \cmdNW@text@style] at
-          (\cmdNW@text@x,\cmdNW@text@y){#1}
+          (\cmdNW@text@x*\DistanceScale,\cmdNW@text@y*\DistanceScale){#1}
         }\@tempa;%
     }{
       \begin{scope}[canvas is yx plane at z=(\cmdNW@text@layer-1)*\NetworkLayerDistance]
@@ -1339,7 +1347,7 @@
           \noexpand\node[TextStyle, LocalTextColor, LocalTextOpacity,
           LocalTextFontSize, LocalTextRotation, LocalTextPosition,
           LocalTextAnchor, LocalTextWidth, \cmdNW@text@style] at
-          (\cmdNW@text@x,\cmdNW@text@y){#1}
+          (\cmdNW@text@x*\DistanceScale,\cmdNW@text@y*\DistanceScale){#1}
         }\@tempa;%
       \end{scope}
     }

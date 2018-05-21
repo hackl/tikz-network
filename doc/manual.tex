@@ -6,7 +6,7 @@
 % Book metadata
 \title{tikz-network\\manual}
 \author[J\"urgen Hackl]{J\"urgen Hackl}
-\publisher{Version 0.3}
+\publisher{Version 0.4}
 
 %%
 % If they're installed, use Bergamo and Chantilly from www.fontsite.com.
@@ -304,7 +304,7 @@ The aim of this manual is to describe the use of the \pkg library for visualizin
 \begin{itemize}
 \item In Chapter \ref{chap:simple_networks} the elements to create simple networks (by hand) in a plane are explained. Thereby, the use of the commands \doccmd{Vertex} and \doccmd{Edge} are shown.
 \item How to create complex networks from external files\footnote{e.g. \doccls{igraph} or \doccls{networkx}} are explained in Chapter \ref{chap:complex_networks}. The main commands, therefore are \doccmd{Vertices} and \doccmd{Edges} which are using the same options as in the simple case.
-\item In Chapter \ref{chap:multilayer_networks}, the visualization of multilayer networks is explained. Additional visualization tools such as \doccmd{Plain} and \docenv{Layer} are introduced.
+\item In Chapter \ref{chap:multilayer_networks}, the visualization of multilayer networks is explained. Additional visualization tools such as \doccmd{Plane} and \docenv{Layer} are introduced.
 \item The default settings used and how they can be modified is explained in Chapter \ref{chap:default_settings}.
 \item Information about troubleshooting and support is given in Chapter \ref{chap:troubleshooting}
 \item Since this is the alpha version (0.1) of the package, features which will be probably added and commands which have to be fixed are listed in Appendix \ref{chap:todo}.
@@ -416,9 +416,13 @@ For a \doccmd{Vertex} the following options are available:
       x          & 0     & measure& x-coordinate \\
       y          & 0     & measure& y-coordinate \\
       size       & \{\}  & measure& diameter of the circle\\
-      color      & \{\}  & color & fillcolor of vertex\\
+      color      & \{\}  & color & fill color of vertex\\
       opacity    & \{\}  & number & opacity of the fill color \\
+      shape      & \{\}  & string & shape of the vertex\\
       label      & \{\}  & string & label \\
+      fontsize   & \{\}  & string & font size of the label\\
+      fontcolor  & \{\}  & color & font color of the label\\
+      fontscale  & \{\}  & number & scale of the label\\
       position   & center& value$^a$ & label position\\
       distance   & 0     & measure & label distance from the center \\
       style      & \{\}  & string & additional \tikzsym styles \\
@@ -445,7 +449,8 @@ The order how the options are entered does not matter. Changes to the default Ve
 \end{docspecdef}
 
 The location of the vertices are determined by Cartesian coordinates in \docopt{x} and \docopt{y}. The coordinates are optional. If no coordinates are determined the vertex will be placed at the origin ($0,0$). The entered \docarg{measures} are in default units (\si{cm}). Changing the unites (locally) can be done by adding the unit to the \docarg{measure}\footnote{e.g. x=\SI{1}{in}}. Changes to the default setting can be made with \doccmd{SetDefaultUnit}\footnote{see Section \ref{sec:gerneral_settings}}. 
-\newpage
+
+%\newpage
 \begin{marginfigure}[6mm]
 \centering
   \begin{tikzpicture}
@@ -518,7 +523,6 @@ To change the fill color of each vertex individually, the option \docopt{color} 
 \end{lstlisting}
 \end{docspec}
 
-
 \begin{docspecdef}
   \doccmd{Vertex}[\docopt{opacity}=\docarg{number}]\{\docarg{Name}\}
 \end{docspecdef}
@@ -546,6 +550,31 @@ With the option \docopt{opacity} the opacity of the vertex fill color can be mod
 \end{docspec}
 
 \begin{docspecdef}
+  \doccmd{Vertex}[\docopt{shape}=\docarg{string}]\{\docarg{Name}\}
+\end{docspecdef}
+
+With the option \docopt{shape} the shape of the vertex can be modified. Thereby the shapes implemented in \tikzsym can be used, including: \docarg{circle}, \docarg{rectangle}, \docarg{diamond}, \docarg{trapezium}, \docarg{semicircle}, \docarg{isosceles triangle}, \dots.
+
+\begin{marginfigure}[34mm]
+\centering
+  \begin{tikzpicture}
+    \Vertex[shape = rectangle]{A}
+    \Vertex[x=1,shape = diamond]{B}
+    \Vertex[x=2,shape = isosceles triangle]{C}
+  \end{tikzpicture}
+\end{marginfigure}
+
+\begin{docspec}
+\begin{lstlisting}
+  \begin{tikzpicture}
+    \Vertex[shape = rectangle]{A}
+    \Vertex[x=1,shape = diamond]{B}
+    \Vertex[x=2,shape = isosceles triangle]{C}
+  \end{tikzpicture}
+\end{lstlisting}
+\end{docspec}
+
+\begin{docspecdef}
   \doccmd{Vertex}[\docopt{label}=\docarg{string}]\{\docarg{Name}\}
 \end{docspecdef}
 
@@ -556,7 +585,7 @@ In \pkg there are several ways to define the labels of the vertices and edges. T
   \begin{tikzpicture}
     \Vertex[label=foo]{A}
     \Vertex[x=1,label=bar]{B}
-    \Vertex[x=2,label=$u_1$]{B}
+    \Vertex[x=2,label=$u_1$]{C}
   \end{tikzpicture}
 \end{marginfigure}
 
@@ -565,11 +594,85 @@ In \pkg there are several ways to define the labels of the vertices and edges. T
   \begin{tikzpicture}
     \Vertex[label=foo]{A}
     \Vertex[x=1,label=bar]{B}
-    \Vertex[x=2,label=$u_1$]{B}
+    \Vertex[x=2,label=$u_1$]{C}
   \end{tikzpicture}
 \end{lstlisting}
 \end{docspec}
 
+\begin{docspecdef}
+  \doccmd{Vertex}[\docopt{label}=\docarg{string},\docopt{fontsize}=\docarg{string}]\{\docarg{Name}\}
+\end{docspecdef}
+
+The font size of the \docopt{label} can be modified with the option \docopt{fontsize}. Here common \LaTeX~ font size commands\footnote{e.g. \doccmd{tiny}, \doccmd{scriptsize}, \doccmd{footnotesize}, \doccmd{small}, \dots.} can be used to change the size of the label.
+
+\begin{marginfigure}[10mm]
+\centering
+  \begin{tikzpicture}
+    \Vertex[label=foo,fontsize=\normalsize]{A}
+    \Vertex[x=1,label=bar,fontsize=\tiny]{B}
+    \Vertex[x=2,label=$u_1$,fontsize=\large]{C}
+  \end{tikzpicture}
+\end{marginfigure}
+
+\begin{docspec}
+\begin{lstlisting}
+  \begin{tikzpicture}
+    \Vertex[label=foo,fontsize=\normalsize]{A}
+    \Vertex[x=1,label=bar,fontsize=\tiny]{B}
+    \Vertex[x=2,label=$u_1$,fontsize=\large]{C}
+  \end{tikzpicture}
+\end{lstlisting}
+\end{docspec}
+
+\begin{docspecdef}
+  \doccmd{Vertex}[\docopt{label}=\docarg{string},\docopt{fontcolor}=\docarg{color}]\{\docarg{Name}\}
+\end{docspecdef}
+
+The color of the \docopt{label} can be changed with the option \docopt{fontcolor}. Currently, only the default \tikzsym and \LaTeX~ colors are supported\footnote{\TODO Add RGB option!}.
+
+\begin{marginfigure}[8mm]
+\centering
+  \begin{tikzpicture}
+    \Vertex[label=foo,fontcolor=blue]{A}
+    \Vertex[x=1,label=bar,fontcolor=magenta]{B}
+    \Vertex[x=2,label=$u_1$,fontcolor=red]{C}
+  \end{tikzpicture}
+\end{marginfigure}
+
+\begin{docspec}
+\begin{lstlisting}
+  \begin{tikzpicture}
+    \Vertex[label=foo,fontcolor=blue]{A}
+    \Vertex[x=1,label=bar,fontcolor=magenta]{B}
+    \Vertex[x=2,label=$u_1$,fontcolor=red]{C}
+  \end{tikzpicture}
+\end{lstlisting}
+\end{docspec}
+
+\begin{docspecdef}
+  \doccmd{Vertex}[\docopt{label}=\docarg{string},\docopt{fontscale}=\docarg{number}]\{\docarg{Name}\}
+\end{docspecdef}
+
+Contrary to the option \docopt{fontsize}, the option \docopt{fontscale} does not change the font size itself but scales the curent font size up or down. The \docarg{number} defines the scale, where numbers between $0$ and $1$ down scale the font and numbers greater then $1$ up scale the label. For example $0.5$ reduces the size of the font to $50\%$ of its originial size, while $1.2$ scales the font to $120\%$.
+
+\begin{marginfigure}[34mm]
+\centering
+  \begin{tikzpicture}
+    \Vertex[label=foo,fontscale=0.5]{A}
+    \Vertex[x=1,label=bar,fontscale=1]{B}
+    \Vertex[x=2,label=$u_1$,fontscale=2]{C}
+  \end{tikzpicture}
+\end{marginfigure}
+
+\begin{docspec}
+\begin{lstlisting}
+  \begin{tikzpicture}
+    \Vertex[label=foo,fontscale=0.5]{A}
+    \Vertex[x=1,label=bar,fontscale=1]{B}
+    \Vertex[x=2,label=$u_1$,fontscale=2]{C}
+  \end{tikzpicture}
+\end{lstlisting}
+\end{docspec}
 
 \begin{docspecdef}
   \doccmd{Vertex}[\docopt{label}=\docarg{string},\docopt{position}=\docarg{value},\docopt{distance}=\docarg{number}]\{\docarg{Name}\}
@@ -660,8 +763,8 @@ Any other \tikzsym style option or command can be entered via the option \docopt
 
 The option \docopt{Math} allows transforming labels into mathematical expressions without using the \$~\$ environment. In combination with \docopt{IdAsLabel} allows this option also mathematical expressions by the definition of the vertex \docarg{Name}.
 
-\newpage
-\begin{marginfigure}[12mm]
+%\newpage
+\begin{marginfigure}[32mm]
 \centering
   \begin{tikzpicture}
     \Vertex[IdAsLabel]{A1}
@@ -765,6 +868,9 @@ For an \doccmd{Edge} the following options are available:
       opacity     & \{\}  & number  & opacity of the edge \\
       bend        & 0     & number  & angle out/in of the vertex \\
       label       & \{\}  & string  & label \\
+      fontsize    & \{\}  & string  & font size of the label\\
+      fontcolor   & \{\}  & color   & font color of the label\\
+      fontscale   & \{\}  & number  & scale of the label\\
       position    & \{\}  & string  & label position\\
       distance    & 0.5   & number  & label distance from vertex i\\
       style       & \{\}  & string  & additional \tikzsym styles \\
@@ -818,7 +924,8 @@ An edge is created between \docarg{Vertex i} and \docarg{Vertex j}.
 
 The line width of an edge can be modified with the option \docopt{lw}. Here, the unit of the \docarg{measure} has to be specified. The default value is \SI{1.5}{pt}.
 
-\begin{marginfigure}[32mm]
+\newpage
+\begin{marginfigure}[6mm]
 \centering
   \begin{tikzpicture}
     \Vertex{A} \Vertex[x=2]{B} \Vertex[x=2,y=-1]{C}
@@ -837,7 +944,7 @@ The line width of an edge can be modified with the option \docopt{lw}. Here, the
 \end{lstlisting}
 \end{docspec}
 
-\newpage
+%\newpage
 
 \begin{docspecdef}
   \doccmd{Edge}[\docopt{color}=\docarg{color}](\docarg{Vertex i})(\docarg{Vertex j})
@@ -951,11 +1058,88 @@ An edge is labeled with the option \docopt{label}. For the label any \docarg{str
 \end{docspec}
 
 \begin{docspecdef}
+  \doccmd{Edge}[\docopt{label}=\docarg{string},\docopt{fontsize}=\docarg{string}](\docarg{Vertex i})(\docarg{Vertex j})
+\end{docspecdef}
+
+The font size of the \docopt{label} can be modified with the option \docopt{fontsize}. Here common \LaTeX~ font size commands\footnote{e.g. \doccmd{tiny}, \doccmd{scriptsize}, \doccmd{footnotesize}, \doccmd{small}, \dots.} can be used to change the size of the label.
+
+\begin{marginfigure}[6mm]
+\centering
+  \begin{tikzpicture}
+    \Vertex{A} \Vertex[x=2]{B} \Vertex[x=2,y=-1]{C}
+    \Edge[label=X,fontsize=\large](A)(B)
+    \Edge[label=Y,fontsize=\tiny](A)(C)
+  \end{tikzpicture}
+\end{marginfigure}
+
+\begin{docspec}
+\begin{lstlisting}
+  \begin{tikzpicture}
+    \Vertex{A} \Vertex[x=2]{B} \Vertex[x=2,y=-1]{C}
+    \Edge[label=X,fontsize=\large](A)(B)
+    \Edge[label=Y,fontsize=\tiny](A)(C)
+  \end{tikzpicture}
+\end{lstlisting}
+\end{docspec}
+
+\begin{docspecdef}
+  \doccmd{Edge}[\docopt{label}=\docarg{string},\docopt{fontcolor}=\docarg{color}](\docarg{Vertex i})(\docarg{Vertex j})
+\end{docspecdef}
+
+The color of the \docopt{label} can be changed with the option \docopt{fontcolor}. Currently, only the default \tikzsym and \LaTeX~ colors are supported \footnote{\TODO Add RGB option!}.
+
+\begin{marginfigure}[1mm]
+\centering
+  \begin{tikzpicture}
+    \Vertex{A} \Vertex[x=2]{B} \Vertex[x=2,y=-1]{C}
+    \Edge[label=X,fontcolor=blue](A)(B)
+    \Edge[label=Y,fontcolor=red](A)(C)
+  \end{tikzpicture}
+\end{marginfigure}
+
+\begin{docspec}
+\begin{lstlisting}
+  \begin{tikzpicture}
+    \Vertex{A} \Vertex[x=2]{B} \Vertex[x=2,y=-1]{C}
+    \Edge[label=X,fontcolor=blue](A)(B)
+    \Edge[label=Y,fontcolor=red](A)(C)
+  \end{tikzpicture}
+\end{lstlisting}
+\end{docspec}
+
+
+\begin{docspecdef}
+  \doccmd{Edge}[\docopt{label}=\docarg{string},\docopt{fontscale}=\docarg{color}](\docarg{Vertex i})(\docarg{Vertex j})
+\end{docspecdef}
+
+Contrary to the option \docopt{fontsize}, the option \docopt{fontscale} does not change the font size itself but scales the curent font size up or down. The \docarg{number} defines the scale, where numbers between $0$ and $1$ down scale the font and numbers greater then $1$ up scale the label. For example $0.5$ reduces the size of the font to $50\%$ of its originial size, while $1.2$ scales the font to $120\%$.
+
+\begin{marginfigure}[30mm]
+\centering
+  \begin{tikzpicture}
+    \Vertex{A} \Vertex[x=2]{B} \Vertex[x=2,y=-1]{C}
+    \Edge[label=X,fontscale=.5](A)(B)
+    \Edge[label=Y,fontscale=1.2](A)(C)
+  \end{tikzpicture}
+\end{marginfigure}
+
+\begin{docspec}
+\begin{lstlisting}
+  \begin{tikzpicture}
+    \Vertex{A} \Vertex[x=2]{B} \Vertex[x=2,y=-1]{C}
+    \Edge[label=X,fontscale=.5](A)(B)
+    \Edge[label=Y,fontscale=2](A)(C)
+  \end{tikzpicture}
+\end{lstlisting}
+\end{docspec}
+
+\begin{docspecdef}
   \doccmd{Edge}[\docopt{label}=\docarg{string},\docopt{position}=\docarg{string}](\docarg{Vertex i})(\docarg{Vertex j})
 \end{docspecdef}
 
 Per default the \docopt{label} is positioned in between both vertices in the center of the line. Classical \tikzsym commands\footnote{e.g. \docarg{above}, \docarg{below}, \docarg{left}, \docarg{right}, \docarg{above left}, \docarg{above right},\dots} can be used to change the \docopt{position} of the \docopt{label}.
-\newpage
+%\newpage
+
 \begin{marginfigure}[6mm]
 \centering
   \begin{tikzpicture}
@@ -981,7 +1165,8 @@ Per default the \docopt{label} is positioned in between both vertices in the cen
 
 The label position between the vertices can be modified with the \docopt{distance} option. Per default the \docopt{label} is centered between both vertices. The position is expressed as the percentage of the length between the vertices, e.g. of \docopt{distance}=$0.7$, the label is placed at 70\% of the edge length away of \docarg{Vertex i}.
 
-\begin{marginfigure}[28mm]
+\newpage
+\begin{marginfigure}[6mm]
 \centering
   \begin{tikzpicture}
     \Vertex{A} \Vertex[x=2]{B}
@@ -1048,7 +1233,7 @@ In order to draw a finite sequence of edges which connect a sequence of vertices
 \end{lstlisting}
 \end{docspec}
 
-\newpage
+%\newpage
 
 \begin{docspecdef}
   \doccmd{Edge}(\docarg{Vertex i})(\docarg{Vertex i})
@@ -1079,7 +1264,8 @@ Self-loops are created by using the same vertex as origin and destination. Besid
 
 With the option \docopt{loopsize} the length of the edge can be modified. The \docarg{measure} value has to be insert together with its units. Per default the \docopt{loopsize} is \SI{1}{cm}.
 
-\begin{marginfigure}[25mm]
+\newpage
+\begin{marginfigure}[2mm]
 \centering
   \begin{tikzpicture}
     \Vertex{A} \Vertex[x=1.3]{B}
@@ -1153,12 +1339,12 @@ The shape of the self-loop is defined by the enclosing angle. The shape can be c
 \begin{lstlisting}
   \begin{tikzpicture}
     \Vertex{A}
-    \Edge[angle=45](A)(A)
+    \Edge[loopshape=45](A)(A)
   \end{tikzpicture}
 \end{lstlisting}
 \end{docspec}
 
-\newpage
+%\newpage
 
 \begin{docspecdef}
   \doccmd{Edge}[\docopt{Direct}](\docarg{Vertex i})(\docarg{Vertex j})
@@ -2095,7 +2281,7 @@ With the option \docopt{layer} only the edges between layer $\alpha$ and $\beta$
 \chapter{Multilayer Networks}
 \label{chap:multilayer_networks}
 
-One of the main purposes of the \pkg package is the illustration of multilayer network structures. Thereby, all the previous commands can be used. A multilayer network is represented as a three-dimensional object, where each layer is located at a different $z$ plain. In order to enable this functionality, the option \docopt{multilayer} has to be used at the beginning of the \docenvdef{tikzpicture}.
+One of the main purposes of the \pkg package is the illustration of multilayer network structures. Thereby, all the previous commands can be used. A multilayer network is represented as a three-dimensional object, where each layer is located at a different $z$ plane. In order to enable this functionality, the option \docopt{multilayer} has to be used at the beginning of the \docenvdef{tikzpicture}.
 
 \section{Simple Networks}
 \label{sec:simple_networks}
@@ -2372,15 +2558,15 @@ The perspective of the three-dimensional plot can be modified by changing the or
 \end{lstlisting}
 \end{docspec}
 \newpage
-\section{Plain}
+\section{Plane}
 
-To support the illustration of multilayer networks, the background of the layer can be simply visualized with the command \doccmddef{Plain}, which allow to draw boundaries, grids and include images to the layer.
+To support the illustration of multilayer networks, the background of the layer can be simply visualized with the command \doccmddef{Plane}, which allow to draw boundaries, grids and include images to the layer.
 \begin{docspecdef}
-  \doccmd{Plain}[\docopt{options}]
+  \doccmd{Plane}[\docopt{options}]
 \end{docspecdef}
-No obligatory arguments are needed. For a \doccmd{Plain} the following options are available:
+No obligatory arguments are needed. For a \doccmd{Plane} the following options are available:
 
-\begin{table}[h]\index{Plain!options}
+\begin{table}[h]\index{Plane!options}
   \footnotesize%
   \begin{center}
     \begin{tabular}{lccl}
@@ -2389,39 +2575,39 @@ No obligatory arguments are needed. For a \doccmd{Plain} the following options a
       \midrule
       x          & 0     & measure& x-coordinate of the origin\\
       y          & 0     & measure& y-coordinate of the origin\\
-      width      & \SI{5}{cm} & measure& width of the plain\\
-      height     & \SI{5}{cm} & measure& height of the plain\\
-      color      & vertexfill  & color  & fill color of the plain \\
+      width      & \SI{5}{cm} & measure& width of the plane\\
+      height     & \SI{5}{cm} & measure& height of the plane\\
+      color      & vertexfill  & color  & fill color of the plane \\
       opacity    & 0.3   & number & opacity of the fill color \\
       grid       & \{\}  & measure& spacing of the grid\\
       image      & \{\}  & file   & path to the image file \\
       style      & \{\}  & string & additional \tikzsym styles \\
-      layer      & 1  & number & layer where the plain is located\\
+      layer      & 1  & number & layer where the plane is located\\
       \midrule
       RGB        & false & Boolean & allow RGB colors \\
       NoFill     & false & Boolean & disable fill color \\
       NoBorder   & false & Boolean & disable border line \\
       ImageAndFill&false & Boolean & allow image and fill color \\
-      InBG       & false & Boolean & plain is in the background layer\\
+      InBG       & false & Boolean & plane is in the background layer\\
       \bottomrule
     \end{tabular}
     \scriptsize
     \\$^a$ either measure or string
   \end{center}
-  \caption{Options for the \doccmd{Plain} command.}
-  \label{tab:plain_options}
+  \caption{Options for the \doccmd{Plane} command.}
+  \label{tab:plane_options}
 \end{table}
 
 \begin{docspecdef}
- \doccmd{Plain}[\docopt{x}=\docarg{measure},\docopt{y}=\docarg{measure},\docopt{width}=\docarg{measure},\docopt{height}=\docarg{measure}]
+ \doccmd{Plane}[\docopt{x}=\docarg{measure},\docopt{y}=\docarg{measure},\docopt{width}=\docarg{measure},\docopt{height}=\docarg{measure}]
 \end{docspecdef}
 
-A \doccmd{Plain} is a rectangle with origin (\docopt{x},\docopt{y}), a given \docopt{width} and \docopt{height}. The origin is defined in the left lower corner and per default $(0,0)$. The plain is default \SI{5}{cm} (width) by \SI{5}{cm} (height). This default options can be changed with \doccmd{SetPlainWidth} and \doccmd{SetPlainHeight}\footnote{See Section \ref{sec:plain_style}.} 
+A \doccmd{Plane} is a rectangle with origin (\docopt{x},\docopt{y}), a given \docopt{width} and \docopt{height}. The origin is defined in the left lower corner and per default $(0,0)$. The plane is default \SI{5}{cm} (width) by \SI{5}{cm} (height). This default options can be changed with \doccmd{SetPlaneWidth} and \doccmd{SetPlaneHeight}\footnote{See Section \ref{sec:plane_style}.} 
 
 \begin{marginfigure}%[45mm]
 \centering
   \begin{tikzpicture}[multilayer=3d]
-    \Plain[x=-.5,y=-.5,width=3,height=2.5]
+    \Plane[x=-.5,y=-.5,width=3,height=2.5]
     \begin{Layer}[layer=1]
     \filldraw [orange] (-.5,-.5) circle (3pt);
     \node [orange,anchor=south west] at (-.5,-.5) {origin};
@@ -2434,29 +2620,29 @@ A \doccmd{Plain} is a rectangle with origin (\docopt{x},\docopt{y}), a given \do
 \begin{docspec}
 \begin{lstlisting}
   \begin{tikzpicture}[multilayer=3d]
-    \Plain[x=-.5,y=-.5,width=3,height=2.5]
+    \Plane[x=-.5,y=-.5,width=3,height=2.5]
   \end{tikzpicture}
 \end{lstlisting}
 \end{docspec}
 
 
 \begin{docspecdef}
-  \doccmd{Plain}[\docopt{color}=\docarg{color}]
+  \doccmd{Plane}[\docopt{color}=\docarg{color}]
 \end{docspecdef}
 
-To change the fill color of each plain individually, the option \docopt{color} has to be used. Without the option \docopt{RGB} set, the default \tikzsym and \LaTeX~ colors can be applied. Per default the default vertex color is used.
+To change the fill color of each plane individually, the option \docopt{color} has to be used. Without the option \docopt{RGB} set, the default \tikzsym and \LaTeX~ colors can be applied. Per default the default vertex color is used.
 
 \begin{marginfigure}[22mm]
 \centering
   \begin{tikzpicture}[multilayer=3d]
-    \Plain[x=-.5,y=-.5,width=3,height=2.5,color=green!70!blue]
+    \Plane[x=-.5,y=-.5,width=3,height=2.5,color=green!70!blue]
   \end{tikzpicture}
 \end{marginfigure}
 
 \begin{docspec}
 \begin{lstlisting}
   \begin{tikzpicture}[multilayer=3d]
-    \Plain[x=-.5,y=-.5,width=3,height=2.5,color=green!70!blue]
+    \Plane[x=-.5,y=-.5,width=3,height=2.5,color=green!70!blue]
   \end{tikzpicture}
 \end{lstlisting}
 \end{docspec}
@@ -2464,37 +2650,37 @@ To change the fill color of each plain individually, the option \docopt{color} h
 \newpage
 
 \begin{docspecdef}
-  \doccmd{Plain}[\docopt{opacity}=\docarg{number}]
+  \doccmd{Plane}[\docopt{opacity}=\docarg{number}]
 \end{docspecdef}
 
-With the option \docopt{opacity} the opacity of the plain fill color can be modified. The range of the \docarg{number} lies between $0$ and $1$. Where $0$ represents a fully transparent fill and $1$ a solid fill. Per default the opacity is set to $0.3$.
+With the option \docopt{opacity} the opacity of the plane fill color can be modified. The range of the \docarg{number} lies between $0$ and $1$. Where $0$ represents a fully transparent fill and $1$ a solid fill. Per default the opacity is set to $0.3$.
 
 \begin{marginfigure}[22mm]
 \centering
   \begin{tikzpicture}[multilayer=3d]
-    \Plain[x=-.5,y=-.5,width=3,height=2.5,opacity=.7]
+    \Plane[x=-.5,y=-.5,width=3,height=2.5,opacity=.7]
   \end{tikzpicture}
 \end{marginfigure}
 
 \begin{docspec}
 \begin{lstlisting}
   \begin{tikzpicture}[multilayer=3d]
-    \Plain[x=-.5,y=-.5,width=3,height=2.5,opacity=.7]
+    \Plane[x=-.5,y=-.5,width=3,height=2.5,opacity=.7]
   \end{tikzpicture}
 \end{lstlisting}
 \end{docspec}
 
 
 \begin{docspecdef}
-  \doccmd{Plain}[\docopt{grid}=\docarg{measure}]
+  \doccmd{Plane}[\docopt{grid}=\docarg{measure}]
 \end{docspecdef}
 
-With the option \docopt{grid} a grid will be drawn on top of the plain. The argument of this option defines the spacing between the grid lines. The entered \docarg{measures} are in default units (\si{cm}). Changing the unites (locally) can be done by adding the unit to the \docarg{measure}\footnote{e.g. x=\SI{5}{mm}}. Changes to the default setting can be made with \doccmd{SetDefaultUnit}\footnote{see Section \ref{sec:gerneral_settings}}. 
+With the option \docopt{grid} a grid will be drawn on top of the plane. The argument of this option defines the spacing between the grid lines. The entered \docarg{measures} are in default units (\si{cm}). Changing the unites (locally) can be done by adding the unit to the \docarg{measure}\footnote{e.g. x=\SI{5}{mm}}. Changes to the default setting can be made with \doccmd{SetDefaultUnit}\footnote{see Section \ref{sec:gerneral_settings}}. 
 
 \begin{marginfigure}%[22mm]
 \centering
   \begin{tikzpicture}[multilayer=3d]
-    \Plain[x=-.5,y=-.5,width=3,height=2.5,grid=5mm]
+    \Plane[x=-.5,y=-.5,width=3,height=2.5,grid=5mm]
     \begin{Layer}[layer=1]
     \draw[<->,orange] (2,-.7) --++ (.5,0) node [pos=.5,below]{5mm};
     \draw[<->,orange] (2.7,-.5) --++ (0,.5) node [pos=.5,below,sloped]{5mm};
@@ -2505,35 +2691,35 @@ With the option \docopt{grid} a grid will be drawn on top of the plain. The argu
 \begin{docspec}
 \begin{lstlisting}
   \begin{tikzpicture}[multilayer=3d]
-    \Plain[x=-.5,y=-.5,width=3,height=2.5,grid=5mm]
+    \Plane[x=-.5,y=-.5,width=3,height=2.5,grid=5mm]
   \end{tikzpicture}
 \end{lstlisting}
 \end{docspec}
 
 
 \begin{docspecdef}
-  \doccmd{Plain}[\docopt{image}=\docarg{file}]
+  \doccmd{Plane}[\docopt{image}=\docarg{file}]
 \end{docspecdef}
 
-An image can be assigned to a plain with the option \docopt{image}. The argument is the file name and the folder where the image is stored. The width and height of the figure is scaled to the size of the plain. Without the option \docopt{ImageAndFill} the image overwrite the color options.
+An image can be assigned to a plane with the option \docopt{image}. The argument is the file name and the folder where the image is stored. The width and height of the figure is scaled to the size of the plane. Without the option \docopt{ImageAndFill} the image overwrite the color options.
 
 \begin{marginfigure}[22mm]
 \centering
   \begin{tikzpicture}[multilayer=3d]
-    \Plain[x=-.5,y=-.5,width=3,height=2.5,image=data/plain.png]
+    \Plane[x=-.5,y=-.5,width=3,height=2.5,image=data/plane.png]
   \end{tikzpicture}
 \end{marginfigure}
 
 \begin{docspec}
 \begin{lstlisting}
   \begin{tikzpicture}[multilayer=3d]
-    \Plain[x=-.5,y=-.5,width=3,height=2.5,image=data/plain.png]
+    \Plane[x=-.5,y=-.5,width=3,height=2.5,image=data/plane.png]
   \end{tikzpicture}
 \end{lstlisting}
 \end{docspec}
 
 \begin{docspecdef}
-  \doccmd{Plain}[\docopt{style}=\docarg{string}]
+  \doccmd{Plane}[\docopt{style}=\docarg{string}]
 \end{docspecdef}
 
 Any other \tikzsym style option or command can be entered via the option \docopt{style}. Most of these commands can be found in the ``\tikzsym and PGF Manual''. Contain the commands additional options (e.g.\docopt{inner color}=\docarg{color}), then the argument for the \docopt{style} has to be between $\{~\}$ brackets.
@@ -2541,31 +2727,31 @@ Any other \tikzsym style option or command can be entered via the option \docopt
 \begin{marginfigure}[22mm]
 \centering
   \begin{tikzpicture}[multilayer=3d]
-    \Plain[x=-.5,y=-.5,width=3,height=2.5,style={dashed,inner color=white,outer color=red!80}]
+    \Plane[x=-.5,y=-.5,width=3,height=2.5,style={dashed,inner color=white,outer color=red!80}]
   \end{tikzpicture}
 \end{marginfigure}
 
 \begin{docspec}
 \begin{lstlisting}
   \begin{tikzpicture}[multilayer=3d]
-    \Plain[x=-.5,y=-.5,width=3,height=2.5,style={dashed,inner color=white,outer color=red!80}]
+    \Plane[x=-.5,y=-.5,width=3,height=2.5,style={dashed,inner color=white,outer color=red!80}]
   \end{tikzpicture}
 \end{lstlisting}
 \end{docspec}
 
 \begin{docspecdef}
-  \doccmd{Plain}[\docopt{layer}=\docarg{number}]
+  \doccmd{Plane}[\docopt{layer}=\docarg{number}]
 \end{docspecdef}
 
-With the option \docopt{layer}=\docarg{layer $\alpha$}, the position of the plain can be assigned to a specific layer. Per default the plain is drawn on layer $1$.
+With the option \docopt{layer}=\docarg{layer $\alpha$}, the position of the plane can be assigned to a specific layer. Per default the plane is drawn on layer $1$.
 
 \newpage
 \begin{marginfigure}%[22mm]
 \centering
   \begin{tikzpicture}[multilayer=3d]
     \SetLayerDistance{-1.5}
-    \Plain[x=-.5,y=-.5,width=3,height=2.5,color=green,layer=2]
-    \Plain[x=-.5,y=-.5,width=3,height=2.5]
+    \Plane[x=-.5,y=-.5,width=3,height=2.5,color=green,layer=2]
+    \Plane[x=-.5,y=-.5,width=3,height=2.5]
     \Text[x=-.5,y=-.5,layer=2,color=orange,anchor=north west,fontsize=\normalsize]{Layer 2}
     \Text[x=-.5,y=-.5,layer=1,color=orange,anchor=north west,fontsize=\normalsize]{Layer 2}
   \end{tikzpicture}
@@ -2575,50 +2761,50 @@ With the option \docopt{layer}=\docarg{layer $\alpha$}, the position of the plai
 \begin{lstlisting}
   \begin{tikzpicture}[multilayer=3d]
     \SetLayerDistance{-1.5}
-    \Plain[x=-.5,y=-.5,width=3,height=2.5,color=green,layer=2]
-    \Plain[x=-.5,y=-.5,width=3,height=2.5]
+    \Plane[x=-.5,y=-.5,width=3,height=2.5,color=green,layer=2]
+    \Plane[x=-.5,y=-.5,width=3,height=2.5]
   \end{tikzpicture}
 \end{lstlisting}
 \end{docspec}
 
 \begin{docspecdef}
-  \doccmd{Plain}[\docopt{RGB},\docopt{color}=\docarg{RGB values}]
+  \doccmd{Plane}[\docopt{RGB},\docopt{color}=\docarg{RGB values}]
 \end{docspecdef}
 
-In order to display RGB colors for the plain fill color, the option \docopt{RGB} has to be entered. In combination with this option, the \docopt{color} hast to be a list with the \docarg{RGB 
+In order to display RGB colors for the plane fill color, the option \docopt{RGB} has to be entered. In combination with this option, the \docopt{color} hast to be a list with the \docarg{RGB 
 values}, separated by <<,>> and within $\{~\}$.\footnote{e.g. the RGB code for white: $\{255,255,255\}$}
 
 \begin{marginfigure}
 \centering
   \begin{tikzpicture}[multilayer=3d]
-    \Plain[x=-.5,y=-.5,width=3,height=2.5,RGB,color={0,0,0}]
+    \Plane[x=-.5,y=-.5,width=3,height=2.5,RGB,color={0,0,0}]
   \end{tikzpicture}
 \end{marginfigure}
 
 \begin{docspec}
 \begin{lstlisting}
   \begin{tikzpicture}[multilayer=3d]
-    \Plain[x=-.5,y=-.5,width=3,height=2.5,RGB,color={0,0,0}]
+    \Plane[x=-.5,y=-.5,width=3,height=2.5,RGB,color={0,0,0}]
   \end{tikzpicture}
 \end{lstlisting}
 \end{docspec}
 
 
 \begin{docspecdef}
-  \doccmd{Plain}[\docopt{NoFill}]
+  \doccmd{Plane}[\docopt{NoFill}]
 \end{docspecdef}
 \begin{docspecdef}
-  \doccmd{Plain}[\docopt{NoBorder}]
+  \doccmd{Plane}[\docopt{NoBorder}]
 \end{docspecdef}
 
-\docopt{NoFill} is a Boolean option which disables the fill color of the plain and \docopt{NoBorder} is a Boolean option which suppress the border line of the plain.
+\docopt{NoFill} is a Boolean option which disables the fill color of the plane and \docopt{NoBorder} is a Boolean option which suppress the border line of the plane.
 
 \begin{marginfigure}[16mm]
 \centering
   \begin{tikzpicture}[multilayer=3d]
     \SetLayerDistance{-1.5}
-    \Plain[x=-.5,y=-.5,width=3,height=2.5,layer=2,NoFill]
-    \Plain[x=-.5,y=-.5,width=3,height=2.5,NoBorder]
+    \Plane[x=-.5,y=-.5,width=3,height=2.5,layer=2,NoFill]
+    \Plane[x=-.5,y=-.5,width=3,height=2.5,NoBorder]
     \Text[x=-.5,y=-.5,layer=2,color=orange,anchor=north west,fontsize=\normalsize]{Layer 2}
     \Text[x=-.5,y=-.5,layer=1,color=orange,anchor=north west,fontsize=\normalsize]{Layer 2}
   \end{tikzpicture}
@@ -2628,38 +2814,38 @@ values}, separated by <<,>> and within $\{~\}$.\footnote{e.g. the RGB code for w
 \begin{lstlisting}
   \begin{tikzpicture}[multilayer=3d]
     \SetLayerDistance{-1.5}
-    \Plain[x=-.5,y=-.5,width=3,height=2.5,layer=2,NoFill]
-    \Plain[x=-.5,y=-.5,width=3,height=2.5,NoBorder]
+    \Plane[x=-.5,y=-.5,width=3,height=2.5,layer=2,NoFill]
+    \Plane[x=-.5,y=-.5,width=3,height=2.5,NoBorder]
   \end{tikzpicture}
 \end{lstlisting}
 \end{docspec}
 
 \begin{docspecdef}
-  \doccmd{Plain}[\docopt{ImageAndFill}]
+  \doccmd{Plane}[\docopt{ImageAndFill}]
 \end{docspecdef}
 
-With the option \docopt{ImageAndFill} both, image and fill color can be drawn on a plain. The option \docopt{opacity} is applied to both objects.
+With the option \docopt{ImageAndFill} both, image and fill color can be drawn on a plane. The option \docopt{opacity} is applied to both objects.
 
 \begin{marginfigure}[18mm]
 \centering
   \begin{tikzpicture}[multilayer=3d]
-    \Plain[x=-.5,y=-.5,width=3,height=2.5,image=data/plain.png,color=red,opacity=.4,ImageAndFill]
+    \Plane[x=-.5,y=-.5,width=3,height=2.5,image=data/plane.png,color=red,opacity=.4,ImageAndFill]
   \end{tikzpicture}
 \end{marginfigure}
 
 \begin{docspec}
 \begin{lstlisting}
   \begin{tikzpicture}[multilayer=3d]
-   \Plain[x=-.5,y=-.5,width=3,height=2.5,image=data/plain.png,color=red,opacity=.4,ImageAndFill]
+   \Plane[x=-.5,y=-.5,width=3,height=2.5,image=data/plane.png,color=red,opacity=.4,ImageAndFill]
   \end{tikzpicture}
 \end{lstlisting}
 \end{docspec}
 
 \begin{docspecdef}
-  \doccmd{Plain}[\docopt{InBG}]
+  \doccmd{Plane}[\docopt{InBG}]
 \end{docspecdef}
 
-A plain is drawn on the current layer of the \docarg{tikzpicture}. I.e. objects which are created after the plain appear on top of it and objects created before below of it. With the option \docopt{InBG} enabled, the plain is drawn on the background layer of the \docarg{tikzpicture}.
+A plane is drawn on the current layer of the \docarg{tikzpicture}. I.e. objects which are created after the plane appear on top of it and objects created before below of it. With the option \docopt{InBG} enabled, the plane is drawn on the background layer of the \docarg{tikzpicture}.
 
 \chapter{Default Settings}
 \label{chap:default_settings}
@@ -2811,23 +2997,23 @@ TextRotation    & 0                   & number   & initial rotation of the text 
     \end{tabularx}
     \scriptsize
   \end{center}
-  \caption{Document style options for the plains.}
-  \label{tab:plain_style}
+  \caption{Document style options for the planes.}
+  \label{tab:plane_style}
 \end{table}
 
 
-\section{Plain Style}
-\label{sec:plain_style}
+\section{Plane Style}
+\label{sec:plane_style}
 
-The appearance of the plains can be modified with the command \doccmddef{SetPlainStyle}. This command will change the default settings of the plains.
+The appearance of the planes can be modified with the command \doccmddef{SetPlaneStyle}. This command will change the default settings of the planes.
 
 \begin{docspecdef}
-  \doccmd{SetPlainStyle}[\docarg{document options}]
+  \doccmd{SetPlaneStyle}[\docarg{document options}]
 \end{docspecdef}
 
 The following options are available:
 
-\begin{table}[h]\index{Plain!style}
+\begin{table}[h]\index{Plane!style}
   \footnotesize%
   \begin{center}
     \begin{tabularx}{\textwidth}{lccX}
@@ -2837,8 +3023,8 @@ The following options are available:
 LineWidth     & 1.5pt               & measure  & width of the border line \\
 LineColor     & black               & color    & color of the border line \\
 LineOpacity   & 1                   & number   & opacity of the border line \\
-FillColor     & vertexfill          & color    & fill color of the plain \\
-FillOpacity   & 0.3                 & number   & fill opacity of the plain \\
+FillColor     & vertexfill          & color    & fill color of the plane \\
+FillOpacity   & 0.3                 & number   & fill opacity of the plane \\
 GridLineWidth & 0.5pt               & measure  & width of the grid lines \\
 GridColor     & black               & color    & color of the grid lines \\
 GridOpacity   & 0.5                 & number   & opacity of the grid lines \\
@@ -2846,18 +3032,18 @@ GridOpacity   & 0.5                 & number   & opacity of the grid lines \\
     \end{tabularx}
     \scriptsize
   \end{center}
-  \caption{Document style options for the plains.}
-  \label{tab:plain_style}
+  \caption{Document style options for the planes.}
+  \label{tab:plane_style}
 \end{table}
 
 \begin{docspecdef}
-  \doccmd{SetPlainWidth}\{\docarg{measure}\}
+  \doccmd{SetPlaneWidth}\{\docarg{measure}\}
 \end{docspecdef}
 \begin{docspecdef}
-  \doccmd{SetPlainHight}\{\docarg{measure}\}
+  \doccmd{SetPlaneHeight}\{\docarg{measure}\}
 \end{docspecdef}
 
-With the commands \doccmd{SetPlainWidth} and \doccmd{SetPlainHight} the default size of the plains can be modified.
+With the commands \doccmd{SetPlaneWidth} and \doccmd{SetPlaneHeight} the default size of the planes can be modified.
 
 
 
@@ -2865,7 +3051,7 @@ With the commands \doccmd{SetPlainWidth} and \doccmd{SetPlainHight} the default 
 \chapter{Troubleshooting and Support}
 \label{chap:troubleshooting}
 
-\section{\TL Website}\label{sec:website}
+\section{\pkg Website}\label{sec:website}
 The website for the \pkg packages is located at
 \url{https://github.com/hackl/tikz-network}.  There, you'll find the actual version of the source code, a bug tracker, and the documentation.
 
@@ -2934,6 +3120,15 @@ The following is a list of packages that the \pkg package rely upon.  Packages m
 \item add networkx to tikz-network compiler (e.g. plot function)
 \item add QGIS to tikz-network compiler
 \end{itemize}
+
+
+\chapter{Add-ons}
+\label{chap:todo}
+
+\section{Python networks to \tikzsym with network2tikz}
+\label{sec:python_to_tikz}
+
+
 
 %%
 % The back matter contains appendices, bibliographies, indices, glossaries, etc.

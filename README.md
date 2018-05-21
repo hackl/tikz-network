@@ -3,14 +3,14 @@ A tool to visualize complex networks in LaTeX.
 
 | Package:           | tikz-network |
 | ------------------ | ----------- |
-| **Date:**          | 9 Oct 2017 |
+| **Date:**          | 21 Mey 2017 |
 | **Authors:**       | Jürgen Hackl |
 | **Contact:**       | hackl.j@gmx.at |
 | **Web site:**      | https://github.com/hackl/tikz-network/ |
 | **Documentation:** | [manual](https://github.com/hackl/tikz-network/blob/master/manual.pdf) |
 | **Copyright:**     | This document has been placed in the public domain. |
 | **License:**       | GNU General Public Licence. |
-| **Version:**       | 0.3 |
+| **Version:**       | 0.4 |
 
 Note:
 
@@ -64,3 +64,4 @@ In order to overcome this issues, the package `tikz-network` was created. Some o
 | 0.1                | initial commit |
 | 0.2                | change of the package name to tikz-network |
 | 0.3                | add commands `\Text` and `\Plain`, plus smaller changes in the commands `\Vertex` and `\Edge`|
+| 0.4                | renamed `\Plain` to `\Plane` and added commands to change the label font, size and color |
