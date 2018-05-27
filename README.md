@@ -3,14 +3,14 @@ A tool to visualize complex networks in LaTeX.
 
 | Package:           | tikz-network |
 | ------------------ | ----------- |
-| **Date:**          | 21 May 2018 |
+| **Date:**          | 27 May 2018 |
 | **Authors:**       | Jürgen Hackl |
 | **Contact:**       | hackl.j@gmx.at |
 | **Web site:**      | https://github.com/hackl/tikz-network/ |
 | **Documentation:** | [manual](https://github.com/hackl/tikz-network/blob/master/manual.pdf) |
 | **Copyright:**     | This document has been placed in the public domain. |
 | **License:**       | GNU General Public Licence. |
-| **Version:**       | 0.4 |
+| **Version:**       | 0.5 |
 
 Note:
 
@@ -40,28 +40,27 @@ In order to overcome this issues, the package `tikz-network` was created. Some o
 ## ToDo
 
 ### Code to fix
-- change default entries for Boolean options in the vertices file.
+- [ ] change default entries for Boolean options in the vertices file.
 
 ### Documentation
-- add indices to the manual.
-- add an extended tutorial/example to the document.
-- clean-up and document the .sty file.
-- upload the package to CTAN, if it is appropriated tested.
+- [ ] add indices to the manual.
+- [ ] add an extended tutorial/example to the document.
+- [ ] clean-up and document the .sty file.
+- [ ] upload the package to CTAN, if it is appropriated tested.
 
 
 ### Features
-- add a spherical coordinate system
+- [ ] add a spherical coordinate system
 
 ### Add-ons
-- add igraph to tikz-network compiler (e.g. plot function)
-- add networkx to tikz-network compiler (e.g. plot function)
-- add QGIS to tikz-network compiler
+- [ ] add QGIS to tikz-network compiler
 
 
 ## Changelog
-| Version:           | Changes |
-| ------------------ | ----------- |
-| 0.1                | initial commit |
-| 0.2                | change of the package name to tikz-network |
-| 0.3                | add commands `\Text` and `\Plain`, plus smaller changes in the commands `\Vertex` and `\Edge`|
-| 0.4                | renamed `\Plain` to `\Plane` and added commands to change the label font, size and color |
+| Version | Changes |
+|---------|-------- |
+| 0.1 | initial commit |
+| 0.2 | changed the package name to tikz-network |
+| 0.3 | added commands `\Text` and `\Plain`, plus smaller changes in the commands `\Vertex` and `\Edge`|
+| 0.4 | renamed `\Plain` to `\Plane` and added commands to change the label font, size and color |
+| 0.5 | added a description of the Python module [network2tikz](https://github.com/hackl/network2tikz) |
