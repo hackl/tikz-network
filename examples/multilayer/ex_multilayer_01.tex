@@ -2,7 +2,7 @@
 % File:  ex_multilayer_01.tex --  tikz-network example
 % Author(s): Jürgen Hackl <hackl@ibi.baug.ethz.ch>
 % Creation:  20 Sep 2017
-% Time-stamp: <Mit 2017-10-11 08:06 juergen>
+% Time-stamp: <Die 2018-06-12 07:45 juergen>
 %
 % Copyright (c) 2017 Jürgen Hackl <hackl@ibi.baug.ethz.ch>
 %               http://www.ibi.ethz.ch
@@ -28,15 +28,15 @@
 \SetCoordinates[xAngle = -20]
 \SetVertexStyle[MinSize = 4.5mm]
 \SetLayerDistance{-5}
-\SetPlainWidth{10}
-\SetPlainHeight{10}
+\SetPlaneWidth{10}
+\SetPlaneHeight{10}
 \begin{tikzpicture}[multilayer=3d]
 
 %%
 % Layer 2
 
 % Background
-\Plain[layer=2,color=orange,opacity=.6,image=./data/ex_multilayer_01_layer_02.pdf,ImageAndFill,grid=1cm,InBG]
+\Plane[layer=2,color=orange,opacity=.6,image=./data/ex_multilayer_01_layer_02.pdf,ImageAndFill,grid=1cm,InBG]
 
 % Text
 \Text[x=1.2,y=-.1,layer=2,anchor=north west,style={scale=2.5}]{Layer $\beta$}
@@ -55,7 +55,7 @@
 % Layer 1
 
 % Background
-\Plain[opacity=.6,image=./data/ex_multilayer_01_layer_01.pdf,ImageAndFill,grid=1cm]
+\Plane[opacity=.6,image=./data/ex_multilayer_01_layer_01.pdf,ImageAndFill,grid=1cm]
 
 % Text
 \Text[x=1.2,y=-.1,layer=1,anchor=north west,style={scale=2.5}]{Layer $\alpha$}
