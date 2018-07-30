@@ -1,3 +1,25 @@
+% =============================================================================
+% File      : tikz-network.tex -- The manual for the package tikz-network
+% Author    : Juergen Hackl <hackl.j@gmx.at>
+% Creation  : 2018-07-30
+% Time-stamp: <Mon 2018-07-30 11:28 juergen>
+%
+% Copyright (c) 2018 Juergen Hackl <hackl.j@gmx.at>
+%
+% This program is free software: you can redistribute it and/or modify
+% it under the terms of the GNU General Public License as published by
+% the Free Software Foundation, either version 3 of the License, or
+% (at your option) any later version.
+%
+% This program is distributed in the hope that it will be useful,
+% but WITHOUT ANY WARRANTY; without even the implied warranty of
+% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+% GNU General Public License for more details.
+%
+% You should have received a copy of the GNU General Public License
+% along with this program.  If not, see <http://www.gnu.org/licenses/>.
+% =============================================================================
+
 \documentclass[a4paper,twosided,notoc]{tufte-book}
 \usepackage{siunitx}
 \hypersetup{colorlinks}% uncomment this line if you prefer colored hyperlinks (e.g., for onscreen viewing)
@@ -39,7 +61,7 @@
 % For graphics / images
 \usepackage{graphicx}
 \setkeys{Gin}{width=\linewidth,totalheight=\textheight,keepaspectratio}
-\graphicspath{{graphics/}}
+\graphicspath{{data/}}
 
 % The fancyvrb package lets us customize the formatting of verbatim
 % environments.  We use a slightly smaller font.
@@ -242,7 +264,7 @@ emphstyle={\color{red}\bfseries},
   \fontsize{36}{40}\selectfont\par\noindent\textcolor{darkgray}{\allcaps{\thanklesstitle}}%
 \vspace{3cm}
 \begin{center}
-\includegraphics[width=14cm]{graphics/front.pdf}%
+\includegraphics[width=14cm]{data/front.pdf}%
 \end{center}
 \vfill%
   \fontsize{14}{16}\selectfont\par\noindent\allcaps{\thanklesspublisher}%
@@ -391,7 +413,7 @@ Should you have any further questions, please do not hesitate to contact me.
 
 Actually, we can hardly speak of an installation since only the necessary package \pkg must be loaded in the preamble of your document.
 
-The current release of the package is available via CTAN\footnote{\url{https://ctan.org/tex-archive/graphics/pgf/contrib/tikz-network}}. A release candidate for the next version of \pkg is available on github\footnote{\url{https://github.com/hackl/}}
+The current release of the package is available via CTAN\footnote{\url{https://ctan.org/pkg/tikz-network}}. A release candidate for the next version of \pkg is available on github\footnote{\url{https://github.com/hackl/}}
 
 Is the package installed or the style file is stored in the folder of the main file, so the library can be imported, as the following example shows:
 
@@ -401,7 +423,7 @@ Is the package installed or the style file is stored in the folder of the main f
   % header
   \documentclass{scrreprt}
 
-item  % ------------
+  % ------------
   % packages
   \usepackage{tikz-network}
 \end{lstlisting}
@@ -3893,7 +3915,7 @@ In the style dictionary multiple keywords can be used to address attributes. The
 
 \end{document}
 
-
+% =============================================================================
 %%% Local Variables:
 %%% mode: latex
 %%% TeX-master: t
