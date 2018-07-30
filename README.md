@@ -1,21 +1,16 @@
 # tikz-network
 A tool to visualize complex networks in LaTeX.
 
-| Package:           | tikz-network |
-| ------------------ | ----------- |
-| **Date:**          | 27 May 2018 |
-| **Authors:**       | Jürgen Hackl |
-| **Contact:**       | hackl.j@gmx.at |
-| **Web site:**      | https://github.com/hackl/tikz-network/ |
+| Package:           | tikz-network                                                           |
+| ------------------ | -----------                                                            |
+| **Date:**          | 30 July 2018                                                           |
+| **Authors:**       | Jürgen Hackl                                                           |
+| **Contact:**       | hackl.j@gmx.at                                                         |
+| **Web site:**      | https://github.com/hackl/tikz-network/                                 |
 | **Documentation:** | [manual](https://github.com/hackl/tikz-network/blob/master/manual.pdf) |
-| **Copyright:**     | This document has been placed in the public domain. |
-| **License:**       | GNU General Public Licence. |
-| **Version:**       | 0.5 |
-
-Note:
-
-> The `tikz-network` package is still under development. Hence, changes in the commands and functionality cannot be excluded.
-
+| **Copyright:**     | This document has been placed in the public domain.                    |
+| **License:**       | GNU General Public Licence.                                            |
+| **Version:**       | 1.0                                                                    |
 
 ## Purpose
 
@@ -57,10 +52,11 @@ In order to overcome this issues, the package `tikz-network` was created. Some o
 
 
 ## Changelog
-| Version | Changes |
-|---------|-------- |
-| 0.1 | initial commit |
-| 0.2 | changed the package name to tikz-network |
-| 0.3 | added commands `\Text` and `\Plain`, plus smaller changes in the commands `\Vertex` and `\Edge`|
-| 0.4 | renamed `\Plain` to `\Plane` and added commands to change the label font, size and color |
-| 0.5 | added a description of the Python module [network2tikz](https://github.com/hackl/network2tikz) |
+| Version | Changes                                                                                         |
+|---------|-------------------------------------------------------------------------------------------------|
+| 0.1     | initial commit                                                                                  |
+| 0.2     | changed the package name to tikz-network                                                        |
+| 0.3     | added commands `\Text` and `\Plain`, plus smaller changes in the commands `\Vertex` and `\Edge` |
+| 0.4     | renamed `\Plain` to `\Plane` and added commands to change the label font, size and color        |
+| 0.5     | added a description of the Python module [network2tikz](https://github.com/hackl/network2tikz)  |
+| 1.0     | upload to the CTAN server                                                                       |

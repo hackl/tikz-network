@@ -6,7 +6,7 @@
 % Book metadata
 \title{tikz-network\\manual}
 \author[J\"urgen Hackl]{J\"urgen Hackl}
-\publisher{Version 0.5}
+\publisher{Version 1.0}
 
 %%
 % If they're installed, use Bergamo and Chantilly from www.fontsite.com.
@@ -252,22 +252,40 @@ emphstyle={\color{red}\bfseries},
 \newpage
 
 \begin{fullwidth}
-\begin{tikzpicture}[remember picture, overlay]
- \node[rectangle,inner sep=2pt,fill=red!30,draw=black,text width=12cm] at ($(current page.center)+(0,6)$) {%
-  The \pkg package is still under development. Hence, changes in the commands and functionality cannot be excluded. 
-};
-\end{tikzpicture}
+% \begin{tikzpicture}[remember picture, overlay]
+%  \node[rectangle,inner sep=2pt,fill=red!30,draw=black,text width=12cm] at ($(current page.center)+(0,6)$) {%
+%   The \pkg package is still under development. Hence, changes in the commands and functionality cannot be excluded.
+% };
+% \end{tikzpicture}
 
 ~\vfill
 \thispagestyle{empty}
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{\baselineskip}
-Copyright \copyright\ \the\year\ \thanklessauthor
 
+
+\par\smallcaps{\pkg}
 \par\smallcaps{\thanklesspublisher}
 \par\smallcaps{\url{https://github.com/hackl/tikz-network}}
 
 \par\textit{Released, \monthyear}
+
+Copyright \copyright\ \the\year\ \thanklessauthor
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see \url{https://www.gnu.org/licenses/}.
+
+
 \end{fullwidth}
 
 \begin{fullwidth}
@@ -366,14 +384,14 @@ When entering size values the base unit is always predefined in $[cm]$\footnote{
 
 Is the manual not enough, occur some ambiguities or some \tikzsym commands are unclear, please have a look in the ``\tikzsym and PGF Manual'' from Till Tantau\footnote{\url{http://mirror.switch.ch/ftp/mirror/tex/graphics/pgf/base/doc/pgfmanual.pdf}}.
 
-Should you have any further questions, please do not hesitate to contact me. 
+Should you have any further questions, please do not hesitate to contact me.
 
 \section{Installation}
 \label{sec:Installation}
 
 Actually, we can hardly speak of an installation since only the necessary package \pkg must be loaded in the preamble of your document.
 
-The current release of the package is available via CTAN\footnote{\TODO upload the package to CTAN, and add here the link}. A release candidate for the next version of \pkg is available on github\footnote{\url{https://github.com/hackl/}}
+The current release of the package is available via CTAN\footnote{\url{https://ctan.org/tex-archive/graphics/pgf/contrib/tikz-network}}. A release candidate for the next version of \pkg is available on github\footnote{\url{https://github.com/hackl/}}
 
 Is the package installed or the style file is stored in the folder of the main file, so the library can be imported, as the following example shows:
 
@@ -383,7 +401,7 @@ Is the package installed or the style file is stored in the folder of the main f
   % header
   \documentclass{scrreprt}
 
-  % ------------
+item  % ------------
   % packages
   \usepackage{tikz-network}
 \end{lstlisting}
@@ -398,11 +416,11 @@ To use all commands and options of \tikzsym, possibly some packages need to be r
 
 \section{Vertex}
 \label{sec:vertex}
-On essential command is \doccmddef{Vertex}, which allow placing vertices in the document and modify their appearance. 
+On essential command is \doccmddef{Vertex}, which allow placing vertices in the document and modify their appearance.
 \begin{docspecdef}
   \doccmd{Vertex}[\docopt{local options}]\{\docarg{Name}\}
 \end{docspecdef}
-In order to be able to place a vertex, a non-empty \docarg{Name} argument is required. This argument defines the vertex's reference name, which must be unique. Mathematical symbols are not allowed as name as well as no blank spaces. The \docarg{Name} should not be confused with the \docopt{label}, that is used for display; for example one may want to display $A_1$ while the name will be \docarg{A1}. 
+In order to be able to place a vertex, a non-empty \docarg{Name} argument is required. This argument defines the vertex's reference name, which must be unique. Mathematical symbols are not allowed as name as well as no blank spaces. The \docarg{Name} should not be confused with the \docopt{label}, that is used for display; for example one may want to display $A_1$ while the name will be \docarg{A1}.
 
 For a \doccmd{Vertex} the following options are available:
 
@@ -448,7 +466,7 @@ The order how the options are entered does not matter. Changes to the default Ve
   \doccmd{Vertex}[\docopt{x}=\docarg{measure},\docopt{y}=\docarg{measure}]\{\docarg{Name}\}
 \end{docspecdef}
 
-The location of the vertices are determined by Cartesian coordinates in \docopt{x} and \docopt{y}. The coordinates are optional. If no coordinates are determined the vertex will be placed at the origin ($0,0$). The entered \docarg{measures} are in default units (\si{cm}). Changing the unites (locally) can be done by adding the unit to the \docarg{measure}\footnote{e.g. x=\SI{1}{in}}. Changes to the default setting can be made with \doccmd{SetDefaultUnit}\footnote{see Section \ref{sec:gerneral_settings}}. 
+The location of the vertices are determined by Cartesian coordinates in \docopt{x} and \docopt{y}. The coordinates are optional. If no coordinates are determined the vertex will be placed at the origin ($0,0$). The entered \docarg{measures} are in default units (\si{cm}). Changing the unites (locally) can be done by adding the unit to the \docarg{measure}\footnote{e.g. x=\SI{1}{in}}. Changes to the default setting can be made with \doccmd{SetDefaultUnit}\footnote{see Section \ref{sec:gerneral_settings}}.
 
 %\newpage
 \begin{marginfigure}[6mm]
@@ -502,7 +520,7 @@ The diameter of the vertex can be changed with the option \docopt{size}. Per def
   \doccmd{Vertex}[\docopt{color}=\docarg{color}]\{\docarg{Name}\}
 \end{docspecdef}
 
-To change the fill color of each vertex individually, the option \docopt{color} has to be used. Without the option \docopt{RGB} set, the default \tikzsym and \LaTeX~ colors can be applied. 
+To change the fill color of each vertex individually, the option \docopt{color} has to be used. Without the option \docopt{RGB} set, the default \tikzsym and \LaTeX~ colors can be applied.
 
 \begin{marginfigure}[34mm]
 \centering
@@ -578,7 +596,7 @@ With the option \docopt{shape} the shape of the vertex can be modified. Thereby 
   \doccmd{Vertex}[\docopt{label}=\docarg{string}]\{\docarg{Name}\}
 \end{docspecdef}
 
-In \pkg there are several ways to define the labels of the vertices and edges. The common way is via the option \docopt{label}. Here, any \docarg{string} argument can be used, including blank spaces. The environment \$ \$ can be used to display mathematical expressions. 
+In \pkg there are several ways to define the labels of the vertices and edges. The common way is via the option \docopt{label}. Here, any \docarg{string} argument can be used, including blank spaces. The environment \$ \$ can be used to display mathematical expressions.
 
 \begin{marginfigure}[34mm]
 \centering
@@ -680,7 +698,7 @@ Contrary to the option \docopt{fontsize}, the option \docopt{fontscale} does not
 
 Per default the \docopt{position} of the \docopt{label} is in the \docarg{center} of the vertex. Classical \tikzsym commands\footnote{e.g. \docarg{above}, \docarg{below}, \docarg{left}, \docarg{right}, \docarg{above left}, \docarg{above right},\dots} can be used to change the \docopt{position} of the \docopt{label}. Instead, using such command, the position can be determined via an angle, by entering a \docarg{number} between $-360$ and $360$. The origin ($0^\circ$) is the $y$ axis. A positive \docarg{number} change the \docopt{position} counter clockwise, while a negative \docarg{number} make changes clockwise.
 
-With the option, \docopt{distance} the distance between the vertex and the label can be changed. 
+With the option, \docopt{distance} the distance between the vertex and the label can be changed.
 
 \begin{marginfigure}[31mm]
 \centering
@@ -788,7 +806,7 @@ The option \docopt{Math} allows transforming labels into mathematical expression
   \doccmd{Vertex}[\docopt{RGB},\docopt{color}=\docarg{RGB values}]\{\docarg{Name}\}
 \end{docspecdef}
 
-In order to display RGB colors for the vertex fill color, the option \docopt{RGB} has to be entered. In combination with this option, the \docopt{color} hast to be a list with the \docarg{RGB 
+In order to display RGB colors for the vertex fill color, the option \docopt{RGB} has to be entered. In combination with this option, the \docopt{color} hast to be a list with the \docarg{RGB
 values}, separated by <<,>> and within $\{~\}$.\footnote{e.g. the RGB code for white: $\{255,255,255\}$}
 
 \begin{marginfigure}[4mm]
@@ -839,14 +857,14 @@ The option \docopt{Pseudo} creates a pseudo vertex, where only the vertex name a
   \doccmd{Vertex}[\docopt{layer}=\docarg{number}]\{\docarg{Name}\}
 \end{docspecdef}
 
-With the option \docopt{layer} the vertex can be assigned to a specific layer. More about this option and the use of layers is explained in Chapter~\ref{chap:multilayer_networks}. 
+With the option \docopt{layer} the vertex can be assigned to a specific layer. More about this option and the use of layers is explained in Chapter~\ref{chap:multilayer_networks}.
 
 \newpage
 
 \section{Edge}
 \label{sec:edge}
 
-The second essential command is an \doccmddef{Edge}, which allow connecting two vertices. 
+The second essential command is an \doccmddef{Edge}, which allow connecting two vertices.
 
 \begin{docspecdef}
   \doccmd{Edge}[\docopt{local options}](\docarg{Vertex i})(\docarg{Vertex j})
@@ -899,7 +917,7 @@ The options \docopt{loopsize}, \docopt{loopposition}, and \docopt{loopsize} are 
   \doccmd{Edge}(\docarg{Vertex i})(\docarg{Vertex j})
 \end{docspecdef}
 
-An edge is created between \docarg{Vertex i} and \docarg{Vertex j}. 
+An edge is created between \docarg{Vertex i} and \docarg{Vertex j}.
 
 \begin{marginfigure}[28mm]
 \centering
@@ -950,7 +968,7 @@ The line width of an edge can be modified with the option \docopt{lw}. Here, the
   \doccmd{Edge}[\docopt{color}=\docarg{color}](\docarg{Vertex i})(\docarg{Vertex j})
 \end{docspecdef}
 
-To change the line color of each edge individually, the option \docopt{color} has to be used. Without the option \docopt{RGB} set, the default \tikzsym and \LaTeX~ colors can be applied. 
+To change the line color of each edge individually, the option \docopt{color} has to be used. Without the option \docopt{RGB} set, the default \tikzsym and \LaTeX~ colors can be applied.
 
 \begin{marginfigure}[30mm]
 \centering
@@ -1002,7 +1020,7 @@ With the option \docopt{opacity} the opacity of the edge line can be modified. T
   \doccmd{Edge}[\docopt{bend}=\docarg{number}](\docarg{Vertex i})(\docarg{Vertex j})
 \end{docspecdef}
 
-The shape of the edge can be modified with the \docopt{bend} option. If nothing is specified a straight edge, between the vertices, is drawn. The \docarg{number} defines the angle in which the edge is diverging from its straight connection. A positive \docarg{number} bend the edge counter clockwise, while a negative \docarg{number} make changes clockwise. 
+The shape of the edge can be modified with the \docopt{bend} option. If nothing is specified a straight edge, between the vertices, is drawn. The \docarg{number} defines the angle in which the edge is diverging from its straight connection. A positive \docarg{number} bend the edge counter clockwise, while a negative \docarg{number} make changes clockwise.
 
 \begin{marginfigure}[32mm]
 \centering
@@ -1288,7 +1306,7 @@ With the option \docopt{loopsize} the length of the edge can be modified. The \d
   \doccmd{Edge}[\docopt{loopposition}=\docarg{number}](\docarg{Vertex i})(\docarg{Vertex i})
 \end{docspecdef}
 
-The position of the self-loop is defined via the rotation angle around the vertex. The origin ($0^\circ$) is the $y$ axis. A positive \docarg{number} change the \docopt{loopposition} counter clockwise, while a negative \docarg{number} make changes clockwise. 
+The position of the self-loop is defined via the rotation angle around the vertex. The origin ($0^\circ$) is the $y$ axis. A positive \docarg{number} change the \docopt{loopposition} counter clockwise, while a negative \docarg{number} make changes clockwise.
 
 \begin{marginfigure}[28mm]
 \centering
@@ -1397,7 +1415,7 @@ The option \docopt{Math} allows transforming labels into mathematical expression
   \doccmd{Edge}[RBG, color=\docopt{RGB value}](\docarg{Vertex i})(\docarg{Vertex j})
 \end{docspecdef}
 
-In order to display RGB colors for the line color of the edge, the option \docopt{RGB} has to be entered. In combination with this option, the \docopt{color} hast to be a list with the \docarg{RGB 
+In order to display RGB colors for the line color of the edge, the option \docopt{RGB} has to be entered. In combination with this option, the \docopt{color} hast to be a list with the \docarg{RGB
 values}, separated by <<,>> and within $\{~\}$.\footnote{e.g. the RGB code for white: $\{255,255,255\}$}
 
 \begin{marginfigure}%[28mm]
@@ -1493,7 +1511,7 @@ The order how the options are entered does not matter. Changes to the default Te
   \doccmd{Text}[\docopt{x}=\docarg{measure},\docopt{y}=\docarg{measure}]\{\docarg{string}\}
 \end{docspecdef}
 
-The location of the text is determined by Cartesian coordinates in \docopt{x} and \docopt{y}. The coordinates are optional. If no coordinates are determined the text will be placed at the origin ($0,0$). The entered \docarg{measures} are in default units (\si{cm}). Changing the unites (locally) can be done by adding the unit to the \docarg{measure}\footnote{e.g. x=\SI{1}{in}}. Changes to the default setting can be made with \doccmd{SetDefaultUnit}\footnote{see Section \ref{sec:gerneral_settings}}. 
+The location of the text is determined by Cartesian coordinates in \docopt{x} and \docopt{y}. The coordinates are optional. If no coordinates are determined the text will be placed at the origin ($0,0$). The entered \docarg{measures} are in default units (\si{cm}). Changing the unites (locally) can be done by adding the unit to the \docarg{measure}\footnote{e.g. x=\SI{1}{in}}. Changes to the default setting can be made with \doccmd{SetDefaultUnit}\footnote{see Section \ref{sec:gerneral_settings}}.
 
 \begin{marginfigure}[6mm]
 \centering
@@ -1544,7 +1562,7 @@ The font size of the text can be changed with the option \docopt{fontsize}. Per 
   \doccmd{Text}[\docopt{color}=\docarg{color}]\{\docarg{string}\}
 \end{docspecdef}
 
-To change the text color individually, the option \docopt{color} has to be used. Without the option \docopt{RGB} set, the default \tikzsym and \LaTeX~ colors can be applied. 
+To change the text color individually, the option \docopt{color} has to be used. Without the option \docopt{RGB} set, the default \tikzsym and \LaTeX~ colors can be applied.
 
 \begin{marginfigure}[34mm]
 \centering
@@ -1600,7 +1618,7 @@ With the option \docopt{opacity} the opacity of the text can be modified. The ra
 
 Per default the \docopt{position} of the text is in the \docarg{center} of the origin. Classical \tikzsym commands\footnote{e.g. \docarg{above}, \docarg{below}, \docarg{left}, \docarg{right}, \docarg{above left}, \docarg{above right},\dots} can be used to change the \docopt{position} of the text.
 
-With the option, \docopt{distance} the distance between the text and the origin can be changed. 
+With the option, \docopt{distance} the distance between the text and the origin can be changed.
 
 \begin{marginfigure}[20mm]
 \centering
@@ -1760,7 +1778,7 @@ In order to display RGB colors for the text color, the option \docopt{RGB} has t
   \doccmd{layer}[\docopt{layer}=\docarg{number}]\{\docarg{string}\}
 \end{docspecdef}
 
-With the option \docopt{layer} the text can be assigned to a specific layer. More about this option and the use of layers is explained in Chapter~\ref{chap:multilayer_networks}. 
+With the option \docopt{layer} the text can be assigned to a specific layer. More about this option and the use of layers is explained in Chapter~\ref{chap:multilayer_networks}.
 
 \chapter{Complex Networks}
 \label{chap:complex_networks}
@@ -1861,7 +1879,7 @@ The diameter of the vertices can be changed with the option \docopt{size}. Per d
   \doccmd{Vertices}[\docopt{color}=\docarg{color}]\{\docarg{filename}\}
 \end{docspecdef}
 
-To change the fill color for all vertices, the option \docopt{color} has to be used. Without the option \docopt{RGB} set, the default \tikzsym and \LaTeX~ colors can be applied. 
+To change the fill color for all vertices, the option \docopt{color} has to be used. Without the option \docopt{RGB} set, the default \tikzsym and \LaTeX~ colors can be applied.
 
 \begin{marginfigure}[22mm]
 \centering
@@ -2011,7 +2029,7 @@ The option \docopt{Pseudo} creates a pseudo vertices, where only the names and t
   \doccmd{Vertices}[\docopt{layer}=\docarg{number}]\{\docarg{filename}\}
 \end{docspecdef}
 
-With the option \docopt{layer}, only the vertices on the selected layer are plotted. More about this option and the use of layers is explained in Chapter~\ref{chap:multilayer_networks}. 
+With the option \docopt{layer}, only the vertices on the selected layer are plotted. More about this option and the use of layers is explained in Chapter~\ref{chap:multilayer_networks}.
 
 \newpage
 \section{Edges}
@@ -2115,7 +2133,7 @@ The line width of the edges can be modified with the option \docopt{lw}. Here, t
   \doccmd{Edges}[\docopt{color}=\docarg{color}]\{\docarg{filename}\}
 \end{docspecdef}
 
-To change the line color of all edges, the option \docopt{color} has to be used. Without the option \docopt{RGB} set, the default \tikzsym and \LaTeX~ colors can be applied. 
+To change the line color of all edges, the option \docopt{color} has to be used. Without the option \docopt{RGB} set, the default \tikzsym and \LaTeX~ colors can be applied.
 
 \begin{marginfigure}[20mm]
 \centering
@@ -2404,7 +2422,7 @@ With the commands \doccmd{Vertices} and \doccmd{Edges}, the network can be creat
 \centering
   \begin{tikzpicture}[multilayer=3d]
     \SetLayerDistance{-1.5}
-    \Vertices[NoLabel,opacity=0]{data/ml_vertices.csv} 
+    \Vertices[NoLabel,opacity=0]{data/ml_vertices.csv}
    \begin{Layer}[layer=2]
       \draw[orange,very thick] (-.5,-.5) rectangle (2.5,2);
       \draw[step=.5, orange,draw opacity=.5] (-.5,-.5) grid (2.5,2);
@@ -2439,7 +2457,7 @@ With the commands \doccmd{Vertices} and \doccmd{Edges}, the network can be creat
   \doccmd{Edges}[\docopt{layer}=\{\docarg{{layer $\alpha$}},\docarg{{layer $\beta$}}\}]\{\docarg{filename}\}
 \end{docspecdef}
 
-With the \doccmd{Vertices} option \docopt{layer} only the vertices on the selected layer are plotted. While, with the \doccmd{Edges} option \docopt{layer}, the edges between layer $\alpha$ and $\beta$ are plotted. The argument is a tuple of both layers indicated by  $\{~,~\}$.  
+With the \doccmd{Vertices} option \docopt{layer} only the vertices on the selected layer are plotted. While, with the \doccmd{Edges} option \docopt{layer}, the edges between layer $\alpha$ and $\beta$ are plotted. The argument is a tuple of both layers indicated by  $\{~,~\}$.
 
 \begin{marginfigure}[30mm]
 \centering
@@ -2602,7 +2620,7 @@ No obligatory arguments are needed. For a \doccmd{Plane} the following options a
  \doccmd{Plane}[\docopt{x}=\docarg{measure},\docopt{y}=\docarg{measure},\docopt{width}=\docarg{measure},\docopt{height}=\docarg{measure}]
 \end{docspecdef}
 
-A \doccmd{Plane} is a rectangle with origin (\docopt{x},\docopt{y}), a given \docopt{width} and \docopt{height}. The origin is defined in the left lower corner and per default $(0,0)$. The plane is default \SI{5}{cm} (width) by \SI{5}{cm} (height). This default options can be changed with \doccmd{SetPlaneWidth} and \doccmd{SetPlaneHeight}\footnote{See Section \ref{sec:plane_style}.} 
+A \doccmd{Plane} is a rectangle with origin (\docopt{x},\docopt{y}), a given \docopt{width} and \docopt{height}. The origin is defined in the left lower corner and per default $(0,0)$. The plane is default \SI{5}{cm} (width) by \SI{5}{cm} (height). This default options can be changed with \doccmd{SetPlaneWidth} and \doccmd{SetPlaneHeight}\footnote{See Section \ref{sec:plane_style}.}
 
 \begin{marginfigure}%[45mm]
 \centering
@@ -2675,7 +2693,7 @@ With the option \docopt{opacity} the opacity of the plane fill color can be modi
   \doccmd{Plane}[\docopt{grid}=\docarg{measure}]
 \end{docspecdef}
 
-With the option \docopt{grid} a grid will be drawn on top of the plane. The argument of this option defines the spacing between the grid lines. The entered \docarg{measures} are in default units (\si{cm}). Changing the unites (locally) can be done by adding the unit to the \docarg{measure}\footnote{e.g. x=\SI{5}{mm}}. Changes to the default setting can be made with \doccmd{SetDefaultUnit}\footnote{see Section \ref{sec:gerneral_settings}}. 
+With the option \docopt{grid} a grid will be drawn on top of the plane. The argument of this option defines the spacing between the grid lines. The entered \docarg{measures} are in default units (\si{cm}). Changing the unites (locally) can be done by adding the unit to the \docarg{measure}\footnote{e.g. x=\SI{5}{mm}}. Changes to the default setting can be made with \doccmd{SetDefaultUnit}\footnote{see Section \ref{sec:gerneral_settings}}.
 
 \begin{marginfigure}%[22mm]
 \centering
@@ -2771,7 +2789,7 @@ With the option \docopt{layer}=\docarg{layer $\alpha$}, the position of the plan
   \doccmd{Plane}[\docopt{RGB},\docopt{color}=\docarg{RGB values}]
 \end{docspecdef}
 
-In order to display RGB colors for the plane fill color, the option \docopt{RGB} has to be entered. In combination with this option, the \docopt{color} hast to be a list with the \docarg{RGB 
+In order to display RGB colors for the plane fill color, the option \docopt{RGB} has to be entered. In combination with this option, the \docopt{color} hast to be a list with the \docarg{RGB
 values}, separated by <<,>> and within $\{~\}$.\footnote{e.g. the RGB code for white: $\{255,255,255\}$}
 
 \begin{marginfigure}
@@ -3106,7 +3124,6 @@ The following is a list of packages that the \pkg package rely upon.  Packages m
 \item add indices to the manual.
 \item extended tutorial/example to the document.
 \item clean-up and document the .sty file.
-\item upload the package to CTAN, if it is appropriated tested.
 \end{itemize}
 
 \section{Features}
@@ -3686,6 +3703,85 @@ Network to be drawn. The network can be a \texttt{cnet}, \texttt{networkx}, \tex
 
 \end{description}
 
+\textbf{Keyword arguments for layout styles}
+
+\begin{description}
+\item[layout] : dict or string, optional (default = None)
+  A dictionary with the node positions on a 2-dimensional plane. The
+  key value of the dict represents the node id while the value
+  represents a tuple of coordinates (e.g. n = (x,y)). The initial
+  layout can be placed anywhere on the 2-dimensional plane.
+
+  Instead of a dictionary, the algorithm used for the layout can be defined
+  via a string value. Currently, supported are:
+
+  \begin{description}
+  \item[Random layout], where the nodes are uniformly at random placed in the
+    unit square. This algorithm can be enabled with the keywords:
+    ``Random'', ``random'', ``rand'', or \texttt{None}.
+
+  \item[Fruchterman-Reingold force-directed algorithm]. In this algorithm, the
+    nodes are represented by steel rings and the edges are springs between
+    them. The attractive force is analogous to the spring force and the
+    repulsive force is analogous to the electrical force. The basic idea is
+    to minimize the energy of the system by moving the nodes and changing
+    the forces between them. This algorithm can be enabled with the
+    keywords: ``Fruchterman-Reingold'', ``fruchterman\_reingold'', ``fr'',
+    ``spring\_layout'', ``spring layout'', ``FR''.
+
+  \end{description}
+
+  \begin{table}[h]
+  \footnotesize%
+  \begin{center}
+    \begin{tabular}{ll}
+      \toprule
+      Keys    & Other valid keys  \\
+      \midrule
+      Random               & Random, random, rand, None                     \\
+      Fruchterman-Reingold & Fruchterman-Reingold, fruchterman\_reingold, fr \\
+              & spring\_layout, spring layout, FR               \\
+      \bottomrule
+    \end{tabular}
+    \scriptsize
+  \end{center}
+  \caption{Algorithms keyword naming convention.}
+  \label{tab:algo_keywords}
+\end{table}
+
+\item[force] : float, optional (default = None)
+  Optimal distance between nodes.  If None the distance is set to
+  $1/\sqrt{n}$ where $n$ is the number of nodes.  Increase this value to move
+  nodes farther apart.
+
+\item[positions] : dict or None  optional (default = None)
+  Initial positions for nodes as a dictionary with node as keys and values
+  as a coordinate list or tuple.  If None, then use random initial
+  positions.
+
+\item[fixed] : list or None, optional (default = None)
+  Nodes to keep fixed at initial position.
+
+\item[iterations] : int, optional (default = 50)
+  Maximum number of iterations taken
+
+\item[threshold]: float, optional (default = 1e-4)
+  Threshold for relative error in node position changes.  The iteration
+  stops if the error is below this threshold.
+
+\item[weight] : string or None, optional (default = None)
+  The edge attribute that holds the numerical value used for the edge
+  weight.  If None, then all edge weights are 1.
+
+\item[dimension] : int, optional (default = 2)
+  Dimension of layout. Currently, only plots in 2 dimension are supported.
+
+\item[seed] : int or None, optional (default = None)
+  Set the random state for deterministic node layouts. If int, \texttt{seed} is
+  the seed used by the random number generator, if None, the a random seed
+  by created by the numpy random number generator is used.
+\end{description}
+
 \textbf{Keyword arguments for general options}
 
 \begin{description}
@@ -3716,7 +3812,7 @@ Network to be drawn. The network can be a \texttt{cnet}, \texttt{networkx}, \tex
   Canvas or figure\_size defines the size of the plot. The values entered as
   a tuple of numbers where the first number is width of the figure and the
   second number is the height of the figure. If the option \texttt{units} is not
-  used the size is specified in cm. Per default the canvas is $6 \times 6$ cm. 
+  used the size is specified in cm. Per default the canvas is $6 \times 6$ cm.
 
 \item[keep\_aspect\_ratio] : bool, optional (default = True)
   Defines whether to keep the aspect ratio of the current layout. If
@@ -3767,6 +3863,8 @@ In the style dictionary multiple keywords can be used to address attributes. The
       margins & margin            \\
       canvas  & bbox, figure\_size \\
       units   & unit              \\
+      fixed   & fixed\_nodes, fixed\_vertices, fixed\_n, fixed\_v\\
+      positions & initial\_positions, node\_positions, vertex\_positions, n\_positions, v\_positions\\
       \bottomrule
     \end{tabular}
     \scriptsize
