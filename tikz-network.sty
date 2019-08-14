@@ -2,7 +2,7 @@
 % File      : tikz-network.sty -- Library for plotting networks in TikZ
 % Author    : Juergen Hackl <hackl.j@gmx.at>
 % Creation  : 2017-02-28
-% Time-stamp: <Mon 2018-07-30 11:26 juergen>
+% Time-stamp: <Wed 2019-08-14 14:49 juergen>
 % Version   : 1.0 (2018-07-30)
 %
 % Copyright (c) 2018 Juergen Hackl <hackl.j@gmx.at>
@@ -33,6 +33,7 @@
 \RequirePackage{tikz}
 \RequirePackage{datatool}
 \RequirePackage{graphicx}
+\RequirePackage{trimspaces}
 \usetikzlibrary{arrows}
 \usetikzlibrary{positioning}
 \usetikzlibrary{3d}
@@ -797,6 +798,8 @@
     \edef\vertex@rgbValues{}%
     % Go through each row element
     \DTLforeachkeyinrow{\thisValue}{
+      % Remove leading and trailing spaces
+      \trim@spaces@in\dtlkey
       \DTLifeq{\dtlkey}{id}{
         % Assign vertex id to storage variable
         \edef\vertex@id{\thisValue}%
@@ -970,8 +973,10 @@
       {1\DefaultUnit}, position = {}, loopposition = {0}, loopshape = {90},
       distance = {.5}, path = {}, fontcolor = {}, fontsize = {}, fontscale ={},}
   \edef\edge@rgbValues{}%
-    % Go through each row element
-    \DTLforeachkeyinrow{\thisValue}{
+  % Go through each row element
+  \DTLforeachkeyinrow{\thisValue}{
+    % Remove leading and trailing spaces
+    \trim@spaces@in\dtlkey
       \DTLifeq{\dtlkey}{u}{
         % Assign edge id to storage variable
         \edef\edge@u{\thisValue}%
