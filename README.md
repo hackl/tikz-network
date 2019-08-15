@@ -3,14 +3,14 @@ A tool to visualize complex networks in LaTeX.
 
 | Package:           | tikz-network                                                           |
 | ------------------ | -----------                                                            |
-| **Date:**          | 30 July 2018                                                           |
+| **Date:**          | 15 Augus 2019                                                          |
 | **Authors:**       | Jürgen Hackl                                                           |
 | **Contact:**       | hackl.j@gmx.at                                                         |
 | **Web site:**      | https://github.com/hackl/tikz-network/                                 |
 | **Documentation:** | [manual](https://github.com/hackl/tikz-network/blob/master/manual.pdf) |
 | **Copyright:**     | This document has been placed in the public domain.                    |
 | **License:**       | GNU General Public Licence.                                            |
-| **Version:**       | 1.0                                                                    |
+| **Version:**       | 1.1                                                                    |
 
 ## Purpose
 
@@ -41,7 +41,6 @@ In order to overcome this issues, the package `tikz-network` was created. Some o
 - [ ] add indices to the manual.
 - [ ] add an extended tutorial/example to the document.
 - [ ] clean-up and document the .sty file.
-- [ ] upload the package to CTAN, if it is appropriated tested.
 
 
 ### Features
@@ -60,3 +59,4 @@ In order to overcome this issues, the package `tikz-network` was created. Some o
 | 0.4     | renamed `\Plain` to `\Plane` and added commands to change the label font, size and color        |
 | 0.5     | added a description of the Python module [network2tikz](https://github.com/hackl/network2tikz)  |
 | 1.0     | upload to the CTAN server                                                                       |
+| 1.1     | fixed csv input and added manual examples as standalone figures to git                          |
