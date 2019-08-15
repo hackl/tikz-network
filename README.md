@@ -3,7 +3,7 @@ A tool to visualize complex networks in LaTeX.
 
 | Package:           | tikz-network                                                           |
 | ------------------ | -----------                                                            |
-| **Date:**          | 15 Augus 2019                                                          |
+| **Date:**          | 15 August 2019                                                          |
 | **Authors:**       | Jürgen Hackl                                                           |
 | **Contact:**       | hackl.j@gmx.at                                                         |
 | **Web site:**      | https://github.com/hackl/tikz-network/                                 |
