@@ -2,8 +2,8 @@
 % File      : tikz-network.tex -- The manual for the package tikz-network
 % Author    : Juergen Hackl <hackl.j@gmx.at>
 % Creation  : 2018-07-30
-% Time-stamp: <Mon 2018-07-30 11:28 juergen>
-%
+% Time-stamp: <Thu 2019-08-15 10:27 juergen>
+%e
 % Copyright (c) 2018 Juergen Hackl <hackl.j@gmx.at>
 %
 % This program is free software: you can redistribute it and/or modify
@@ -81,6 +81,10 @@
 %%
 % Prints a trailing space in a smart way.
 \usepackage{xspace}
+
+%%
+% needed for its \numberwithin command
+\usepackage{amsmath}
 
 %%
 % Some shortcuts for Tufte's book titles.  The lowercase commands will
@@ -173,14 +177,29 @@
 \newcommand{\docfilehook}[2]{\texttt{#1}\index{file hooks!#2}\index{#1@\texttt{#1}}}
 \newcommand{\doccounter}[1]{\texttt{#1}\index{#1 counter@\texttt{#1} counter}}
 
+%%
+% Example environment
 
-\newenvironment{docspec}{\begin{shaded}}{\vspace{-5mm}\end{shaded}}% command specification environment
+% Create counter
+\newcounter{doccount}
 
+\newenvironment{docspec}{%
+  \bigskip\noindent%         create a vertical offset to previous material
+  \refstepcounter{doccount}% increment the environment's counter
+  \llap{\parbox{1.5cm}{\hfill\small\thedoccount}\hspace{2mm}}\vspace{-9mm}
+  \begin{shaded}
+  }
+  {\vspace{-5mm}\end{shaded}}% command specification environment
+\numberwithin{doccount}{chapter}
 
 % Numerate the sections
 \setcounter{secnumdepth}{2}
 
 \setcounter{tocdepth}{3}
+
+\newenvironment{docspeca}{\begin{shaded}}
+  {\vspace{-5mm}\end{shaded}}% command specification environment
+
 
 
 \usepackage{etoolbox}
@@ -1103,7 +1122,7 @@ An edge is labeled with the option \docopt{label}. For the label any \docarg{str
 
 The font size of the \docopt{label} can be modified with the option \docopt{fontsize}. Here common \LaTeX~ font size commands\footnote{e.g. \doccmd{tiny}, \doccmd{scriptsize}, \doccmd{footnotesize}, \doccmd{small}, \dots.} can be used to change the size of the label.
 
-\begin{marginfigure}[6mm]
+\begin{marginfigure}[25mm]
 \centering
   \begin{tikzpicture}
     \Vertex{A} \Vertex[x=2]{B} \Vertex[x=2,y=-1]{C}
@@ -1440,7 +1459,9 @@ The option \docopt{Math} allows transforming labels into mathematical expression
 In order to display RGB colors for the line color of the edge, the option \docopt{RGB} has to be entered. In combination with this option, the \docopt{color} hast to be a list with the \docarg{RGB
 values}, separated by <<,>> and within $\{~\}$.\footnote{e.g. the RGB code for white: $\{255,255,255\}$}
 
-\begin{marginfigure}%[28mm]
+\newpage
+
+\begin{marginfigure}[10mm]
 \centering
   \begin{tikzpicture}
     \Vertex{A} \Vertex[x=2]{B} \Vertex[x=2,y=-1]{C}
@@ -1976,7 +1997,7 @@ Any other \tikzsym style option or command can be entered via the option \docopt
 \centering
   \begin{tikzpicture}
     \Vertices[IdAsLabel]{data/vertices.csv}
-    \node at (2,1)[font=\scriptsize]{C};
+    %\node at (2,1)[font=\scriptsize]{C};
   \end{tikzpicture}
 \end{marginfigure}
 
@@ -3198,7 +3219,7 @@ Since \textit{a picture is worth a thousand words} a small example:
   \end{tikzpicture}
 \end{marginfigure}
 
-\begin{docspec}
+\begin{docspeca}
 \begin{lstlisting}
 #!/usr/bin/python -tt
 # -*- coding: utf-8 -*-
@@ -3217,11 +3238,11 @@ style['edge_curved'] = .1
 from network2tikz import plot
 plot((nodes,edges),'network.tex',**style)
 \end{lstlisting}
-\end{docspec}
+\end{docspeca}
 
 (see above) gives
 
-\begin{docspec}
+\begin{docspeca}
 \begin{lstlisting}
 \documentclass{standalone}
 \usepackage{tikz-network}
@@ -3239,7 +3260,7 @@ plot((nodes,edges),'network.tex',**style)
 \end{tikzpicture}
 \end{document}
 \end{lstlisting}
-\end{docspec}
+\end{docspeca}
 
 Tweaking the plot is straightforward and can be done as part of your LaTeX workflow.
 
@@ -3248,11 +3269,11 @@ Tweaking the plot is straightforward and can be done as part of your LaTeX workf
 
 \texttt{network2tikz} is available from the \href{https://pypi.org/project/network2tikz/}{Python Package Index}, so simply type
 
-\begin{docspec}
+\begin{docspeca}
 \begin{lstlisting}
 pip install -U network2tikz
 \end{lstlisting}
-\end{docspec}
+\end{docspeca}
 
 to install/update. If your are intersted in the development version of the module check out the \href{https://github.com/hackl/network2tikz}{github repository}.
 
@@ -3262,48 +3283,57 @@ to install/update. If your are intersted in the development version of the modul
 \item Generate, manipulation, and study of the structure, dynamics, and functions of your complex networks as usual, with your preferred python module.
 
 \item Instead of the default plot functions (e.g. \texttt{igraph.plot()} or \texttt{networkx.draw()}) invoke \texttt{network2tikz} by
-\begin{docspec}
+
+\begin{docspeca}
 \begin{lstlisting}
 plot(G,'mytikz.tex')
 \end{lstlisting}
-\end{docspec}
+\end{docspeca}
+
 to store your network visualisation as the TikZ file \texttt{mytikz.tex}. Load the module with:
-\begin{docspec}
+
+\begin{docspeca}
 \begin{lstlisting}
 from network2tikz import plot
 \end{lstlisting}
-\end{docspec}
+\end{docspeca}
 
 \textbf{Advanced usage:}
 
 Of course, you always can improve your plot by manipulating the generated LaTeX file, but why not do it directly in Python? To do so, all visualization options available in \pkg are also implemented in \texttt{network2tikz}. The appearance of the plot can be modified by keyword arguments.\footnote{For a detailed explanation, please see Section \ref{sec:plot_function}.}
-\begin{docspec}
+
+\begin{docspeca}
 \begin{lstlisting}
 my_style = {}
 plot(G,'mytikz.tex',**my_style)
 \end{lstlisting}
-\end{docspec}
+\end{docspeca}
 
 The arguments follow the options described above in the manual.
 
 Additionally, if you are more interested in the final output and  not only the \texttt{.tex} file, used
-\begin{docspec}
+
+\begin{docspeca}
 \begin{lstlisting}
 plot(G,'mypdf.pdf')
 \end{lstlisting}
-\end{docspec}
+\end{docspeca}
+
 to save your plot as a pdf, or
-\begin{docspec}
+
+\begin{docspeca}
 \begin{lstlisting}
 plot(G)
 \end{lstlisting}
-\end{docspec}
+\end{docspeca}
+
 to create a temporal plot and directly show the result, i.e. similar to the matplotlib function \texttt{show()}. Finally, you can also create a node and edge list, which can be read and easily modified (in a post-processing step) as showd above.
-\begin{docspec}
+
+\begin{docspeca}
 \begin{lstlisting}
 plot(G,'mycsv.csv')
 \end{lstlisting}
-\end{docspec}
+\end{docspeca}
 
 \item Compile the figure or add the contents of \texttt{mytikz.tex} into your LaTeX source code. With the option \docopt{standalone}=\docarg{false} only the \tikzsym figure will be saved, which can then be easily included in your \LaTeX~ document via \doccmd{input}\{\texttt{/path/to/mytikz.tex}\}.
 
@@ -3315,7 +3345,8 @@ For illustration purpose, a similar network as in the \href{http://igraph.org/py
 
 
 Create network object and add some edges.
-\begin{docspec}
+
+\begin{docspeca}
 \begin{lstlisting}
 #!/usr/bin/python -tt
 # -*- coding: utf-8 -*-
@@ -3326,11 +3357,11 @@ from network2tikz import plot
 net = igraph.Graph([(0,1), (0,2), (2,3), (3,4), (4,2), (2,5), (5,0), (6,3),
                     (5,6), (6,6)],directed=True)
 \end{lstlisting}
-\end{docspec}
+\end{docspeca}
 
 Adding node and edge properties.
 
-\begin{docspec}
+\begin{docspeca}
 \begin{lstlisting}
 net.vs["name"] = ["Alice", "Bob", "Claire", "Dennis", "Esther", "Frank", "George"]
 net.vs["age"] = [25, 31, 18, 47, 22, 23, 50]
@@ -3338,7 +3369,7 @@ net.vs["gender"] = ["f", "m", "f", "m", "f", "m", "m"]
 net.es["is_formal"] = [False, False, True, True, True, False, True, False,
                        False, False]
 \end{lstlisting}
-\end{docspec}
+\end{docspeca}
 
 Already now the network can be plotted.
 \begin{marginfigure}[5mm]
@@ -3365,15 +3396,15 @@ Already now the network can be plotted.
   \end{tikzpicture}
 \end{marginfigure}
 
-\begin{docspec}
+\begin{docspeca}
 \begin{lstlisting}
 plot(net)
 \end{lstlisting}
-\end{docspec}
+\end{docspeca}
 
 Per default, the node positions are assigned uniform random. In order to create a layout, the layout methods of the network packages can be used. Or the position of the nodes can be directly assigned, in form of a dictionary, where the key is the node id and the value is a tuple of the node position in $x$ and $y$.
 
-\begin{docspec}
+\begin{docspeca}
 \begin{lstlisting}
 layout = {0: (4.3191, -3.5352), 1: (0.5292, -0.5292),
           2: (8.6559, -3.8008), 3: (12.4117, -7.5239),
@@ -3381,7 +3412,7 @@ layout = {0: (4.3191, -3.5352), 1: (0.5292, -0.5292),
           6: (9.7608, -12.7)}
 plot(net,layout=layout)
 \end{lstlisting}
-\end{docspec}
+\end{docspeca}
 
 \begin{marginfigure}[5mm]
 \centering
@@ -3412,11 +3443,11 @@ This should open an external pdf viewer showing a visual representation of the n
 
 We can simply re-using the previous layout object here, but we also specified that we need a bigger plot ($8 \times 8$ cm) and a larger margin around the graph to fit the self loop and potential labels (1 cm).\footnote{Per default, all size values are based on cm, and all line widths are defined in pt units. With the general option \docopt{units} this can be changed, see Section \ref{sec:plot_function}.}
 
-\begin{docspec}
+\begin{docspeca}
 \begin{lstlisting}
 plot(net, layout=layout, canvas=(8,8), margin=1)
 \end{lstlisting}
-\end{docspec}
+\end{docspeca}
 
 \begin{marginfigure}[5mm]
 \centering
@@ -3444,7 +3475,7 @@ plot(net, layout=layout, canvas=(8,8), margin=1)
 
 In to keep the properties of the visual representation of your network separate from the network itself. You can simply set up a Python dictionary containing the keyword arguments you would pass to \texttt{plot} and then use the double asterisk (\texttt{**}) operator to pass your specific styling attributes to \texttt{plot}:
 
-\begin{docspec}
+\begin{docspeca}
 \begin{lstlisting}
 color_dict = {'m': 'blue', 'f': 'red'}
 visual_style = {}
@@ -3468,7 +3499,7 @@ visual_style['margin'] = 1
 # Plot command
 plot(net,**visual_style)
 \end{lstlisting}
-\end{docspec}
+\end{docspeca}
 
 \begin{marginfigure}[5mm]
 \centering
@@ -3498,17 +3529,17 @@ plot(net,**visual_style)
 Beside showing the network, we can also generate the latex source file, which can be used and modified later on. This is done by adding the output file name with the ending \texttt{'.tex'}.
 
 
-\begin{docspec}
+\begin{docspeca}
 \begin{lstlisting}
 plot(net,'network.tex',**visual_style)
 \end{lstlisting}
-\end{docspec}
+\end{docspeca}
 
 produces
 
 \begin{fullwidth}
 \begin{minipage}{17cm}
-\begin{docspec}
+\begin{docspeca}
 \begin{lstlisting}
 \documentclass{standalone}
 \usepackage{tikz-network}
@@ -3535,21 +3566,22 @@ produces
 \end{tikzpicture}
 \end{document}
 \end{lstlisting}
-\end{docspec}
+\end{docspeca}
 \end{minipage}
 \end{fullwidth}
 
 Instead of the tex file, a node and edge list can be generates, which can also be used with the library.
 
 
-\begin{docspec}
+\begin{docspeca}
 \begin{lstlisting}
 plot(net,'network.csv',**visual_style)
 \end{lstlisting}
-\end{docspec}
+\end{docspeca}
 
 The node list \texttt{network\_nodes.csv}.
-\begin{docspec}
+
+\begin{docspeca}
 \begin{lstlisting}
 id,x,y,size,color,opacity,label,position
 a,2.868,5.518,0.5,red,0.7,Alice,below
@@ -3560,10 +3592,11 @@ e,7.000,6.419,0.5,red,0.7,Esther,below
 f,3.698,2.808,0.5,blue,0.7,Frank,below
 g,5.551,1.000,0.5,blue,0.7,George,below
 \end{lstlisting}
-\end{docspec}
+\end{docspeca}
 
 The edge list \texttt{network\_edges.csv}.
-\begin{docspec}
+
+\begin{docspeca}
 \begin{lstlisting}
 u,v,lw,bend,Direct
 a,b,1.0,-8.531,true
@@ -3577,7 +3610,7 @@ f,g,1.0,-8.531,true
 g,g,1.0,-8.531,true
 g,d,1.0,-8.531,true
 \end{lstlisting}
-\end{docspec}
+\end{docspeca}
 
 \subsection{The plot function in detail}
 \label{sec:plot_function}
