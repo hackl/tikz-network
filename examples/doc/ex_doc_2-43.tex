@@ -1,0 +1,27 @@
+% =============================================================================
+% File      : ex_doc_2-43.tex -- example 2.43
+% Author    : Jürgen Hackl <hackl.j@gmx.at>
+% Creation  : 2019-08-14
+% Time-stamp: <Wed 2019-08-14 17:13 juergen>
+%
+% Copyright (c) 2019 Jürgen Hackl <hackl.j@gmx.at>
+% =============================================================================
+\documentclass{standalone}
+\usepackage{../../tikz-network}
+\begin{document}
+\begin{tikzpicture}
+  \filldraw [orange] (0,0) circle (2pt);
+  \filldraw [orange] (1,0) circle (2pt);
+  \filldraw [orange] (2,0) circle (2pt);
+  \Text[anchor=north east]{NE}
+  \Text[x=1,anchor = south]{S}
+  \Text[x=2,anchor =south west]{SW}
+\end{tikzpicture}
+\end{document}
+% =============================================================================
+% eof
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:

@@ -1,0 +1,27 @@
+% =============================================================================
+% File      : ex_doc_2-42.tex -- example 2.42
+% Author    : Jürgen Hackl <hackl.j@gmx.at>
+% Creation  : 2019-08-14
+% Time-stamp: <Wed 2019-08-14 17:13 juergen>
+%
+% Copyright (c) 2019 Jürgen Hackl <hackl.j@gmx.at>
+% =============================================================================
+\documentclass{standalone}
+\usepackage{../../tikz-network}
+\begin{document}
+\begin{tikzpicture}
+  \Text[rotation = 30]{A}
+  \Text[x=1,rotation = 45]{B}
+  \Text[x=2,rotation = 75]{C}
+  \draw[orange,dashed](2,0) --++ (7mm,0mm)(2,0)--++(75:7mm);
+  \draw[orange,->] (2.5,0) arc (0:75:5mm);
+  \node[orange] (x) at (2.6,-.2) {$75^\circ$};
+\end{tikzpicture}
+\end{document}
+% =============================================================================
+% eof
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:

@@ -1,0 +1,23 @@
+% =============================================================================
+% File      : ex_doc_2-28.tex -- example 2.28
+% Author    : Jürgen Hackl <hackl.j@gmx.at>
+% Creation  : 2019-08-14
+% Time-stamp: <Wed 2019-08-14 17:05 juergen>
+%
+% Copyright (c) 2019 Jürgen Hackl <hackl.j@gmx.at>
+% =============================================================================
+\documentclass{standalone}
+\usepackage{../../tikz-network}
+\begin{document}
+\begin{tikzpicture}
+  \Vertex{A} \Vertex[x=2]{B} \Vertex[x=2,y=-1]{C}
+  \Edge[path={A,{0,-1},C,B}](A)(B)
+\end{tikzpicture}
+\end{document}
+% =============================================================================
+% eof
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:

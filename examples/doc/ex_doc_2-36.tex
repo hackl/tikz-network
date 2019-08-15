@@ -1,0 +1,25 @@
+% =============================================================================
+% File      : ex_doc_2-36.tex -- example 2.36
+% Author    : Jürgen Hackl <hackl.j@gmx.at>
+% Creation  : 2019-08-14
+% Time-stamp: <Wed 2019-08-14 17:10 juergen>
+%
+% Copyright (c) 2019 Jürgen Hackl <hackl.j@gmx.at>
+% =============================================================================
+\documentclass{standalone}
+\usepackage{../../tikz-network}
+\begin{document}
+\begin{tikzpicture}
+  \Vertex{A} \Vertex[x=2]{B} \Vertex[x=1,y=-.5]{C}
+  \Vertex[y=-1]{D} \Vertex[x=2,y=-1]{E}
+  \Edge[bend=-30](A)(B)
+  \Edge[bend=30,NotInBG](D)(E)
+\end{tikzpicture}
+\end{document}
+% =============================================================================
+% eof
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:

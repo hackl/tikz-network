@@ -1,0 +1,27 @@
+% =============================================================================
+% File      : ex_doc_4-08.tex -- example 4.08
+% Author    : Jürgen Hackl <hackl.j@gmx.at>
+% Creation  : 2019-08-14
+% Time-stamp: <Thu 2019-08-15 09:41 juergen>
+%
+% Copyright (c) 2019 Jürgen Hackl <hackl.j@gmx.at>
+% =============================================================================
+\documentclass{standalone}
+\usepackage{../../tikz-network}
+\begin{document}
+\begin{tikzpicture}[multilayer=3d]
+  \begin{Layer}[layer=1]
+    \draw[very thick] (-.5,-.5) rectangle (2.5,2);
+    \node at (-.5,-.5)[below right]{Layer 1};
+  \end{Layer}
+  \Vertices[layer=1]{data/ml_vertices.csv}
+  \Edges[layer={1,1}]{data/ml_edges.csv}
+\end{tikzpicture}
+\end{document}
+% =============================================================================
+% eof
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:

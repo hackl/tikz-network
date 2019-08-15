@@ -1,0 +1,27 @@
+% =============================================================================
+% File      : ex_doc_2-01.tex -- example 2.01
+% Author    : Jürgen Hackl <hackl.j@gmx.at>
+% Creation  : 2019-08-14
+% Time-stamp: <Wed 2019-08-14 16:47 juergen>
+%
+% Copyright (c) 2019 Jürgen Hackl <hackl.j@gmx.at>
+% =============================================================================
+\documentclass{standalone}
+\usepackage{../../tikz-network}
+\begin{document}
+\begin{tikzpicture}
+  \Vertex{A}
+  \Vertex[x=1,y=1]{B}
+  \Vertex[x=2]{C}
+  \node at (0,0)[font=\footnotesize,orange]{\textbf{A}};
+  \node at (1,1)[font=\footnotesize,orange]{\textbf{B}};
+  \node at (2,0)[font=\footnotesize,orange]{\textbf{C}};
+\end{tikzpicture}
+\end{document}
+% =============================================================================
+% eof
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:

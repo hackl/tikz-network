@@ -1,0 +1,24 @@
+% =============================================================================
+% File      : ex_doc_4-09.tex -- example 4.09
+% Author    : Jürgen Hackl <hackl.j@gmx.at>
+% Creation  : 2019-08-14
+% Time-stamp: <Thu 2019-08-15 09:42 juergen>
+%
+% Copyright (c) 2019 Jürgen Hackl <hackl.j@gmx.at>
+% =============================================================================
+\documentclass{standalone}
+\usepackage{../../tikz-network}
+\begin{document}
+\SetCoordinates[xAngle=-30,yLength=1.2,xLength=.8]
+\begin{tikzpicture}[multilayer=3d]
+  \Vertices[layer=1]{data/ml_vertices.csv}
+  \Edges[layer={1,1}]{data/ml_edges.csv}
+\end{tikzpicture}
+\end{document}
+% =============================================================================
+% eof
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:

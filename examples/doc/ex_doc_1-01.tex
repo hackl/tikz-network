@@ -1,0 +1,23 @@
+% =============================================================================
+% File      : ex_doc_1-01.tex -- example 1.01
+% Author    : Jürgen Hackl <hackl.j@gmx.at>
+% Creation  : 2019-08-14
+% Time-stamp: <Wed 2019-08-14 16:44 juergen>
+%
+% Copyright (c) 2019 Jürgen Hackl <hackl.j@gmx.at>
+% =============================================================================
+\documentclass{standalone}
+\usepackage{../../tikz-network}
+\begin{document}
+\begin{tikzpicture}
+  \filldraw (-.2,.2) circle (2pt) (.2,.2) circle (2pt);
+  \draw (0,0) circle (5mm) (-.3,-.1) .. controls (0,-.3) .. (.3,-.1);
+\end{tikzpicture}
+\end{document}
+% =============================================================================
+% eof
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:

@@ -1,0 +1,27 @@
+% =============================================================================
+% File      : ex_doc_4-01.tex -- example 4.01
+% Author    : Jürgen Hackl <hackl.j@gmx.at>
+% Creation  : 2019-08-14
+% Time-stamp: <Thu 2019-08-15 09:37 juergen>
+%
+% Copyright (c) 2019 Jürgen Hackl <hackl.j@gmx.at>
+% =============================================================================
+\documentclass{standalone}
+\usepackage{../../tikz-network}
+\begin{document}
+  \begin{tikzpicture}[multilayer]
+    \Vertex[x=.5,y=.5,IdAsLabel,layer=1]{A}
+    \Vertex[x=1.5,y=.5,IdAsLabel,layer=1]{B}
+    \Vertex[x=1.5,y=.5,IdAsLabel,layer=2]{C}
+    \Edge[bend=60](A)(B)
+    \Edge(C)(C)
+    \Edge[style=dashed](B)(C)
+  \end{tikzpicture}
+\end{document}
+% =============================================================================
+% eof
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:

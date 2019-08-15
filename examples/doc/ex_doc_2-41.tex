@@ -1,0 +1,27 @@
+% =============================================================================
+% File      : ex_doc_2-41.tex -- example 2.41
+% Author    : Jürgen Hackl <hackl.j@gmx.at>
+% Creation  : 2019-08-14
+% Time-stamp: <Wed 2019-08-14 17:12 juergen>
+%
+% Copyright (c) 2019 Jürgen Hackl <hackl.j@gmx.at>
+% =============================================================================
+\documentclass{standalone}
+\usepackage{../../tikz-network}
+\begin{document}
+\begin{tikzpicture}
+  \filldraw [orange] (0,0) circle (2pt);
+  \draw[<-,orange] (0.1,0) --++ (0.5,0) node [pos=1,right]{origin ($0,0$)};
+  \Text[position=above]{above}
+  \Text[position=below]{below}
+  \Text[position=left,distance=5mm]{left}
+  \Text[position=above right,distance=5mm]{above right}
+\end{tikzpicture}
+\end{document}
+% =============================================================================
+% eof
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:
