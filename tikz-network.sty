@@ -2,7 +2,7 @@
 % File      : tikz-network.sty -- Library for plotting networks in TikZ
 % Author    : Juergen Hackl <hackl.j@gmx.at>
 % Creation  : 2017-02-28
-% Time-stamp: <Thu 2019-08-15 10:57 juergen>
+% Time-stamp: <Tue 2020-05-05 14:32 juergen>
 % Version   : 1.1 (2019-08-15)
 %
 % Copyright (c) 2019 Juergen Hackl <hackl.j@gmx.at>
@@ -42,6 +42,8 @@
 \usetikzlibrary{backgrounds}
 \usetikzlibrary{arrows.meta}
 \usetikzlibrary{shapes.geometric}
+\usetikzlibrary{decorations.markings}
+
 %=============================================================================
 
 
@@ -83,7 +85,7 @@
 \newcommand*{\EdgeTextRotation}{0}
 \newcommand*{\EdgeTextOpacity}{1}
 \newcommand*{\EdgeTextFont}{\scriptsize}
-
+\newcommand*{\EdgeStubsLength}{0.2cm}
 
 %<--------------------------------------------------------------------------->
 %      Plane
@@ -710,13 +712,13 @@
  \noexpand\draw[\estyle,LocalEdgeLW,LocalEdgeOpacity,LocalEdgeColor,LocalArrow,\cmdNW@edge@style] (#2) -- \edge@pts (#3)}      \@tempa;
     }{
       \protected@edef\@tempa{%
-       \noexpand\path[\estyle,LocalEdgeLW,LocalEdgeOpacity,LocalEdgeColor,LocalArrow,\cmdNW@edge@style] (#2) edge [bend left = \cmdNW@edge@bend] \edge@Label (#3)}%
+       \noexpand\path[\estyle,LocalEdgeLW,LocalEdgeOpacity,LocalEdgeColor,LocalArrow] (#2) edge [bend left = \cmdNW@edge@bend,\cmdNW@edge@style] \edge@Label (#3)}%
       \@tempa;
     }
     }{% Self loop
       \protected@edef\@tempa{%
-        \noexpand\path[\estyle,LocalEdgeLW,LocalEdgeOpacity,LocalEdgeColor,LocalArrow,\cmdNW@edge@style]
-        (#2) edge [in=-\cmdNW@edge@loopshape/2+\cmdNW@edge@loopposition,out=\cmdNW@edge@loopshape/2+\cmdNW@edge@loopposition,loop,distance=\cmdNW@edge@loopsize,] \edge@Label (#3)}%
+        \noexpand\path[\estyle,LocalEdgeLW,LocalEdgeOpacity,LocalEdgeColor,LocalArrow]
+        (#2) edge [in=-\cmdNW@edge@loopshape/2+\cmdNW@edge@loopposition,out=\cmdNW@edge@loopshape/2+\cmdNW@edge@loopposition,loop,distance=\cmdNW@edge@loopsize,\cmdNW@edge@style,] \edge@Label (#3)}%
       \@tempa;
     }
   \end{scope}
@@ -1370,12 +1372,20 @@
   }
 
 
+%<--------------------------------------------------------------------------->
+%      Custom edge styles
+%<--------------------------------------------------------------------------->
 
-
-
-
-
-
+ \tikzset{
+  stubs/.style args={#1}{
+    decorate,draw,
+      decoration={
+        markings,
+        pre=curveto, pre length=#1,%*\pgfdecoratedinputsegmentlength,
+        post=curveto, post length=#1%*\pgfdecoratedinputsegmentlength
+  }},
+  stubs/.default={\EdgeStubsLength}
+}
 
 
 
