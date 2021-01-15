@@ -1,0 +1,31 @@
+\documentclass[border=1mm]{standalone}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{tikz,pgfplots}
+\usepackage{tikz-network}
+\usetikzlibrary{arrows.meta}
+\pgfplotsset{compat=1.15}
+\usetikzlibrary{shapes.geometric, patterns, calc}
+\usetikzlibrary{graphs}
+\usetikzlibrary{nef}
+\usetikzlibrary{quotes}
+
+%\usetikzlibrary{arrows}
+\begin{document}
+% the following removes white background color
+\nopagecolor
+\begin{tikzpicture}
+  \Vertices[RGB]{data/ex_complex_02_vertices.csv}
+  \Edges{data/ex_complex_02_edges.csv}
+\end{tikzpicture}
+
+\end{document}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:
