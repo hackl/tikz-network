@@ -560,6 +560,7 @@
 %<--------------------------------------------------------------------------->
 \define@cmdkey  [NW] {edge} {label}{}
 \define@cmdkey  [NW] {edge} {lw}{}
+\define@cmdkey  [NW] {edge} {arrowhead}{}
 \define@cmdkey  [NW] {edge} {color}{}
 \define@cmdkey  [NW] {edge} {opacity}{}
 \define@cmdkey  [NW] {edge} {style}{}
@@ -600,6 +601,7 @@
                        fontcolor  = {},
                        fontsize   = {},
                        fontscale  = {},
+                       arrowhead  = {},
                        RGB        = false,
                        Math       = false,
                        Direct     = false,
@@ -625,7 +627,16 @@
     % ]
     % Check if Direct is true, if so use default arrow style
     \ifNW@edge@Direct
-      \tikzset{LocalArrow/.style={}}
+       \ifthenelse{\not\equal{\cmdNW@edge@arrowhead}{}}{
+          \tikzset{LocalArrow/.style={\cmdNW@edge@arrowhead}}
+        }{
+          \tikzset{LocalArrow/.style={}}
+      }
+       %\ifNW@edge@arrow \not\equal{}
+          %\tikzset{LocalArrow/.style={\cmdNW@edge@arrow}}
+       %\else
+          %\tikzset{LocalArrow/.style={}}
+       %\fi
     \else
       \tikzset{LocalArrow/.style={-}}
     \fi
@@ -886,6 +897,7 @@
 \define@cmdkey  [NW] {edges} {vertices}{}
 \define@cmdkey  [NW] {edges} {style}{}
 \define@cmdkey  [NW] {edges} {lw}{}
+\define@cmdkey  [NW] {edges} {arrowhead}{}
 \define@cmdkey  [NW] {edges} {color}{}
 \define@cmdkey  [NW] {edges} {opacity}{}
 \define@boolkey [NW] {edges} {RGB}[true]{}
@@ -899,6 +911,7 @@
                               lw         = {},
                               color      = {},
                               opacity    = {},
+                              arrowhead  = {},
                               RGB        = false,
                               Math       = false,
                               Direct     = false,
@@ -953,6 +966,7 @@
   \def\edge@rgbValues{}%
   \def\u@layer{}%
   \def\v@layer{}%
+  \def\arrowhead@layer{}%
   %
   % Assign where the edges are drawn from to
   \ifthenelse{\not\equal{\cmdNW@edges@layer}{}}{
@@ -972,7 +986,7 @@
     % reset storage variable to default values
     \edef\edge@Options{label = {}, lw = {}, color = {}, opacity = {}, style =
       {}, RGB = false, Math = false, Direct = false, NotInBG = false, bend = {0}, loopsize =
-      {1\DefaultUnit}, position = {}, loopposition = {0}, loopshape = {90},
+      {1\DefaultUnit}, position = {}, loopposition = {0}, loopshape = {90}, arrowhead = {},
       distance = {.5}, path = {}, fontcolor = {}, fontsize = {}, fontscale ={},}
   \edef\edge@rgbValues{}%
   % Go through each row element
@@ -1028,6 +1042,11 @@
     \ifthenelse{\not\equal{\cmdNW@edges@color}{}}
     {
       \edef\edge@Options{\edge@Options color=\cmdNW@edges@color,}
+    }{}
+    % arrowhead
+    \ifthenelse{\not\equal{\cmdNW@edges@arrowhead}{}}
+    {
+      \edef\edge@Options{\edge@Options arrow=\cmdNW@edges@arrowhead,}
     }{}
     % opacity
     \ifthenelse{\not\equal{\cmdNW@edges@opacity}{}}
